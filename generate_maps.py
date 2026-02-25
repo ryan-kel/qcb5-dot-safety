@@ -2448,11 +2448,8 @@ window.addEventListener('message', function(ev) {{
   rebuildYearLayers();
 }});
 
-// If embedded in iframe, hide the in-map year filter (page controls it)
-if (window !== window.top) {{
-  var yf = document.getElementById('year-filter');
-  if (yf) yf.style.display = 'none';
-}}
+// Keep the in-map year filter visible even when embedded in an iframe,
+// so users always have a direct way to filter by year.
 
 // Notify parent of year changes so page can stay synced
 function notifyParentYear() {{
