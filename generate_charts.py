@@ -59,6 +59,7 @@ COLORS = {
     'avg_line': '#B8860B',     # Dark goldenrod dashed — citywide average reference lines
     'crash': '#996633',        # Warm brown — crash data (unified w/ maps)
     'crash_alt': '#CC9966',    # Lighter warm brown — injury data (unified w/ maps)
+    'aps': '#7B68AE',         # Purple — APS-specific charts
 }
 
 # Denial-reason gradient (darkest to lightest, for ranked horizontal bars)
@@ -212,14 +213,15 @@ def prepare_data(signal_studies, srts, crashes, cb5_studies):
     }
 
 
-def chart_01_request_volume(data):
-    """Chart 1: Request Volume by Borough."""
-    signal_studies = data['signal_studies']
-    cb5_studies = data['cb5_studies']
+# ============================================================
+# Chart 01: Citywide Signal Study Requests by Borough
+# ============================================================
 
-    # Filter to 2020–2025 (match CB5 data range)
+def chart_01_request_volume_by_borough(data):
+    """Chart 01: Citywide Signal Study Requests by Borough."""
+    signal_studies = data['signal_studies']
+
     signal_capped = signal_studies[signal_studies['year'].between(2020, 2025)].copy()
-    cb5_capped = cb5_studies[cb5_studies['year'].between(2020, 2025)].copy()
 
     def normalize_borough(b):
         if pd.isna(b): return 'Unknown'
@@ -231,53 +233,18 @@ def chart_01_request_volume(data):
     signal_capped['borough_clean'] = signal_capped['borough'].apply(normalize_borough)
     borough_counts = signal_capped['borough_clean'].value_counts().sort_values(ascending=True)
 
-    # CB5 request types
-    cb5_types = cb5_capped['requesttype'].value_counts()
-    top_types = cb5_types.head(5)
-    other_count = cb5_types[5:].sum()
-    if other_count > 0:
-        top_types = pd.concat([top_types, pd.Series({'Other': other_count})])
-    top_types = top_types.sort_values(ascending=True)
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Create figure
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    bars = ax.barh(borough_counts.index, borough_counts.values,
+                   color=COLORS['primary'], edgecolor='black', zorder=3)
+    for bar, val in zip(bars, borough_counts.values):
+        ax.text(val + 200, bar.get_y() + bar.get_height()/2, f'{val:,}', va='center', fontsize=10)
 
-    # Left panel
-    bars1 = axes[0].barh(borough_counts.index, borough_counts.values,
-                         color=COLORS['primary'], edgecolor='black', zorder=3)
-    for bar, val in zip(bars1, borough_counts.values):
-        axes[0].text(val + 200, bar.get_y() + bar.get_height()/2, f'{val:,}', va='center', fontsize=10)
+    ax.set_xlabel('Number of Requests', fontweight='bold')
+    ax.set_title(f'Citywide Signal Study Requests by Borough\n(n={len(signal_capped):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlim(0, borough_counts.max() * 1.15)
+    ax.yaxis.grid(False)
 
-    axes[0].set_xlabel('Number of Requests', fontweight='bold')
-    axes[0].set_title(f'Citywide Signal Study Requests by Borough\n(n={len(signal_capped):,}, 2020–2025)', fontweight='bold', fontsize=12)
-    axes[0].set_xlim(0, borough_counts.max() * 1.15)
-
-    # Right panel — hatch APS bar to flag court-mandated status
-    bar_colors = [COLORS['secondary'] if label == 'Accessible Pedestrian Signal' else COLORS['primary']
-                  for label in top_types.index]
-    bars2 = axes[1].barh(top_types.index, top_types.values,
-                         color=bar_colors, edgecolor='black', zorder=3)
-    for bar, label in zip(bars2, top_types.index):
-        if label == 'Accessible Pedestrian Signal':
-            bar.set_hatch('///')
-            bar.set_edgecolor('black')
-
-    for bar, val in zip(bars2, top_types.values):
-        axes[1].text(val + 2, bar.get_y() + bar.get_height()/2, f'{val:,}', va='center', fontsize=10)
-
-    # APS annotation
-    from matplotlib.patches import Patch
-    aps_legend = Patch(facecolor=COLORS['secondary'], edgecolor='black', hatch='///',
-                       label='Court-mandated (excl. from denial rates)')
-    axes[1].legend(handles=[aps_legend], loc='lower right', fontsize=8, framealpha=0.9)
-
-    axes[1].set_xlabel('Number of Requests', fontweight='bold')
-    cb5_min_year = int(cb5_capped['year'].min())
-    cb5_max_year = min(int(cb5_capped['year'].max()), 2025)
-    axes[1].set_title(f'QCB5 Signal Study Requests by Type\n(n={len(cb5_capped):,}, {cb5_min_year}–{cb5_max_year})', fontweight='bold', fontsize=12)
-    axes[1].set_xlim(0, top_types.max() * 1.2)
-
-    fig.suptitle('DOT Signal Study Request Volume, 2020–2025', fontweight='bold', fontsize=14, y=1.02)
     fig.text(0.01, -0.02, 'Source: NYC Open Data — Signal Studies [w76s-c5u4]',
              ha='left', fontsize=9, style='italic', color='#333333')
 
@@ -286,19 +253,80 @@ def chart_01_request_volume(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data tables
+    # Save underlying data table
     borough_df = borough_counts.rename_axis('Borough').reset_index(name='Requests')
     borough_df = borough_df.sort_values('Requests', ascending=False)
     borough_df['Source Dataset'] = 'Signal Studies [w76s-c5u4]'
     borough_df.to_csv(f'{OUTPUT_DIR}/table_01a_requests_by_borough.csv', index=False)
 
+    print("  Chart 01 saved.")
+
+
+# ============================================================
+# Chart 01a: QCB5 Signal Study Requests by Type
+# ============================================================
+
+def chart_01a_request_volume_by_type(data):
+    """Chart 01a: QCB5 Signal Study Requests by Type."""
+    cb5_studies = data['cb5_studies']
+
+    cb5_capped = cb5_studies[cb5_studies['year'].between(2020, 2025)].copy()
+
+    cb5_types = cb5_capped['requesttype'].value_counts()
+    top_types = cb5_types.head(5)
+    other_count = cb5_types[5:].sum()
+    if other_count > 0:
+        top_types = pd.concat([top_types, pd.Series({'Other': other_count})])
+    top_types = top_types.sort_values(ascending=True)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Hatch APS bar to flag court-mandated status
+    bar_colors = [COLORS['secondary'] if label == 'Accessible Pedestrian Signal' else COLORS['primary']
+                  for label in top_types.index]
+    bars = ax.barh(top_types.index, top_types.values,
+                   color=bar_colors, edgecolor='black', zorder=3)
+    for bar, label in zip(bars, top_types.index):
+        if label == 'Accessible Pedestrian Signal':
+            bar.set_hatch('///')
+            bar.set_edgecolor('black')
+
+    for bar, val in zip(bars, top_types.values):
+        ax.text(val + 2, bar.get_y() + bar.get_height()/2, f'{val:,}', va='center', fontsize=10)
+
+    # APS annotation
+    from matplotlib.patches import Patch
+    aps_legend = Patch(facecolor=COLORS['secondary'], edgecolor='black', hatch='///',
+                       label='Court-mandated (excl. from denial rates)')
+    ax.legend(handles=[aps_legend], loc='lower right', fontsize=8, framealpha=0.9)
+
+    ax.set_xlabel('Number of Requests', fontweight='bold')
+    cb5_min_year = int(cb5_capped['year'].min())
+    cb5_max_year = min(int(cb5_capped['year'].max()), 2025)
+    ax.set_title(f'QCB5 Signal Study Requests by Type\n(n={len(cb5_capped):,}, {cb5_min_year}–{cb5_max_year})', fontweight='bold', fontsize=12)
+    ax.set_xlim(0, top_types.max() * 1.2)
+    ax.yaxis.grid(False)
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Signal Studies [w76s-c5u4]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_01a_request_volume_by_type.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+
+    # Save underlying data table
     cb5_type_df = top_types.rename_axis('Request Type').reset_index(name='Requests')
     cb5_type_df = cb5_type_df.sort_values('Requests', ascending=False)
     cb5_type_df['Source Dataset'] = 'Signal Studies [w76s-c5u4]'
     cb5_type_df.to_csv(f'{OUTPUT_DIR}/table_01b_cb5_requests_by_type.csv', index=False)
 
-    print("  Chart 01 saved.")
+    print("  Chart 01a saved.")
 
+
+# ============================================================
+# Chart 01z: Full History
+# ============================================================
 
 def chart_01z_request_volume_full(data):
     """Chart 1z: Request Volume by Borough — full history."""
@@ -345,6 +373,10 @@ def chart_01z_request_volume_full(data):
     print("  Chart 01z saved.")
 
 
+# ============================================================
+# Chart 01bz: Full History Request Trends
+# ============================================================
+
 def chart_01bz_requests_by_year_full(data):
     """Chart 1bz: Request Trends — full history (Citywide + Queens lines)."""
     signal_studies = data['signal_studies']
@@ -382,19 +414,20 @@ def chart_01bz_requests_by_year_full(data):
     print("  Chart 01bz saved.")
 
 
+# ============================================================
+# Chart 01b: Citywide and Queens Request Trends by Year (2020–2025)
+# ============================================================
+
 def chart_01b_requests_by_year(data):
     """Chart 1b: Citywide and Queens Signal Study Request Trends."""
     signal_studies = data['signal_studies']
 
-    # Citywide by year (2020–2025)
     cw_yearly = signal_studies[signal_studies['year'].between(2020, 2025)].groupby('year').size()
-
-    # Queens by year (2020–2025)
     queens_yearly = signal_studies[
         (signal_studies['borough'] == 'Queens') & signal_studies['year'].between(2020, 2025)
     ].groupby('year').size()
 
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     ax.plot(cw_yearly.index, cw_yearly.values, marker='o', markersize=5,
             linewidth=2, color=COLORS['citywide'], label='Citywide', zorder=3)
@@ -414,13 +447,16 @@ def chart_01b_requests_by_year(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     left_df = pd.DataFrame({'Year': cw_yearly.index, 'Citywide': cw_yearly.values, 'Queens': queens_yearly.reindex(cw_yearly.index, fill_value=0).values})
     left_df['Source Dataset'] = 'Signal Studies [w76s-c5u4]'
     left_df.to_csv(f'{OUTPUT_DIR}/table_01b_requests_by_year.csv', index=False)
 
     print("  Chart 01b saved.")
 
+
+# ============================================================
+# Chart 01c: QCB5 Request Type Composition by Year
+# ============================================================
 
 def chart_01c_cb5_requests_by_type(data):
     """Chart 1c: QCB5 Signal Study Requests by Type (stacked bar)."""
@@ -429,12 +465,10 @@ def chart_01c_cb5_requests_by_type(data):
     cb5_by_type_year = cb5_studies[cb5_studies['year'].between(2020, 2025)].copy()
     type_yearly = cb5_by_type_year.groupby(['year', 'requesttype']).size().unstack(fill_value=0)
 
-    # Stack order: main types bottom-up, APS on top (visually distinct)
     stack_order = ['Traffic Signal', 'All-Way Stop', 'Leading Pedestrian Interval',
                    'Left Turn Arrow/Signal', 'Accessible Pedestrian Signal']
     stack_colors = ['#2C5F8B', '#B8860B', '#4A7C59', '#B44040', '#999999']
 
-    # Aggregate minor types into "Other"
     other_cols = [c for c in type_yearly.columns if c not in stack_order]
     if other_cols:
         type_yearly['Other'] = type_yearly[other_cols].sum(axis=1)
@@ -444,7 +478,7 @@ def chart_01c_cb5_requests_by_type(data):
     years = type_yearly.index
     bottom = np.zeros(len(years))
 
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     from matplotlib.patches import Patch
     legend_handles = []
@@ -455,7 +489,6 @@ def chart_01c_cb5_requests_by_type(data):
         vals = type_yearly[rtype].values
         bars = ax.bar(years, vals, bottom=bottom, color=color, edgecolor='black',
                       linewidth=0.5, zorder=3, label=rtype)
-        # Hatch APS segment
         if rtype == 'Accessible Pedestrian Signal':
             for bar in bars:
                 bar.set_hatch('///')
@@ -464,7 +497,6 @@ def chart_01c_cb5_requests_by_type(data):
             legend_handles.append(Patch(facecolor=color, edgecolor='black', label=rtype))
         bottom += vals
 
-    # Total labels on top of each bar
     for i, yr in enumerate(years):
         total = int(bottom[i])
         ax.text(yr, total + 1.5, str(total), ha='center', va='bottom', fontsize=9, fontweight='bold')
@@ -486,7 +518,6 @@ def chart_01c_cb5_requests_by_type(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     right_df = type_yearly[stack_order].copy()
     right_df['Total'] = right_df.sum(axis=1)
     right_df['Source Dataset'] = 'Signal Studies [w76s-c5u4]'
@@ -496,14 +527,128 @@ def chart_01c_cb5_requests_by_type(data):
     print("  Chart 01c saved.")
 
 
+# ============================================================
+# Chart 01d: QCB5 Signal Study Outcomes: Denied and Approved
+# ============================================================
+
+def chart_01d_signal_outcomes(data):
+    """Chart 01d: QCB5 Signal Study Outcomes — Denied vs Approved."""
+    print("  Generating Chart 01d: Signal Study Outcomes...")
+
+    cb5_resolved_no_aps = data['cb5_resolved_no_aps']
+    sig = cb5_resolved_no_aps[cb5_resolved_no_aps['year'].between(2020, 2025)]
+    sig_denied = (sig['outcome'] == 'denied').sum()
+    sig_approved = (sig['outcome'] == 'approved').sum()
+    sig_n = len(sig)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    categories = ['Denied', 'Approved']
+    bar_colors = [COLORS['denied'], COLORS['approved']]
+    sig_vals = [sig_denied, sig_approved]
+
+    bars = ax.bar(categories, sig_vals, color=bar_colors, edgecolor='black', zorder=3)
+    for bar, val in zip(bars, sig_vals):
+        ax.text(bar.get_x() + bar.get_width()/2, val + 2,
+                str(val), ha='center', va='bottom', fontweight='bold', fontsize=11)
+
+    sig_approval_rate = sig_approved / sig_n * 100 if sig_n > 0 else 0
+    ax.set_title(f'QCB5 Signal Study Outcomes: Denied and Approved\n(Excl. APS, n={sig_n:,}, 2020–2025)',
+                 fontweight='bold', fontsize=12)
+    ax.set_ylabel('Number of Requests', fontweight='bold')
+    ax.xaxis.grid(False)
+    ax.annotate(
+        f'Approval rate: {sig_approval_rate:.1f}%',
+        xy=(0.98, 0.95), xycoords='axes fraction', ha='right', va='top',
+        fontsize=10, bbox=dict(boxstyle='round', facecolor='lightyellow',
+                               edgecolor='gray', alpha=0.9))
+
+    fig.text(0.01, -0.02,
+             'Source: NYC Open Data — Signal Studies [w76s-c5u4]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_01d_denied_vs_approved.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+    print("  Chart 01d saved.")
+
+    return sig_denied, sig_approved, sig_approval_rate
+
+
+# ============================================================
+# Chart 01e: QCB5 Speed Bump Outcomes: Denied and Approved
+# ============================================================
+
+def chart_01e_srts_outcomes(data):
+    """Chart 01e: QCB5 Speed Bump Outcomes — Denied vs Approved."""
+    print("  Generating Chart 01e: Speed Bump Outcomes...")
+
+    cb5_srts = data['cb5_srts']
+    srts = cb5_srts[cb5_srts['year'].between(2020, 2025)]
+    srts_denied = (srts['segmentstatusdescription'] == 'Not Feasible').sum()
+    srts_approved = (srts['segmentstatusdescription'] == 'Feasible').sum()
+    srts_n = srts_denied + srts_approved
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    categories = ['Denied', 'Approved']
+    bar_colors = [COLORS['denied'], COLORS['approved']]
+    srts_vals = [srts_denied, srts_approved]
+
+    bars = ax.bar(categories, srts_vals, color=bar_colors, edgecolor='black', zorder=3)
+    for bar, val in zip(bars, srts_vals):
+        ax.text(bar.get_x() + bar.get_width()/2, val + 15,
+                str(val), ha='center', va='bottom', fontweight='bold', fontsize=11)
+
+    srts_approval_rate = srts_approved / srts_n * 100 if srts_n > 0 else 0
+    ax.set_title(f'QCB5 Speed Bump Outcomes: Denied and Approved\n(n={srts_n:,}, 2020–2025)',
+                 fontweight='bold', fontsize=12)
+    ax.set_ylabel('Number of Requests', fontweight='bold')
+    ax.xaxis.grid(False)
+    ax.annotate(
+        f'Approval rate: {srts_approval_rate:.1f}%',
+        xy=(0.98, 0.95), xycoords='axes fraction', ha='right', va='top',
+        fontsize=10, bbox=dict(boxstyle='round', facecolor='lightyellow',
+                               edgecolor='gray', alpha=0.9))
+
+    fig.text(0.01, -0.02,
+             'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_01e_speed_bump_outcomes.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+    print("  Chart 01e saved.")
+
+    return srts_denied, srts_approved, srts_approval_rate
+
+
+def save_table_01d(sig_denied, sig_approved, sig_approval_rate,
+                   srts_denied, srts_approved, srts_approval_rate):
+    """Save combined CSV for chart 01d/01e outcomes."""
+    table_01d = pd.DataFrame([
+        {'Dataset': 'Signal Studies (Excl. APS)', 'Period': '2020–2025',
+         'Denied': sig_denied, 'Approved': sig_approved,
+         'Approval Rate (%)': round(sig_approval_rate, 1)},
+        {'Dataset': 'Speed Bumps', 'Period': '2020–2025',
+         'Denied': srts_denied, 'Approved': srts_approved,
+         'Approval Rate (%)': round(srts_approval_rate, 1)},
+    ])
+    table_01d.to_csv(f'{OUTPUT_DIR}/table_01d_denied_vs_approved.csv', index=False)
+
+
+# ============================================================
+# Chart 02: Denial Rates by Borough
+# ============================================================
+
 def chart_02_denial_rates_by_borough(data):
     """Chart 2: Denial Rates by Borough."""
     signal_resolved_no_aps = data['signal_resolved_no_aps']
 
-    # Filter to 2020–2025 for consistency — use resolved records for rate computation
     signal_recent = signal_resolved_no_aps[signal_resolved_no_aps['year'].between(2020, 2025)]
 
-    # Calculate denial rates by borough (five boroughs only)
     five_boroughs = ['Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island']
     signal_five = signal_recent[signal_recent['borough'].isin(five_boroughs)]
     borough_stats = signal_five.groupby('borough').agg({
@@ -513,7 +658,6 @@ def chart_02_denial_rates_by_borough(data):
     borough_stats['denial_rate'] = borough_stats['denied'] / borough_stats['total'] * 100
     borough_stats = borough_stats.sort_values('denial_rate', ascending=True)
 
-    # Citywide average (2020–2025)
     cw_denial_rate = (signal_recent['outcome'] == 'denied').sum() / len(signal_recent) * 100
 
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -533,7 +677,7 @@ def chart_02_denial_rates_by_borough(data):
     ax.set_title(f'DOT Signal Study Denial Rates by Borough\n(Excl. APS, n={len(signal_five):,}, 2020–2025)',
                  fontweight='bold', fontsize=12)
     ax.set_xlim(0, 100)
-    ax.yaxis.grid(False)  # horizontal gridlines not useful for categorical axis
+    ax.yaxis.grid(False)
 
     fig.text(0.01, -0.02, 'Source: NYC Open Data — Signal Studies [w76s-c5u4]',
              ha='left', fontsize=9, style='italic', color='#333333')
@@ -543,7 +687,6 @@ def chart_02_denial_rates_by_borough(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     table_02 = borough_stats[['total', 'denied', 'denial_rate']].copy()
     table_02.columns = ['Total Resolved', 'Denied', 'Denial Rate (%)']
     table_02 = table_02.sort_values('Denial Rate (%)', ascending=False)
@@ -558,17 +701,20 @@ def chart_02_denial_rates_by_borough(data):
     print("  Chart 02 saved.")
 
 
+# ============================================================
+# Year-over-Year Helpers
+# ============================================================
+
 def _compute_yoy_data(data, year_min, year_max):
     """Shared helper: compute year-over-year stats for signal studies and speed bumps."""
-    cb5_no_aps = data['cb5_no_aps']              # all non-APS (for volume)
-    signal_no_aps = data['signal_no_aps']          # all non-APS (for volume)
-    cb5_resolved_no_aps = data['cb5_resolved_no_aps']  # resolved only (for rates)
+    cb5_no_aps = data['cb5_no_aps']
+    signal_no_aps = data['signal_no_aps']
+    cb5_resolved_no_aps = data['cb5_resolved_no_aps']
     signal_resolved_no_aps = data['signal_resolved_no_aps']
     cb5_srts = data['cb5_srts']
     srts_resolved = data['srts_resolved']
 
     def _agg_signal(df_all, df_resolved, lo, hi):
-        """Volume from all records, denial rate from resolved only."""
         vol = df_all.groupby('year').size().rename('total')
         res = df_resolved.groupby('year').agg({
             'outcome': ['count', lambda x: (x == 'denied').sum()]
@@ -586,7 +732,6 @@ def _compute_yoy_data(data, year_min, year_max):
         yearly['denial_rate'] = yearly['denied'] / yearly['total'] * 100
         return yearly[(yearly.index >= lo) & (yearly.index <= hi)]
 
-    # For signal studies, CB5 data only exists 2020+
     sig_lo = max(year_min, 2020)
     return {
         'cb5_sig': _agg_signal(cb5_no_aps, cb5_resolved_no_aps, sig_lo, year_max),
@@ -596,8 +741,192 @@ def _compute_yoy_data(data, year_min, year_max):
     }
 
 
+def _save_yoy_tables(yoy, prefix):
+    """Save CSV tables for year-over-year data."""
+    cb5_sig = yoy['cb5_sig']
+    cw_sig = yoy['cw_sig']
+    cb5_srts = yoy['cb5_srts']
+    cw_srts = yoy['cw_srts']
+
+    sig_table = pd.merge(
+        cb5_sig[['total', 'resolved', 'denied', 'denial_rate']].rename(columns={'total': 'CB5 Total', 'resolved': 'CB5 Resolved', 'denied': 'CB5 Denied', 'denial_rate': 'CB5 Denial Rate (%)'}),
+        cw_sig[['total', 'resolved', 'denied', 'denial_rate']].rename(columns={'total': 'CW Total', 'resolved': 'CW Resolved', 'denied': 'CW Denied', 'denial_rate': 'CW Denial Rate (%)'}),
+        left_index=True, right_index=True, how='outer'
+    )
+    sig_table['Source Dataset'] = 'Signal Studies [w76s-c5u4]'
+    sig_table.index.name = 'Year'
+    sig_table.to_csv(f'{OUTPUT_DIR}/{prefix}_signal.csv')
+
+    srts_table = pd.merge(
+        cb5_srts[['total', 'denied', 'denial_rate']].rename(columns={'total': 'CB5 Total', 'denied': 'CB5 Denied', 'denial_rate': 'CB5 Denial Rate (%)'}),
+        cw_srts[['total', 'denied', 'denial_rate']].rename(columns={'total': 'CW Total', 'denied': 'CW Denied', 'denial_rate': 'CW Denial Rate (%)'}),
+        left_index=True, right_index=True, how='outer'
+    )
+    srts_table['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
+    srts_table.index.name = 'Year'
+    srts_table.to_csv(f'{OUTPUT_DIR}/{prefix}_srts.csv')
+
+
+# ============================================================
+# Chart 03a: QCB5 Signal Study Request Volume by Year
+# ============================================================
+
+def chart_03a_signal_volume(data):
+    """Chart 03a: QCB5 Signal Study Request Volume by Year."""
+    yoy = _compute_yoy_data(data, 2020, 2025)
+    cb5_sig = yoy['cb5_sig']
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    bars = ax.bar(cb5_sig.index, cb5_sig['total'], color=COLORS['primary'], edgecolor='black', zorder=3)
+    for bar, val in zip(bars, cb5_sig['total'].astype(int)):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                str(val), ha='center', va='bottom', fontsize=9, fontweight='bold')
+
+    ax.set_title(f'QCB5 Signal Study Request Volume by Year\n(Excl. APS, n={int(cb5_sig["total"].sum()):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Number of Requests')
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax.xaxis.grid(False)
+    ax.set_ylim(0, cb5_sig['total'].max() * 1.15)
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Signal Studies [w76s-c5u4]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_03a_signal_volume.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+
+    _save_yoy_tables(yoy, 'table_03_year_over_year_trends')
+    print("  Chart 03a saved.")
+
+
+# ============================================================
+# Chart 03b: QCB5 Signal Study Denial Rates by Year
+# ============================================================
+
+def chart_03b_signal_denial_rates(data):
+    """Chart 03b: QCB5 Signal Study Denial Rates by Year, vs. Citywide."""
+    yoy = _compute_yoy_data(data, 2020, 2025)
+    cb5_sig = yoy['cb5_sig']
+    cw_sig = yoy['cw_sig']
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.plot(cb5_sig.index, cb5_sig['denial_rate'], marker='o', linewidth=2,
+            color=COLORS['primary'], label='QCB5', zorder=3)
+    ax.plot(cw_sig.index, cw_sig['denial_rate'], marker='s', linewidth=2,
+            color=COLORS['citywide'], linestyle='--', label='Citywide', zorder=3)
+
+    sig_avg_rate = cb5_sig['denied'].sum() / cb5_sig['resolved'].sum() * 100
+    ax.axhline(y=sig_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.2, alpha=0.7, zorder=2)
+    ax.text(cb5_sig.index.min() - 0.1, sig_avg_rate + 1.2,
+            f'QCB5 Avg {sig_avg_rate:.0f}%', fontsize=8, color=COLORS['denied'], ha='left')
+
+    ax.set_title(f'QCB5 Signal Study Denial Rates by Year, vs. Citywide\n(Excl. APS, n={int(cb5_sig["total"].sum()):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Denial Rate (%)')
+    ax.legend(loc='lower right')
+
+    all_rates = pd.concat([cb5_sig['denial_rate'], cw_sig['denial_rate']]).dropna()
+    rate_floor = max(0, int(all_rates.min() // 10) * 10)
+    ax.set_ylim(rate_floor, 105)
+    ax.set_yticks(list(range(rate_floor, 101, 10)))
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Signal Studies [w76s-c5u4]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_03b_signal_denial_rates.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+    print("  Chart 03b saved.")
+
+
+# ============================================================
+# Chart 03c: QCB5 Speed Bump Request Volume by Year
+# ============================================================
+
+def chart_03c_srts_volume(data):
+    """Chart 03c: QCB5 Speed Bump Request Volume by Year."""
+    yoy = _compute_yoy_data(data, 2020, 2025)
+    cb5_srts = yoy['cb5_srts']
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    bars = ax.bar(cb5_srts.index, cb5_srts['total'], color=COLORS['primary'], edgecolor='black', zorder=3)
+    for bar, val in zip(bars, cb5_srts['total'].astype(int)):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                str(val), ha='center', va='bottom', fontsize=9, fontweight='bold')
+
+    ax.set_title(f'QCB5 Speed Bump Request Volume by Year\n(n={int(cb5_srts["total"].sum()):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Number of Requests')
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax.xaxis.grid(False)
+    ax.set_ylim(0, cb5_srts['total'].max() * 1.15)
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_03c_srts_volume.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+    print("  Chart 03c saved.")
+
+
+# ============================================================
+# Chart 03d: QCB5 Speed Bump Denial Rates by Year
+# ============================================================
+
+def chart_03d_srts_denial_rates(data):
+    """Chart 03d: QCB5 Speed Bump Denial Rates by Year, vs. Citywide."""
+    yoy = _compute_yoy_data(data, 2020, 2025)
+    cb5_srts = yoy['cb5_srts']
+    cw_srts = yoy['cw_srts']
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.plot(cb5_srts.index, cb5_srts['denial_rate'], marker='o', linewidth=2,
+            color=COLORS['primary'], label='QCB5', zorder=3)
+    ax.plot(cw_srts.index, cw_srts['denial_rate'], marker='s', linewidth=2,
+            color=COLORS['citywide'], linestyle='--', label='Citywide', zorder=3)
+
+    srts_avg_rate = cb5_srts['denied'].sum() / cb5_srts['total'].sum() * 100
+    ax.axhline(y=srts_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.2, alpha=0.7, zorder=2)
+    ax.text(cb5_srts.index.min() - 0.1, srts_avg_rate + 1.2,
+            f'QCB5 Avg {srts_avg_rate:.0f}%', fontsize=8, color=COLORS['denied'], ha='left')
+
+    ax.set_title(f'QCB5 Speed Bump Denial Rates by Year, vs. Citywide\n(n={int(cb5_srts["total"].sum()):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Denial Rate (%)')
+    ax.legend(loc='lower right')
+
+    all_rates = pd.concat([cb5_srts['denial_rate'], cw_srts['denial_rate']]).dropna()
+    rate_floor = max(0, int(all_rates.min() // 10) * 10)
+    ax.set_ylim(rate_floor, 105)
+    ax.set_yticks(list(range(rate_floor, 101, 10)))
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_03d_srts_denial_rates.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+    print("  Chart 03d saved.")
+
+
+# ============================================================
+# Chart 03z: Year-over-Year Full History (combined — unchanged)
+# ============================================================
+
 def _draw_yoy_chart(yoy, filename, suptitle_suffix, sig_year_label, srts_year_label):
-    """Shared helper: draw the 4-panel year-over-year chart."""
+    """Shared helper: draw the 4-panel year-over-year chart (z-series only)."""
     cb5_sig = yoy['cb5_sig']
     cw_sig = yoy['cw_sig']
     cb5_srts = yoy['cb5_srts']
@@ -605,7 +934,6 @@ def _draw_yoy_chart(yoy, filename, suptitle_suffix, sig_year_label, srts_year_la
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-    # Compute dynamic y-axis lower bound for denial rate panels
     all_rates = pd.concat([
         cb5_sig['denial_rate'], cw_sig['denial_rate'],
         cb5_srts['denial_rate'], cw_srts['denial_rate']
@@ -630,7 +958,6 @@ def _draw_yoy_chart(yoy, filename, suptitle_suffix, sig_year_label, srts_year_la
                     color=COLORS['primary'], label='QCB5', zorder=3)
     axes[0, 1].plot(cw_sig.index, cw_sig['denial_rate'], marker='s', linewidth=2,
                     color=COLORS['citywide'], linestyle='--', label='Citywide', zorder=3)
-    # Period average denial rate
     sig_avg_rate = cb5_sig['denied'].sum() / cb5_sig['resolved'].sum() * 100
     axes[0, 1].axhline(y=sig_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.2, alpha=0.7, zorder=2)
     axes[0, 1].text(cb5_sig.index.min() - 0.1, sig_avg_rate + 1.2,
@@ -660,7 +987,6 @@ def _draw_yoy_chart(yoy, filename, suptitle_suffix, sig_year_label, srts_year_la
                     color=COLORS['primary'], label='QCB5', zorder=3)
     axes[1, 1].plot(cw_srts.index, cw_srts['denial_rate'], marker='s', linewidth=2,
                     color=COLORS['citywide'], linestyle='--', label='Citywide', zorder=3)
-    # Period average denial rate
     srts_avg_rate = cb5_srts['denied'].sum() / cb5_srts['total'].sum() * 100
     axes[1, 1].axhline(y=srts_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.2, alpha=0.7, zorder=2)
     axes[1, 1].text(cb5_srts.index.min() - 0.1, srts_avg_rate + 1.2,
@@ -683,31 +1009,7 @@ def _draw_yoy_chart(yoy, filename, suptitle_suffix, sig_year_label, srts_year_la
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data tables
-    sig_table = pd.merge(
-        cb5_sig[['total', 'resolved', 'denied', 'denial_rate']].rename(columns={'total': 'CB5 Total', 'resolved': 'CB5 Resolved', 'denied': 'CB5 Denied', 'denial_rate': 'CB5 Denial Rate (%)'}),
-        cw_sig[['total', 'resolved', 'denied', 'denial_rate']].rename(columns={'total': 'CW Total', 'resolved': 'CW Resolved', 'denied': 'CW Denied', 'denial_rate': 'CW Denial Rate (%)'}),
-        left_index=True, right_index=True, how='outer'
-    )
-    sig_table['Source Dataset'] = 'Signal Studies [w76s-c5u4]'
-    sig_table.index.name = 'Year'
-    sig_table.to_csv(f'{OUTPUT_DIR}/{filename.replace("chart_", "table_")}_signal.csv')
-
-    srts_table = pd.merge(
-        cb5_srts[['total', 'denied', 'denial_rate']].rename(columns={'total': 'CB5 Total', 'denied': 'CB5 Denied', 'denial_rate': 'CB5 Denial Rate (%)'}),
-        cw_srts[['total', 'denied', 'denial_rate']].rename(columns={'total': 'CW Total', 'denied': 'CW Denied', 'denial_rate': 'CW Denial Rate (%)'}),
-        left_index=True, right_index=True, how='outer'
-    )
-    srts_table['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
-    srts_table.index.name = 'Year'
-    srts_table.to_csv(f'{OUTPUT_DIR}/{filename.replace("chart_", "table_")}_srts.csv')
-
-
-def chart_03_year_over_year_trends(data):
-    """Chart 3: Year-over-Year Trends — focused 2020–2025."""
-    yoy = _compute_yoy_data(data, 2020, 2025)
-    _draw_yoy_chart(yoy, 'chart_03_year_over_year_trends', '', '2020–2025', '2020–2025')
-    print("  Chart 03 saved.")
+    _save_yoy_tables(yoy, filename.replace("chart_", "table_"))
 
 
 def chart_03z_year_over_year_full(data):
@@ -718,6 +1020,10 @@ def chart_03z_year_over_year_full(data):
     print("  Chart 03z saved.")
 
 
+# ============================================================
+# Chart 04: Denial Rates by Request Type
+# ============================================================
+
 def chart_04_denial_rates_by_type(data):
     """Chart 4: Denial Rates by Request Type."""
     cb5_resolved_no_aps = data['cb5_resolved_no_aps']
@@ -725,13 +1031,11 @@ def chart_04_denial_rates_by_type(data):
     cb5_srts = data['cb5_srts']
     srts_resolved = data['srts_resolved']
 
-    # Filter to 2020–2025 — use resolved records for rate computation
     cb5_recent = cb5_resolved_no_aps[cb5_resolved_no_aps['year'].between(2020, 2025)]
     cw_recent = signal_resolved_no_aps[signal_resolved_no_aps['year'].between(2020, 2025)]
     cb5_srts_recent = cb5_srts[cb5_srts['year'].between(2020, 2025)]
     srts_recent = srts_resolved[srts_resolved['year'].between(2020, 2025)]
 
-    # n= for title: total non-APS requests (including pending) for reconciliation with Chart 01
     cb5_all_recent = data['cb5_no_aps'][data['cb5_no_aps']['year'].between(2020, 2025)]
     n_title = len(cb5_all_recent)
 
@@ -752,14 +1056,13 @@ def chart_04_denial_rates_by_type(data):
         cb5_rates.append((cb5_subset['outcome'] == 'denied').sum() / len(cb5_subset) * 100 if len(cb5_subset) > 0 else 0)
         cw_rates.append((cw_subset['outcome'] == 'denied').sum() / len(cw_subset) * 100 if len(cw_subset) > 0 else 0)
 
-    # Add speed bumps
     request_types.append('Speed Bumps')
     cb5_ns.append(len(cb5_srts_recent))
     cw_ns.append(len(srts_recent))
     cb5_rates.append((cb5_srts_recent['segmentstatusdescription'] == 'Not Feasible').sum() / len(cb5_srts_recent) * 100)
     cw_rates.append((srts_recent['segmentstatusdescription'] == 'Not Feasible').sum() / len(srts_recent) * 100)
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     x = np.arange(len(request_types))
     width = 0.35
@@ -793,7 +1096,6 @@ def chart_04_denial_rates_by_type(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     table_04 = pd.DataFrame({
         'Request Type': request_types,
         'CB5 Resolved': cb5_ns,
@@ -809,6 +1111,10 @@ def chart_04_denial_rates_by_type(data):
     print("  Chart 04 saved.")
 
 
+# ============================================================
+# SRTS Denial Reason Categorization
+# ============================================================
+
 def _categorize_srts_denial(reason):
     """Shared helper: categorize speed bump denial reasons."""
     if pd.isna(reason): return 'Not Specified'
@@ -822,16 +1128,15 @@ def _categorize_srts_denial(reason):
     return 'Other'
 
 
-def chart_05_speed_bump_analysis(data):
-    """Chart 5: Speed Bump (SRTS) Analysis — focused 2020–2025."""
+# ============================================================
+# Chart 05a: Speed Bump Denial Rates by Queens Community Board
+# ============================================================
+
+def chart_05a_queens_cb_denial_rates(data):
+    """Chart 05a: Speed Bump Denial Rates by Queens Community Board."""
     srts_resolved = data['srts_resolved']
-    cb5_srts = data['cb5_srts']
 
-    # Filter to 2020–2025
     srts_recent = srts_resolved[srts_resolved['year'].between(2020, 2025)]
-    cb5_recent = cb5_srts[cb5_srts['year'].between(2020, 2025)]
-
-    # Left panel data: Queens CB comparison (2020–2025)
     queens_srts = srts_recent[srts_recent['borough'] == 'Queens'].copy()
     queens_srts['cb_num'] = pd.to_numeric(queens_srts['cb'], errors='coerce')
 
@@ -845,17 +1150,104 @@ def chart_05_speed_bump_analysis(data):
 
     queens_denial_rate = (queens_srts['segmentstatusdescription'] == 'Not Feasible').sum() / len(queens_srts) * 100
 
-    # Middle panel data: CB5 denial reasons (2020–2025)
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    cb_labels = [f'CB{int(cb)-400}' for cb in cb_stats.index]
+    colors = [COLORS['primary'] if cb != 405 else '#1B3F5E' for cb in cb_stats.index]
+
+    bars = ax.barh(cb_labels, cb_stats['denial_rate'], color=colors, edgecolor='black', zorder=2)
+
+    label_x = 101
+    for bar, rate in zip(bars, cb_stats['denial_rate']):
+        ax.text(label_x, bar.get_y() + bar.get_height()/2,
+                f'{rate:.0f}%', va='center', ha='left', fontsize=9)
+
+    ax.axvline(x=queens_denial_rate, color=COLORS['denied'], linestyle='--', linewidth=1.5, zorder=4)
+    ax.text(queens_denial_rate - 1, -0.8, f'Queens Avg {queens_denial_rate:.1f}%',
+            ha='right', fontsize=8, color=COLORS['denied'])
+
+    ax.set_xlabel('Denial Rate (%)', fontweight='bold')
+    ax.set_title(f'Speed Bump Denial Rates by Queens Community Board\n(n={len(queens_srts):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlim(0, 112)
+    ax.yaxis.grid(False)
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_05a_queens_cb_denial_rates.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+
+    cb_table = cb_stats[['total', 'denied', 'denial_rate']].copy()
+    cb_table.index = [f'CB{int(cb)-400}' for cb in cb_table.index]
+    cb_table.columns = ['Total', 'Denied', 'Denial Rate (%)']
+    cb_table['Denial Rate (%)'] = cb_table['Denial Rate (%)'].round(1)
+    cb_table = cb_table.sort_values('Denial Rate (%)', ascending=False)
+    cb_table['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
+    cb_table.index.name = 'Community Board'
+    cb_table.to_csv(f'{OUTPUT_DIR}/table_05a_queens_cb_denial_rates.csv')
+
+    print("  Chart 05a saved.")
+
+
+# ============================================================
+# Chart 05b: QCB5 Speed Bump Denial Reasons
+# ============================================================
+
+def chart_05b_denial_reasons(data):
+    """Chart 05b: QCB5 Speed Bump Denial Reasons."""
+    cb5_srts = data['cb5_srts']
+    cb5_recent = cb5_srts[cb5_srts['year'].between(2020, 2025)]
     cb5_denied = cb5_recent[cb5_recent['segmentstatusdescription'] == 'Not Feasible'].copy()
     cb5_denied['reason_cat'] = cb5_denied['denialreason'].apply(_categorize_srts_denial)
     reason_counts = cb5_denied['reason_cat'].value_counts().sort_values(ascending=True)
 
-    # Right panel data: denial reason breakdown by year (2020–2025)
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    reason_colors = [COLORS['denied']] * len(reason_counts)
+    bars = ax.barh(reason_counts.index, reason_counts.values,
+                   color=reason_colors, edgecolor='black', zorder=3)
+
+    for bar, val in zip(bars, reason_counts.values):
+        pct = val / reason_counts.sum() * 100
+        ax.text(val + 2, bar.get_y() + bar.get_height()/2, f'{pct:.0f}%', va='center', fontsize=9)
+
+    ax.set_xlabel('Number of Denials', fontweight='bold')
+    ax.set_title(f'QCB5 Speed Bump Denial Reasons\n(n={len(cb5_denied):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.set_xlim(0, reason_counts.max() * 1.15)
+    ax.yaxis.grid(False)
+
+    fig.text(0.01, -0.02, 'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_05b_denial_reasons.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+
+    reason_df = reason_counts.rename_axis('Reason').reset_index(name='Count')
+    reason_df['Percent'] = (reason_df['Count'] / reason_df['Count'].sum() * 100).round(1)
+    reason_df = reason_df.sort_values('Count', ascending=False)
+    reason_df['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
+    reason_df.to_csv(f'{OUTPUT_DIR}/table_05b_cb5_denial_reasons.csv', index=False)
+
+    print("  Chart 05b saved.")
+
+
+# ============================================================
+# Chart 05c: QCB5 Speed Bump Denial Reasons by Year
+# ============================================================
+
+def chart_05c_denial_reasons_by_year(data):
+    """Chart 05c: QCB5 Speed Bump Denial Reasons by Year."""
+    cb5_srts = data['cb5_srts']
+
     cb5_all_denied = cb5_srts[cb5_srts['segmentstatusdescription'] == 'Not Feasible'].copy()
     cb5_all_denied['reason_cat'] = cb5_all_denied['denialreason'].apply(_categorize_srts_denial)
     cb5_all_denied_recent = cb5_all_denied[cb5_all_denied['year'].between(2020, 2025)]
     reason_by_year = cb5_all_denied_recent.groupby(['year', 'reason_cat']).size().unstack(fill_value=0)
-    # Collapse to "Speed < 30 mph" vs "All Other Reasons"
+
     speed_col = 'Speed < 30 mph' if 'Speed < 30 mph' in reason_by_year.columns else None
     if speed_col:
         other_cols = [c for c in reason_by_year.columns if c != speed_col]
@@ -866,44 +1258,8 @@ def chart_05_speed_bump_analysis(data):
     else:
         reason_simple = pd.DataFrame({'All Other Reasons': reason_by_year.sum(axis=1)})
 
-    # Create figure
-    fig, axes = plt.subplots(1, 3, figsize=(15, 6))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Left panel: Queens CB comparison
-    cb_labels = [f'CB{int(cb)-400}' for cb in cb_stats.index]
-    colors = [COLORS['primary'] if cb != 405 else '#1B3F5E' for cb in cb_stats.index]
-
-    bars1 = axes[0].barh(cb_labels, cb_stats['denial_rate'], color=colors, edgecolor='black', zorder=2)
-
-    label_x = 101
-    for bar, rate in zip(bars1, cb_stats['denial_rate']):
-        axes[0].text(label_x, bar.get_y() + bar.get_height()/2,
-                     f'{rate:.0f}%', va='center', ha='left', fontsize=9)
-
-    axes[0].axvline(x=queens_denial_rate, color=COLORS['denied'], linestyle='--', linewidth=1.5, zorder=4)
-    axes[0].text(queens_denial_rate - 1, -0.8, f'Queens Avg {queens_denial_rate:.1f}%',
-                 ha='right', fontsize=8, color=COLORS['denied'])
-
-    axes[0].set_xlabel('Denial Rate (%)', fontweight='bold')
-    axes[0].set_title(f'Speed Bump Denial Rates by Queens CB\n(n={len(queens_srts):,}, 2020–2025)', fontweight='bold', fontsize=12)
-    axes[0].set_xlim(0, 112)
-    axes[0].yaxis.grid(False)
-
-    # Middle panel: CB5 Denial Reasons
-    reason_colors = [COLORS['denied']] * len(reason_counts)
-    bars2 = axes[1].barh(reason_counts.index, reason_counts.values,
-                         color=reason_colors, edgecolor='black', zorder=3)
-
-    for bar, val in zip(bars2, reason_counts.values):
-        pct = val / reason_counts.sum() * 100
-        axes[1].text(val + 2, bar.get_y() + bar.get_height()/2, f'{pct:.0f}%', va='center', fontsize=9)
-
-    axes[1].set_xlabel('Number of Denials', fontweight='bold')
-    axes[1].set_title(f'QCB5 Speed Bump Denial Reasons\n(n={len(cb5_denied):,}, 2020–2025)', fontweight='bold', fontsize=12)
-    axes[1].set_xlim(0, reason_counts.max() * 1.15)
-    axes[1].yaxis.grid(False)
-
-    # Right panel: "Speed < 30 mph" vs other reasons by year (stacked bar)
     years = reason_simple.index
     bottom = np.zeros(len(years))
     stack_colors = [DENIAL_SHADES[0], '#BAB0AC']
@@ -912,76 +1268,59 @@ def chart_05_speed_bump_analysis(data):
 
     for col, color in zip(reason_simple.columns, stack_colors):
         vals = reason_simple[col].values
-        axes[2].bar(years, vals, bottom=bottom, color=color, edgecolor='black', linewidth=0.5, zorder=3)
+        ax.bar(years, vals, bottom=bottom, color=color, edgecolor='black', linewidth=0.5, zorder=3)
         legend_handles.append(Patch(facecolor=color, edgecolor='black', label=col))
         bottom += vals
 
-    # Total labels
     for i, yr in enumerate(years):
         total = int(bottom[i])
-        axes[2].text(yr, total + 1, str(total), ha='center', va='bottom', fontsize=9, fontweight='bold')
+        ax.text(yr, total + 1, str(total), ha='center', va='bottom', fontsize=9, fontweight='bold')
 
-    # Percentage annotation for Speed < 30 mph
     if speed_col:
         for i, yr in enumerate(years):
             speed_val = reason_simple.loc[yr, 'Speed < 30 mph']
             total = int(bottom[i])
             if total > 0:
                 pct = speed_val / total * 100
-                axes[2].text(yr, speed_val / 2, f'{pct:.0f}%', ha='center', va='center',
-                             fontsize=8, fontweight='bold', color='white')
+                ax.text(yr, speed_val / 2, f'{pct:.0f}%', ha='center', va='center',
+                        fontsize=8, fontweight='bold', color='white')
 
-    axes[2].set_xlabel('Year', fontweight='bold')
-    axes[2].set_ylabel('Number of Denials', fontweight='bold')
-    axes[2].set_title(f'QCB5 Denial Reasons by Year\n(n={len(cb5_all_denied_recent):,}, 2020–2025)', fontweight='bold', fontsize=12)
-    axes[2].legend(handles=legend_handles, loc='upper left', fontsize=9, framealpha=0.9)
-    axes[2].xaxis.set_major_locator(MaxNLocator(integer=True))
-    axes[2].set_ylim(0, bottom.max() * 1.12)
-    axes[2].xaxis.grid(False)
+    ax.set_xlabel('Year', fontweight='bold')
+    ax.set_ylabel('Number of Denials', fontweight='bold')
+    ax.set_title(f'QCB5 Speed Bump Denial Reasons by Year\n(n={len(cb5_all_denied_recent):,}, 2020–2025)', fontweight='bold', fontsize=12)
+    ax.legend(handles=legend_handles, loc='upper left', fontsize=9, framealpha=0.9)
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax.set_ylim(0, bottom.max() * 1.12)
+    ax.xaxis.grid(False)
 
-    fig.suptitle('Speed Bump (SRTS) Analysis, QCB5, 2020–2025', fontweight='bold', fontsize=14, y=1.02)
     fig.text(0.01, -0.02, 'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
              ha='left', fontsize=9, style='italic', color='#333333')
 
     plt.tight_layout()
-    plt.savefig(f'{OUTPUT_DIR}/chart_05_speed_bump_analysis.png', dpi=300,
+    plt.savefig(f'{OUTPUT_DIR}/chart_05c_denial_reasons_by_year.png', dpi=300,
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
-
-    # Save underlying data tables
-    cb_table = cb_stats[['total', 'denied', 'denial_rate']].copy()
-    cb_table.index = [f'CB{int(cb)-400}' for cb in cb_table.index]
-    cb_table.columns = ['Total', 'Denied', 'Denial Rate (%)']
-    cb_table['Denial Rate (%)'] = cb_table['Denial Rate (%)'].round(1)
-    cb_table = cb_table.sort_values('Denial Rate (%)', ascending=False)
-    cb_table['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
-    cb_table.index.name = 'Community Board'
-    cb_table.to_csv(f'{OUTPUT_DIR}/table_05a_queens_cb_denial_rates.csv')
-
-    reason_df = reason_counts.rename_axis('Reason').reset_index(name='Count')
-    reason_df['Percent'] = (reason_df['Count'] / reason_df['Count'].sum() * 100).round(1)
-    reason_df = reason_df.sort_values('Count', ascending=False)
-    reason_df['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
-    reason_df.to_csv(f'{OUTPUT_DIR}/table_05b_cb5_denial_reasons.csv', index=False)
 
     reason_simple.index.name = 'Year'
     reason_simple['Total'] = reason_simple.sum(axis=1)
     reason_simple['Source Dataset'] = 'Speed Reducer Tracking System [9n6h-pt9g]'
     reason_simple.to_csv(f'{OUTPUT_DIR}/table_05c_denial_reasons_by_year.csv')
 
-    print("  Chart 05 saved.")
+    print("  Chart 05c saved.")
 
+
+# ============================================================
+# Chart 05z: Speed Bump Analysis Full History (combined — unchanged)
+# ============================================================
 
 def chart_05z_speed_bump_full(data):
     """Chart 5z: Speed Bump Analysis — full history (capped at 2025)."""
     srts_resolved = data['srts_resolved']
     cb5_srts = data['cb5_srts']
 
-    # Cap everything at 2025
     srts_capped = srts_resolved[srts_resolved['year'] <= 2025]
     cb5_capped = cb5_srts[cb5_srts['year'] <= 2025]
 
-    # Queens CB comparison (through 2025, n>=50)
     queens_srts = srts_capped[srts_capped['borough'] == 'Queens'].copy()
     queens_srts['cb_num'] = pd.to_numeric(queens_srts['cb'], errors='coerce')
 
@@ -995,29 +1334,26 @@ def chart_05z_speed_bump_full(data):
 
     queens_denial_rate = (queens_srts['segmentstatusdescription'] == 'Not Feasible').sum() / len(queens_srts) * 100
 
-    # Denial reasons (through 2025)
     cb5_denied = cb5_capped[cb5_capped['segmentstatusdescription'] == 'Not Feasible'].copy()
     cb5_denied['reason_cat'] = cb5_denied['denialreason'].apply(_categorize_srts_denial)
     reason_counts = cb5_denied['reason_cat'].value_counts().sort_values(ascending=True)
 
-    # Trend lines — full span through 2025, with minimum-n filters
     cb5_yearly = cb5_capped.groupby('year').agg({
         'projectcode': 'count',
         'segmentstatusdescription': lambda x: (x == 'Not Feasible').sum()
     }).rename(columns={'projectcode': 'total', 'segmentstatusdescription': 'denied'})
     cb5_yearly['denial_rate'] = cb5_yearly['denied'] / cb5_yearly['total'] * 100
-    cb5_yearly = cb5_yearly[cb5_yearly['total'] >= 5]  # exclude years with n<5
+    cb5_yearly = cb5_yearly[cb5_yearly['total'] >= 5]
 
     cw_yearly = srts_capped.groupby('year').agg({
         'projectcode': 'count',
         'segmentstatusdescription': lambda x: (x == 'Not Feasible').sum()
     }).rename(columns={'projectcode': 'total', 'segmentstatusdescription': 'denied'})
     cw_yearly['denial_rate'] = cw_yearly['denied'] / cw_yearly['total'] * 100
-    cw_yearly = cw_yearly[cw_yearly['total'] >= 10]  # exclude years with n<10
+    cw_yearly = cw_yearly[cw_yearly['total'] >= 10]
 
-    fig, axes = plt.subplots(1, 3, figsize=(15, 6))
+    fig, axes = plt.subplots(1, 3, figsize=(14, 7))
 
-    # Left: CB comparison
     q_min_yr = int(queens_srts['year'].min())
     cb_labels = [f'CB{int(cb)-400}' for cb in cb_stats.index]
     colors = [COLORS['primary'] if cb != 405 else '#1B3F5E' for cb in cb_stats.index]
@@ -1033,7 +1369,6 @@ def chart_05z_speed_bump_full(data):
     axes[0].set_xlim(0, 112)
     axes[0].yaxis.grid(False)
 
-    # Middle: Denial Reasons
     cb5_min_yr = int(cb5_capped['year'].min())
     reason_colors = [COLORS['denied']] * len(reason_counts)
     bars2 = axes[1].barh(reason_counts.index, reason_counts.values, color=reason_colors, edgecolor='black', zorder=3)
@@ -1045,7 +1380,6 @@ def chart_05z_speed_bump_full(data):
     axes[1].set_xlim(0, reason_counts.max() * 1.18)
     axes[1].yaxis.grid(False)
 
-    # Right: Trend Lines
     axes[2].plot(cb5_yearly.index, cb5_yearly['denial_rate'], marker='o', linewidth=2, markersize=4,
                  color=COLORS['primary'], label='QCB5', zorder=3)
     axes[2].plot(cw_yearly.index, cw_yearly['denial_rate'], marker='s', linewidth=2, markersize=3,
@@ -1057,7 +1391,6 @@ def chart_05z_speed_bump_full(data):
     axes[2].legend(loc='lower right', fontsize=9)
     all_rates = pd.concat([cb5_yearly['denial_rate'], cw_yearly['denial_rate']])
     axes[2].set_ylim(max(0, all_rates.min() - 5), min(108, all_rates.max() + 8))
-    # Red annotation with arrow on last year's QCB5 denial rate
     last_yr = cb5_yearly.index.max()
     last_rate = cb5_yearly.loc[last_yr, 'denial_rate']
     axes[2].annotate(f'{last_rate:.0f}%',
@@ -1065,7 +1398,6 @@ def chart_05z_speed_bump_full(data):
                      xytext=(last_yr - 3, last_rate - 12),
                      fontsize=10, fontweight='bold', color=COLORS['denied'],
                      arrowprops=dict(arrowstyle='->', color=COLORS['denied'], lw=1.5), zorder=5)
-    # Clean x-axis: ticks every 5 years
     from matplotlib.ticker import MultipleLocator
     axes[2].xaxis.set_major_locator(MultipleLocator(5))
     axes[2].xaxis.set_minor_locator(MultipleLocator(1))
@@ -1079,7 +1411,6 @@ def chart_05z_speed_bump_full(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save accompanying CSVs
     table_05za = cb_stats.reset_index()
     table_05za.columns = ['Community Board', 'Total', 'Denied', 'Denial Rate (%)']
     table_05za['Community Board'] = table_05za['Community Board'].apply(lambda x: f'CB{int(x)-400}')
@@ -1102,19 +1433,16 @@ def chart_05z_speed_bump_full(data):
     print("  Chart 05z saved.")
 
 
-def _dedup_signal_studies(df):
-    """De-duplicate signal study records that share the same externalreferencenumber.
+# ============================================================
+# Chart 06: Most Denied Intersections
+# ============================================================
 
-    Some external requests generate multiple internal tracking records (sequential
-    CQ reference numbers with the same DOT external ref).  We collapse these to
-    one record per external reference, keeping the most recent status date.
-    Records with null or 'INTERNAL REQUEST' external refs are kept as-is.
-    """
+def _dedup_signal_studies(df):
+    """De-duplicate signal study records that share the same externalreferencenumber."""
     ext = df['externalreferencenumber'].fillna('')
     is_dup_candidate = ext.str.startswith('DOT-')
     keep_as_is = df[~is_dup_candidate]
     dedup_pool = df[is_dup_candidate].copy()
-    # Keep one record per external reference (latest status date)
     dedup_pool['statusdate'] = pd.to_datetime(dedup_pool['statusdate'], errors='coerce')
     deduped = dedup_pool.sort_values('statusdate', ascending=False).drop_duplicates(
         subset='externalreferencenumber', keep='first')
@@ -1125,20 +1453,17 @@ def chart_06_most_denied_intersections(data):
     """Chart 6: Most Denied Intersections."""
     cb5_no_aps = data['cb5_no_aps']
 
-    # Filter to 2020–2025 to match title and other charts
     cb5_no_aps_recent = cb5_no_aps[cb5_no_aps['year'].between(2020, 2025)]
     cb5_denied = cb5_no_aps_recent[cb5_no_aps_recent['outcome'] == 'denied'].copy()
 
-    # De-duplicate administrative duplicates (same external reference)
     cb5_denied = _dedup_signal_studies(cb5_denied)
 
     cb5_denied['location'] = cb5_denied['mainstreet'].fillna('') + ' & ' + cb5_denied['crossstreet1'].fillna('')
-    # Title-case for readability
     cb5_denied['location'] = cb5_denied['location'].str.title()
 
     location_counts = cb5_denied['location'].value_counts().head(10)
 
-    fig, ax = plt.subplots(figsize=(12, 7))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     bars = ax.barh(location_counts.index[::-1], location_counts.values[::-1],
                    color=COLORS['denied'], edgecolor='black', zorder=3)
@@ -1161,7 +1486,6 @@ def chart_06_most_denied_intersections(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     table_06 = location_counts.rename_axis('Intersection').reset_index(name='Denials')
     table_06['Source File'] = 'data_cb5_signal_studies.csv'
     table_06.to_csv(f'{OUTPUT_DIR}/table_06_most_denied_intersections.csv', index=False)
@@ -1169,21 +1493,23 @@ def chart_06_most_denied_intersections(data):
     print("  Chart 06 saved.")
 
 
+# ============================================================
+# Chart 07: Most Denied Streets for Speed Bumps
+# ============================================================
+
 def chart_07_most_denied_streets_speed_bumps(data):
     """Chart 7: Most Denied Streets for Speed Bumps (2020-2025)."""
     cb5_srts = data['cb5_srts'].copy()
 
-    # Filter to 2020-2025 for consistency (year column already computed during data loading)
     cb5_srts_recent = cb5_srts[cb5_srts['year'].between(2020, 2025)]
 
     cb5_srts_denied = cb5_srts_recent[cb5_srts_recent['segmentstatusdescription'] == 'Not Feasible'].copy()
     n_denied = len(cb5_srts_denied)
 
-    # Title-case street names and count top 10
     cb5_srts_denied['street_clean'] = cb5_srts_denied['onstreet'].str.title()
     street_counts = cb5_srts_denied['street_clean'].value_counts().head(10)
 
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     bars = ax.barh(street_counts.index[::-1], street_counts.values[::-1],
                    color=COLORS['denied'], edgecolor='black', zorder=3)
@@ -1207,7 +1533,6 @@ def chart_07_most_denied_streets_speed_bumps(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     table_07 = street_counts.rename_axis('Street').reset_index(name='Denials')
     table_07['Source File'] = 'srts_citywide.csv'
     table_07.to_csv(f'{OUTPUT_DIR}/table_07_most_denied_streets_speed_bumps.csv', index=False)
@@ -1215,17 +1540,16 @@ def chart_07_most_denied_streets_speed_bumps(data):
     print("  Chart 07 saved.")
 
 
-def _normalize_street_name(name):
-    """Normalize street names: strip whitespace, expand abbreviations, title case.
+# ============================================================
+# Street Name Normalizer
+# ============================================================
 
-    Note: Returns Title Case for chart display labels. The generate_maps.py
-    version returns UPPERCASE for cross-dataset matching. Same abbreviation set.
-    """
+def _normalize_street_name(name):
+    """Normalize street names: strip whitespace, expand abbreviations, title case."""
     if pd.isna(name) or str(name).strip() == '':
         return ''
     s = str(name).strip().upper()
     s = ' '.join(s.split())
-    # Expand common abbreviations at end of string
     abbrevs = {
         ' AVE': ' AVENUE', ' BLVD': ' BOULEVARD', ' RD': ' ROAD',
         ' ST': ' STREET', ' PL': ' PLACE', ' DR': ' DRIVE',
@@ -1238,15 +1562,17 @@ def _normalize_street_name(name):
     return s.title()
 
 
-def chart_08_crash_hotspots(data):
-    """Chart 8: Crash Hotspots — CB5 Queens (2020-2025)."""
+# ============================================================
+# Chart 08a: Top 10 Streets by Crash Count
+# ============================================================
+
+def chart_08a_crash_count(data):
+    """Chart 08a: Top 10 Streets by Crash Count."""
     cb5_crashes = data['cb5_crashes'].copy()
 
-    # Filter to 2020-2025 (exclude 2026 data)
     cb5_crashes['year'] = cb5_crashes['crash_date'].dt.year
     cb5_crashes = cb5_crashes[cb5_crashes['year'].between(2020, 2025)]
 
-    # Normalize street names to merge variants (e.g., "METROPOLITAN AVE" + "METROPOLITAN AVENUE")
     cb5_crashes['street_clean'] = cb5_crashes['on_street_name'].apply(_normalize_street_name)
 
     street_crashes = cb5_crashes[cb5_crashes['street_clean'] != ''].groupby('street_clean').agg({
@@ -1264,78 +1590,119 @@ def chart_08_crash_hotspots(data):
     })
 
     street_crashes_by_crash = street_crashes.sort_values('crashes', ascending=False).head(10)
-    street_crashes_by_injury = street_crashes.sort_values('injuries', ascending=False).head(10)
-
     n_crashes = len(cb5_crashes)
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 8))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Left: Crashes (sorted by crashes)
-    bars1 = axes[0].barh(street_crashes_by_crash.index[::-1], street_crashes_by_crash['crashes'].values[::-1],
-                         color=COLORS['crash'], edgecolor='black', zorder=3)
-    for bar, val in zip(bars1, street_crashes_by_crash['crashes'].values[::-1]):
-        axes[0].text(val + 1, bar.get_y() + bar.get_height()/2, str(int(val)),
-                     va='center', ha='left', fontsize=9, fontweight='bold')
+    bars = ax.barh(street_crashes_by_crash.index[::-1], street_crashes_by_crash['crashes'].values[::-1],
+                   color=COLORS['crash'], edgecolor='black', zorder=3)
+    for bar, val in zip(bars, street_crashes_by_crash['crashes'].values[::-1]):
+        ax.text(val + 1, bar.get_y() + bar.get_height()/2, str(int(val)),
+                va='center', ha='left', fontsize=9, fontweight='bold')
 
-    axes[0].set_xlabel('Number of Crashes', fontweight='bold')
-    axes[0].set_title('Top 10 Streets by Crash Count', fontweight='bold', fontsize=12)
-    axes[0].yaxis.grid(False)
+    ax.set_xlabel('Number of Crashes', fontweight='bold')
+    ax.set_title(f'QCB5 Top 10 Streets by Crash Count\n(n={n_crashes:,} crashes, 2020–2025)',
+                 fontweight='bold', fontsize=12)
+    ax.yaxis.grid(False)
 
-    # Right: Stacked injuries by type (sorted by total injuries)
-    top10_inj = street_crashes_by_injury.iloc[::-1]  # reverse for horizontal bar
-    y_labels = top10_inj.index
-
-    from matplotlib.patches import Patch
-
-    # Stacked horizontal bars: Pedestrian | Cyclist | Motorist
-    ped_vals = top10_inj['ped_injuries'].values.astype(int)
-    cyc_vals = top10_inj['cyclist_injuries'].values.astype(int)
-    mot_vals = top10_inj['motorist_injuries'].values.astype(int)
-
-    bars_ped = axes[1].barh(y_labels, ped_vals, color=COLORS['denied'],
-                            edgecolor='black', linewidth=0.5, zorder=3, label='Pedestrians')
-    bars_cyc = axes[1].barh(y_labels, cyc_vals, left=ped_vals, color=COLORS['citywide'],
-                            edgecolor='black', linewidth=0.5, zorder=3, label='Cyclists')
-    bars_mot = axes[1].barh(y_labels, mot_vals, left=ped_vals + cyc_vals, color=COLORS['crash_alt'],
-                            edgecolor='black', linewidth=0.5, zorder=3, label='Motorists')
-
-    # Total label at end of each bar
-    for i, (p, c, m) in enumerate(zip(ped_vals, cyc_vals, mot_vals)):
-        total = p + c + m
-        axes[1].text(total + 1, i, str(total),
-                     va='center', ha='left', fontsize=9, fontweight='bold')
-
-    axes[1].set_xlabel('Number of Persons Injured', fontweight='bold')
-    axes[1].set_title('Top 10 Streets by Persons Injured', fontweight='bold', fontsize=12)
-    axes[1].yaxis.grid(False)
-    axes[1].legend(loc='lower right', fontsize=9, framealpha=0.9)
-
-    fig.suptitle(f'QCB5 Crash Hotspots\n(n={n_crashes:,} crashes, 2020–2025)',
-                 fontweight='bold', fontsize=14, y=1.02)
     fig.text(0.01, -0.02,
-             'Source: NYC Open Data — Motor Vehicle Collisions [h9gi-nx95] | CB5 defined by community district polygon\n'
-             'Street names normalized (abbreviations expanded, variants merged)',
+             'Source: NYC Open Data — Motor Vehicle Collisions [h9gi-nx95] | CB5 defined by community district polygon',
              ha='left', fontsize=9, style='italic', color='#333333')
 
     plt.tight_layout()
-    plt.savefig(f'{OUTPUT_DIR}/chart_08_crash_hotspots_cb5.png', dpi=300,
+    plt.savefig(f'{OUTPUT_DIR}/chart_08a_crash_count.png', dpi=300,
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data tables
     table_08_crashes = street_crashes_by_crash[['crashes', 'injuries', 'ped_injuries']].reset_index()
     table_08_crashes.columns = ['Street', 'Crashes', 'Injuries', 'Pedestrian Injuries']
     table_08_crashes['Source Dataset'] = 'Motor Vehicle Collisions [h9gi-nx95]'
     table_08_crashes.to_csv(f'{OUTPUT_DIR}/table_08a_crash_hotspots_by_crashes.csv', index=False)
+
+    print("  Chart 08a saved.")
+
+    return street_crashes
+
+
+# ============================================================
+# Chart 08b: Top 10 Streets by Persons Injured
+# ============================================================
+
+def chart_08b_crash_injuries(data, street_crashes=None):
+    """Chart 08b: Top 10 Streets by Persons Injured (stacked by type)."""
+    if street_crashes is None:
+        cb5_crashes = data['cb5_crashes'].copy()
+        cb5_crashes['year'] = cb5_crashes['crash_date'].dt.year
+        cb5_crashes = cb5_crashes[cb5_crashes['year'].between(2020, 2025)]
+        cb5_crashes['street_clean'] = cb5_crashes['on_street_name'].apply(_normalize_street_name)
+        street_crashes = cb5_crashes[cb5_crashes['street_clean'] != ''].groupby('street_clean').agg({
+            'collision_id': 'count',
+            'number_of_persons_injured': 'sum',
+            'number_of_pedestrians_injured': 'sum',
+            'number_of_cyclist_injured': 'sum',
+            'number_of_motorist_injured': 'sum'
+        }).rename(columns={
+            'collision_id': 'crashes',
+            'number_of_persons_injured': 'injuries',
+            'number_of_pedestrians_injured': 'ped_injuries',
+            'number_of_cyclist_injured': 'cyclist_injuries',
+            'number_of_motorist_injured': 'motorist_injuries'
+        })
+        n_crashes = len(cb5_crashes)
+    else:
+        n_crashes = data['cb5_crashes']['crash_date'].dt.year.between(2020, 2025).sum()
+
+    street_crashes_by_injury = street_crashes.sort_values('injuries', ascending=False).head(10)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    top10_inj = street_crashes_by_injury.iloc[::-1]
+    y_labels = top10_inj.index
+
+    from matplotlib.patches import Patch
+
+    ped_vals = top10_inj['ped_injuries'].values.astype(int)
+    cyc_vals = top10_inj['cyclist_injuries'].values.astype(int)
+    mot_vals = top10_inj['motorist_injuries'].values.astype(int)
+
+    ax.barh(y_labels, ped_vals, color=COLORS['denied'],
+            edgecolor='black', linewidth=0.5, zorder=3, label='Pedestrians')
+    ax.barh(y_labels, cyc_vals, left=ped_vals, color=COLORS['citywide'],
+            edgecolor='black', linewidth=0.5, zorder=3, label='Cyclists')
+    ax.barh(y_labels, mot_vals, left=ped_vals + cyc_vals, color=COLORS['crash_alt'],
+            edgecolor='black', linewidth=0.5, zorder=3, label='Motorists')
+
+    for i, (p, c, m) in enumerate(zip(ped_vals, cyc_vals, mot_vals)):
+        total = p + c + m
+        ax.text(total + 1, i, str(total),
+                va='center', ha='left', fontsize=9, fontweight='bold')
+
+    ax.set_xlabel('Number of Persons Injured', fontweight='bold')
+    ax.set_title(f'QCB5 Top 10 Streets by Persons Injured\n(n={n_crashes:,} crashes, 2020–2025)',
+                 fontweight='bold', fontsize=12)
+    ax.yaxis.grid(False)
+    ax.legend(loc='lower right', fontsize=9, framealpha=0.9)
+
+    fig.text(0.01, -0.02,
+             'Source: NYC Open Data — Motor Vehicle Collisions [h9gi-nx95] | CB5 defined by community district polygon',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_08b_crash_injuries.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
 
     table_08_injuries = street_crashes_by_injury[['crashes', 'injuries', 'ped_injuries']].reset_index()
     table_08_injuries.columns = ['Street', 'Crashes', 'Injuries', 'Pedestrian Injuries']
     table_08_injuries['Source Dataset'] = 'Motor Vehicle Collisions [h9gi-nx95]'
     table_08_injuries.to_csv(f'{OUTPUT_DIR}/table_08b_crash_hotspots_by_injuries.csv', index=False)
 
-    print("  Chart 08 saved.")
+    print("  Chart 08b saved.")
 
 
+# ============================================================
+# Chart 12: Request Type Distribution
+# ============================================================
 
 def chart_12_request_types(data):
     """Chart 12: Request Type Mix — CB5 vs Citywide (2020-2025)."""
@@ -1344,7 +1711,6 @@ def chart_12_request_types(data):
     srts_resolved = data['srts_resolved']
     cb5_srts = data['cb5_srts']
 
-    # Filter to 2020-2025
     cb5_recent = cb5_no_aps[cb5_no_aps['year'].between(2020, 2025)]
     cw_recent = signal_no_aps[signal_no_aps['year'].between(2020, 2025)]
     srts_recent = srts_resolved[srts_resolved['year'].between(2020, 2025)]
@@ -1353,7 +1719,6 @@ def chart_12_request_types(data):
     cb5_by_type = cb5_recent.groupby('requesttype').size().sort_values(ascending=False)
     cw_by_type = cw_recent.groupby('requesttype').size().sort_values(ascending=False)
 
-    # Request types to compare
     request_types = ['Traffic Signal', 'All-Way Stop', 'Leading Pedestrian Interval',
                      'Left Turn Arrow/Signal', 'Speed Bumps']
     cb5_counts = []
@@ -1372,7 +1737,7 @@ def chart_12_request_types(data):
     cb5_pct = [c / cb5_total * 100 for c in cb5_counts]
     cw_pct = [c / cw_total * 100 for c in cw_counts]
 
-    fig, ax = plt.subplots(figsize=(12, 7))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
     x = np.arange(len(request_types))
     width = 0.35
@@ -1408,7 +1773,6 @@ def chart_12_request_types(data):
                 bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.close()
 
-    # Save underlying data table
     table_12 = pd.DataFrame({
         'Request Type': request_types,
         'CB5 Count': cb5_counts,
@@ -1424,6 +1788,95 @@ def chart_12_request_types(data):
     print("  Chart 12 saved.")
 
 
+# ============================================================
+# Chart 14: QCB5 APS Installations by Year
+# ============================================================
+
+def chart_14_aps_installed(data):
+    """Chart 14: QCB5 Accessible Pedestrian Signal Installations by Year."""
+    print("  Generating Chart 14: APS Installations by Year...")
+
+    aps_path = f'{DATA_DIR}/aps_installed_citywide.csv'
+    if not os.path.exists(aps_path):
+        print("  WARNING: APS installed data not found, skipping chart 14.")
+        return
+
+    aps = pd.read_csv(aps_path, low_memory=False)
+
+    # Filter to QCB5: borocd='405' (borough 4=Queens, district 05)
+    aps['borocd_num'] = pd.to_numeric(aps['borocd'], errors='coerce')
+    cb5_aps = aps[aps['borocd_num'] == 405].copy()
+
+    # Parse installation date
+    cb5_aps['install_date'] = pd.to_datetime(cb5_aps['date_insta'], errors='coerce')
+    cb5_aps = cb5_aps[cb5_aps['install_date'].notna()].copy()
+    cb5_aps['year'] = cb5_aps['install_date'].dt.year
+
+    # Cap at 2025
+    cb5_aps = cb5_aps[cb5_aps['year'] <= 2025]
+
+    n_total = len(cb5_aps)
+    if n_total == 0:
+        print("  WARNING: No CB5 APS installations found, skipping chart 14.")
+        return
+
+    min_yr = int(cb5_aps['year'].min())
+    max_yr = min(int(cb5_aps['year'].max()), 2025)
+
+    yearly = cb5_aps.groupby('year').size().reindex(range(min_yr, max_yr + 1), fill_value=0)
+    cumulative = yearly.cumsum()
+
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+
+    # Bars: installations per year
+    bars = ax1.bar(yearly.index, yearly.values, color=COLORS['aps'],
+                   edgecolor='black', zorder=3, alpha=0.85)
+    for bar, val in zip(bars, yearly.values):
+        if val > 0:
+            ax1.text(bar.get_x() + bar.get_width()/2, val + 0.3,
+                     str(val), ha='center', va='bottom', fontsize=9, fontweight='bold')
+
+    ax1.set_xlabel('Year', fontweight='bold')
+    ax1.set_ylabel('Installations per Year', fontweight='bold', color=COLORS['aps'])
+    ax1.tick_params(axis='y', labelcolor=COLORS['aps'])
+    ax1.xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax1.xaxis.grid(False)
+
+    # Line: cumulative total (right y-axis)
+    ax2 = ax1.twinx()
+    ax2.plot(cumulative.index, cumulative.values, marker='o', markersize=5,
+             linewidth=2, color=COLORS['primary'], zorder=4)
+    ax2.set_ylabel('Cumulative Total', fontweight='bold', color=COLORS['primary'])
+    ax2.tick_params(axis='y', labelcolor=COLORS['primary'])
+
+    ax1.set_title(f'QCB5 Accessible Pedestrian Signal Installations by Year\n(n={n_total:,}, {min_yr}–{max_yr})',
+                  fontweight='bold', fontsize=12)
+
+    fig.text(0.01, -0.02,
+             'Source: NYC Open Data — APS Installed [de3m-c5p4] | Court-mandated (American Council of the Blind v. NYC)',
+             ha='left', fontsize=9, style='italic', color='#333333')
+
+    plt.tight_layout()
+    plt.savefig(f'{OUTPUT_DIR}/chart_14_aps_installed_by_year.png', dpi=300,
+                bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close()
+
+    # Save CSV
+    table_14 = pd.DataFrame({
+        'Year': yearly.index,
+        'Installations': yearly.values,
+        'Cumulative': cumulative.values,
+    })
+    table_14['Source Dataset'] = 'APS Installed [de3m-c5p4]'
+    table_14.to_csv(f'{OUTPUT_DIR}/table_14_aps_installed_by_year.csv', index=False)
+
+    print("  Chart 14 saved.")
+
+
+# ============================================================
+# Main
+# ============================================================
+
 def main():
     """Generate all charts."""
     print("=" * 60)
@@ -1436,18 +1889,29 @@ def main():
 
     print("\nGenerating charts...")
 
-    # Generate focused charts (2020–2025)
-    chart_01_request_volume(data)
+    # Individual charts (2020–2025)
+    chart_01_request_volume_by_borough(data)
+    chart_01a_request_volume_by_type(data)
     chart_01b_requests_by_year(data)
     chart_01c_cb5_requests_by_type(data)
+    sig_d, sig_a, sig_rate = chart_01d_signal_outcomes(data)
+    srts_d, srts_a, srts_rate = chart_01e_srts_outcomes(data)
+    save_table_01d(sig_d, sig_a, sig_rate, srts_d, srts_a, srts_rate)
     chart_02_denial_rates_by_borough(data)
-    chart_03_year_over_year_trends(data)
+    chart_03a_signal_volume(data)
+    chart_03b_signal_denial_rates(data)
+    chart_03c_srts_volume(data)
+    chart_03d_srts_denial_rates(data)
     chart_04_denial_rates_by_type(data)
-    chart_05_speed_bump_analysis(data)
+    chart_05a_queens_cb_denial_rates(data)
+    chart_05b_denial_reasons(data)
+    chart_05c_denial_reasons_by_year(data)
     chart_06_most_denied_intersections(data)
     chart_07_most_denied_streets_speed_bumps(data)
-    chart_08_crash_hotspots(data)
+    street_crashes = chart_08a_crash_count(data)
+    chart_08b_crash_injuries(data, street_crashes)
     chart_12_request_types(data)
+    chart_14_aps_installed(data)
 
     # Generate z-series (full history)
     print("\nGenerating z-series (full history)...")

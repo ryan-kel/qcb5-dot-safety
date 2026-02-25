@@ -79,7 +79,7 @@ The `borough` field contains inconsistent values including codes ("QK", "MB", "9
 
 For the interactive map and proximity analysis (Part 2), SRTS data is filtered to **2020–2025** to match the crash data and signal study windows. This excluded 1,528 pre-2020 SRTS records.
 
-Charts 13 and 15 examine SRTS installation history using the full date range. These charts load SRTS data via the shared `_load_cb5_srts_full()` helper, which applies the complete CB5 filtering pipeline (cb=405 + cross-street exclusion + polygon filter) before any chart-specific year logic.
+Chart 15 examines SRTS installation history using the full date range. It loads SRTS data via the shared `_load_cb5_srts_full()` helper, which applies the CB5 filtering pipeline (cb=405 + polygon filter) before any chart-specific year logic. Chart 01d (denied vs approved counts) uses 2020–2025 for both signal studies and speed bumps.
 
 **Rationale:** Crash data is only available from 2020 onward. Plotting a speed bump request denied in 2005 against crash data from 2020–2025 would create a misleading temporal mismatch. All data on the map shares the same 2020–2025 window.
 
@@ -95,15 +95,15 @@ CB5 is identified by filtering Queens borough records to streets within CB5 geog
 
 ### 4.2 Speed Bumps (SRTS)
 
-CB5 is identified by `cb = '405'` (borough code 4 for Queens + district 05) **plus** two additional mandatory filters:
+CB5 is identified by `cb = '405'` (borough code 4 for Queens + district 05) **plus** a mandatory polygon boundary filter:
 
-1. **Cross-street exclusion**: Records with cross streets indicating locations north of the LIE (52nd Avenue, 53rd Avenue, Calamus Avenue, Queens Boulevard, etc.) are excluded. Impact: 6 records removed.
+1. **Polygon boundary filter**: All records with coordinates are tested against the official CB5 community district polygon (`data_raw/cb5_boundary.geojson`). The polygon is the **sole geographic authority** — no street-name heuristics. Impact: ~26 records excluded that pass `cb=405` but fall outside the actual CB5 polygon.
 
-2. **Polygon boundary filter**: All records with coordinates are tested against the official CB5 community district polygon. Impact: ~23 additional records removed.
+**CRITICAL:** Both layers (cb=405 + polygon filter) must be applied together. The `cb=405` field alone includes ~26 records outside the actual CB5 polygon. In `generate_maps.py`, the shared `_load_cb5_srts_full()` helper centralizes this pipeline so all SRTS charts use identical filtering. In `generate_charts.py`, the `prepare_data()` function applies the same two-layer pipeline.
 
-**CRITICAL:** All three layers (cb=405 + cross-street exclusion + polygon filter) must be applied together. The `cb=405` field alone includes ~29 records outside the actual CB5 polygon. In `generate_maps.py`, the shared `_load_cb5_srts_full()` helper centralizes this pipeline so all SRTS charts use identical filtering.
+*Note: A cross-street exclusion filter was previously applied but was removed in Feb 2026 after audit revealed it wrongly excluded 67 valid records inside the CB5 polygon (Maspeth area: 52 Ave, 53 Ave, Calamus Ave, Maurice Ave). Boundary streets are partly inside the polygon and must not be excluded by name.*
 
-**Final count (all years):** ~1,959 resolved SRTS records retained. **After 2020–2025 filter (map pipeline):** 431 records.
+**Final count (all years):** ~1,962 resolved SRTS records retained. **After 2020–2025 filter (map pipeline):** 431 records.
 
 ### 4.3 Motor Vehicle Crashes
 
@@ -140,6 +140,12 @@ The 2022 peak and subsequent decline may reflect community discouragement after 
 ### Chart 01c: QCB5 Requests by Type
 
 Chart 01c (`chart_01c_cb5_requests_by_type.png`) breaks down QCB5's signal study requests by type as a horizontal bar chart (n=499, 2020–2025). This chart provides the type-level detail for QCB5 specifically, complementing Chart 01's right panel by showing request counts per type with year-over-year composition in an accompanying data table (`table_01c_cb5_requests_by_type_year.csv`).
+
+### Chart 01d: QCB5 DOT Request Outcomes — Denied and Approved
+
+Chart 01d (`chart_01d_denied_vs_approved.png`) presents the aggregate outcome counts for QCB5 safety requests in a two-panel layout, both covering 2020–2025. The left panel shows Signal Studies (excluding APS) with denied and approved counts labeled on red and green bars, plus an annotation box with the approval rate. The right panel shows Speed Bumps with the same layout — "Not Feasible" mapped to Denied and "Feasible" mapped to Approved. An accompanying data table (`table_01d_denied_vs_approved.csv`) provides the exact counts and rates.
+
+This is the only chart that presents the raw headline numbers — the total count of denied versus approved requests for each infrastructure type. While other charts show denial *rates* by borough (Chart 02), by request type (Chart 04), or over time (Chart 03), this chart provides the blunt summary: how many times the community asked and was told no versus yes. The disparity between the denied and approved bars is immediately visible and requires no statistical interpretation.
 
 ### Chart 02: Denial Rates by Borough
 
@@ -240,14 +246,6 @@ Chart 09b (`chart_09b_denied_locations_crash_ranking.png`) identifies the denied
 Three layers of de-duplication are applied before ranking. First, `_normalize_intersection()` sorts street names alphabetically so that "Cooper Ave & Cypress Ave" and "Cypress Ave & Cooper Ave" are treated as the same location. Second, a name-based groupby aggregates records sharing the same normalized intersection name, keeping the row with the highest crash count. Third, `_spatial_dedup(df, radius_m=150)` applies a greedy algorithm: locations are sorted by crashes descending, and any location within 150 meters (haversine distance) of an already-selected location is skipped. The 150-meter spatial dedup radius matches the analysis radius because two denied locations 100 meters apart would share most of the same crash pool, creating the appearance of distinct hotspots when the crash exposure is largely the same.
 
 The top denied location (Aubrey Ave & Metropolitan Ave) has 66 crashes and 101 injuries within 150 meters — more than many locations where DOT has approved infrastructure. These are specific, nameable locations where the community asked for safety infrastructure, DOT said no, and crashes continue to occur.
-
-### Chart 13: Paper Approvals vs Confirmed Installations
-
-Chart 13 (`chart_13_approval_vs_installation.png`) compares paper approvals to confirmed installations in a two-panel layout: "QCB5 Signal Studies" (2020–2025) on the left and "QCB5 Speed Bumps" (1999–2025) on the right. Each panel displays three bars — Denied, Approved (on paper), and Confirmed Installed — with annotation boxes showing the paper approval rate versus the confirmed install rate. Installation status is determined by non-null `aw_installdate` or `signalinstalldate` fields for signals and `installationdate` for SRTS. The absence of an install date on approvals older than one year is treated as strong evidence of non-installation. SRTS data is loaded via `_load_cb5_srts_full()` with the full CB5 filtering pipeline.
-
-For signal studies, 43 were approved on paper but only 15 have confirmed installation dates — a 35% fulfillment rate. The paper approval rate of 9.7% drops to a confirmed install rate of just 3.6%. For SRTS, approximately 237 were approved, approximately 101 installed (43%), and approximately 114 were cancelled or rejected after approval. The paper approval rate of approximately 12% drops to a confirmed install rate of approximately 5%.
-
-The "approval rate" that might be cited by DOT in response to community concerns is approximately **2× the actual installation rate**. Paper approval does not equal infrastructure on the ground. For SRTS, DOT's own data shows more approvals were subsequently cancelled than were actually installed — getting past the engineering evaluation is only half the battle, as bureaucratic and budgetary obstacles eliminate roughly half of approvals before a single bolt is tightened.
 
 ### Chart 15: SRTS Approval Funnel
 
@@ -373,10 +371,10 @@ The analysis is structured as a two-part pipeline:
 ```
 scripts_fetch_data.py          → data_raw/*.csv (raw API downloads)
 generate_charts.py  (Part 1)   → output/chart_01–08, 12*.png + tables
-generate_maps.py    (Part 2)   → output/map_01*.html + chart_09, 09b, 13, 15*.png + tables + layer CSVs
+generate_maps.py    (Part 2)   → output/map_01*.html + chart_09, 09b, 15*.png + tables + layer CSVs
 ```
 
-Both scripts share identical patterns: outcome classification, APS exclusion, cross-street exclusion, polygon filtering, and street name normalization. The `_normalize_street_name()` function exists in both files to avoid cross-file imports.
+Both scripts share identical patterns: outcome classification, APS exclusion, polygon filtering, and street name normalization. The `_normalize_street_name()` function exists in both files to avoid cross-file imports.
 
 Each chart function is self-contained: it loads its data, computes its metrics, generates its visualization, and saves both the chart and its underlying data table. This ensures any single chart can be regenerated independently.
 
@@ -384,7 +382,7 @@ Each chart function is self-contained: it loads its data, computes its metrics, 
 
 | Function | Purpose |
 |----------|---------|
-| `_load_cb5_srts_full()` | Centralized SRTS loader applying full CB5 pipeline (cb=405 + cross-street exclusion + polygon filter). Used by charts 13, 15. |
+| `_load_cb5_srts_full()` | Centralized SRTS loader applying full CB5 pipeline (cb=405 + polygon filter). Used by chart 15 and map layers. |
 | `_normalize_intersection(a, b)` | Alphabetically sort two street names to prevent reversed-name duplicates ("A & B" == "B & A"). |
 | `_spatial_dedup(df, radius_m)` | Greedy spatial de-duplication: sort by crashes desc, skip entries within `radius_m` (haversine) of already-selected locations. |
 | `_filter_points_in_cb5(df)` | Polygon filter against official CB5 boundary. Excludes rows without coordinates. |
@@ -416,7 +414,7 @@ A comprehensive data integrity audit was conducted across all charts and data pi
 | # | Bug | Impact | Fix |
 |---|-----|--------|-----|
 | 1 | **`_filter_points_in_cb5()` included no-coordinate rows** | Crash count inflated from 3,213 to 3,938 (+725). No-coord rows had NaN lat/lon so did not affect proximity analysis, but inflated n= in chart titles (Chart 08, map layer counts). | Exclude rows without valid coordinates. Applied in both `generate_charts.py` and `generate_maps.py`. |
-| 2 | **Charts 13, 15 loaded SRTS without full CB5 filtering** | These charts loaded SRTS directly from CSV with only `cb=405`, missing cross-street exclusion and polygon filter. ~29 records outside actual CB5 boundary were included. SRTS approved count was 245 (should be ~237); installed was 106 (should be ~101). | Created `_load_cb5_srts_full()` shared helper. Refactored affected charts to use it. |
+| 2 | **Charts 13 (now 01d), 15 loaded SRTS without full CB5 filtering** | These charts loaded SRTS directly from CSV with only `cb=405`, missing polygon filter. ~26 records outside actual CB5 boundary were included. SRTS approved count was 245 (should be ~237); installed was 106 (should be ~101). | Created `_load_cb5_srts_full()` shared helper. Chart 01d (formerly 13) moved to `generate_charts.py` using the shared `prepare_data()` pipeline. Chart 15 refactored to use `_load_cb5_srts_full()`. |
 | 3 | **Chart 06 missing year filter** | Title claimed "2020–2025" but no year filter was applied. Included all-years data in a chart labeled as 2020–2025. | Added explicit `.between(2020, 2025)` year filter. |
 | 4 | **Chart 09b reversed intersection duplicates** | "Cooper Ave & Cypress Ave" and "Cypress Ave & Cooper Ave" treated as different locations. | Created `_normalize_intersection()` to sort street names alphabetically. |
 | 5 | **Chart 09b spatial duplicates from overlapping 150m radii** | Nearby denied locations (e.g., same intersection in Signal Studies and SRTS) counted overlapping crash pools, appearing as separate hotspots. | Created `_spatial_dedup()` with 150m radius matching the analysis radius. Applied to chart 09b, map Top 15 spotlight, and table_09c. |
@@ -429,9 +427,10 @@ A comprehensive data integrity audit was conducted across all charts and data pi
 - 68.7% of crashes share exact coordinates with at least one other crash — expected behavior (multiple crashes at the same intersection over time).
 
 **Documentation errors that contributed to bugs:**
-- `CLAUDE.md` "CB5 Identification" section listed only `cb='405'` for SRTS without mentioning mandatory cross-street exclusion and polygon filter — this omission led to charts 13–16 being built without proper filtering.
-- `decisions.md` documented "Charts 13, 15 load SRTS independently from CSV" as intentional design rather than identifying it as inconsistent with the centralized pipeline.
+- `CLAUDE.md` "CB5 Identification" section listed only `cb='405'` for SRTS without mentioning mandatory polygon filter — this omission led to charts being built without proper filtering.
+- `decisions.md` documented independent SRTS loading from CSV as intentional design rather than identifying it as inconsistent with the centralized pipeline.
 - `METHODOLOGY.md` section 3.3 described independent loading as deliberate behavior.
+- Chart 13 (denied vs approved counts) was renumbered to Chart 01d and moved from `generate_maps.py` to `generate_charts.py`, with both panels aligned to 2020–2025. The previous version had mismatched date ranges (signals 2020–2025, SRTS 1999–2025).
 
 All documentation updated to prevent recurrence.
 
