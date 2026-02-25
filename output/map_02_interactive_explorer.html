@@ -908,8 +908,19 @@ window.addEventListener('message', function(ev) {
   rebuildYearLayers();
 });
 
-// Keep the in-map year filter visible even when embedded in an iframe,
-// so users always have a direct way to filter by year.
+// If embedded in iframe, hide the in-map year filter (page controls it)
+if (window !== window.top) {
+  var yf = document.getElementById('year-filter');
+  if (yf) yf.style.display = 'none';
+}
+
+// Expose setYearRange globally so parent page can call it directly
+window.setYearRange = function(s, e) {
+  if (isNaN(s) || isNaN(e) || s < 2020 || e > 2025 || s > e) return;
+  selStart.value = String(s);
+  selEnd.value = String(e);
+  rebuildYearLayers();
+};
 
 // Notify parent of year changes so page can stay synced
 function notifyParentYear() {
