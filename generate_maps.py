@@ -1536,7 +1536,11 @@ def map_interactive_explorer(signal_prox, srts_prox, cb5_crashes, data,
 
 
 def _build_interactive_html(map_data_json_str):
-    """Build the complete HTML for the interactive explorer map."""
+    """Build the complete HTML for the interactive explorer map.
+
+    Uses a 360px left sidebar panel (matching parking/citibike maps)
+    with custom layer checkboxes instead of Leaflet's floating control.
+    """
 
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -1548,214 +1552,263 @@ def _build_interactive_html(map_data_json_str):
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
 <style>
-html, body {{ margin:0; padding:0; height:100%; }}
-#map {{ width:100%; height:100%; }}
-
-/* Font */
-body, .leaflet-popup-content, .leaflet-control-layers,
-.leaflet-tooltip, #stats-panel, #year-filter, .map-title {{
-  font-family: 'Times New Roman', 'Liberation Serif', Georgia, serif !important;
+:root {{
+  --navy: #2C5F8B;
+  --navy-dark: #1B3F5E;
+  --gold: #B8860B;
+  --red: #B44040;
+  --green: #4A7C59;
+  --crash: #996633;
+  --aps: #7B68AE;
+  --border: #e0e0e0;
+  --font: Georgia, 'Times New Roman', serif;
 }}
-.leaflet-popup-content {{ font-size:12px; line-height:1.5; }}
-.leaflet-popup-content b {{ font-size:13px; }}
+html, body {{ margin:0; padding:0; height:100%; font-family:var(--font); }}
 
-/* Layer control */
-.leaflet-control-layers {{
-  background: rgba(255,255,255,0.92) !important;
-  border: 1px solid #bbb !important; border-radius: 4px !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.12) !important; padding:0 !important;
+/* Panel + Map layout */
+.map-and-panel {{ display:flex; height:100vh; width:100%; }}
+
+.panel {{
+  width:360px; min-width:360px; height:100%;
+  overflow-y:auto; background:#fff;
+  border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
 }}
-.leaflet-control-layers-expanded {{ padding: 8px 12px 8px 10px !important; }}
-.leaflet-control-layers-list {{ font-size:11px; line-height:1.7; }}
-.leaflet-control-layers-list label {{ cursor:pointer; }}
-.leaflet-control-layers-list label:hover {{ color:#2C5F8B; }}
-.leaflet-control-layers-separator {{ border-color:#ddd !important; margin:4px 0 !important; }}
 
-/* Spotlight radius circles */
-.leaflet-overlay-pane path[stroke-dasharray] {{ pointer-events: none !important; }}
-
-/* Title bar */
-.map-title {{
-  position:fixed; top:10px; left:50%; transform:translateX(-50%); z-index:1000;
-  background:rgba(255,255,255,0.92); padding:8px 20px; border:1px solid #666;
-  text-align:center; pointer-events:none;
+.panel-header {{
+  background:var(--navy-dark); color:#fff;
+  padding:18px 20px 14px; text-align:center;
 }}
-.map-title #title-main {{ font-size:15px; font-weight:bold; }}
-.map-title #title-sub {{ font-size:11px; color:#555; margin-top:2px; }}
+.panel-header h1 {{ font-size:1.15rem; font-weight:700; letter-spacing:0.3px; margin-bottom:2px; }}
+.panel-header .subtitle {{ font-size:0.82rem; opacity:0.75; font-style:italic; }}
+
+.panel-section {{
+  padding:14px 20px;
+  border-bottom:1px solid var(--border);
+}}
+
+.section-title {{
+  font-size:0.72rem; font-weight:600; text-transform:uppercase;
+  letter-spacing:1px; color:var(--navy);
+  margin-bottom:10px; padding-bottom:4px;
+  border-bottom:1px solid var(--gold);
+}}
 
 /* Year filter */
-#year-filter {{
-  position:fixed; top:62px; left:50%; transform:translateX(-50%); z-index:1001;
-  background:rgba(255,255,255,0.95); padding:5px 12px; border:1px solid #999;
-  border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.15);
-  font-size:12px; display:flex; align-items:center; gap:6px;
+.year-filter {{
+  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
 }}
-#year-filter select {{
-  font-family: 'Times New Roman', Georgia, serif; font-size:12px;
-  padding:2px 4px; border:1px solid #999; border-radius:2px;
+.year-filter label {{ font-size:0.82rem; color:#555; }}
+.year-filter select {{
+  font-family:var(--font); font-size:0.82rem;
+  padding:3px 6px; border:1px solid var(--border);
+  border-radius:3px; background:#fff;
 }}
-#year-filter button {{
-  font-family: 'Times New Roman', Georgia, serif; font-size:11px;
-  padding:2px 8px; border:1px solid #999; background:#f5f5f5;
-  border-radius:2px; cursor:pointer;
+.year-filter select:focus {{ outline:none; border-color:var(--navy); }}
+.year-filter .btn-reset {{
+  font-family:var(--font); font-size:0.75rem;
+  padding:3px 10px; border:1px solid var(--border);
+  background:#fff; border-radius:3px; cursor:pointer;
+  color:var(--navy); font-weight:600;
 }}
-#year-filter button:hover {{ background:#e0e0e0; }}
+.year-filter .btn-reset:hover {{ background:var(--navy); color:#fff; }}
 
-/* Left panel container — legend stacked above stats */
-#left-panel {{
-  position:fixed; bottom:12px; left:12px; z-index:1000;
-  display:flex; flex-direction:column; gap:6px;
-  max-height:calc(100vh - 100px); overflow-y:auto;
+/* Layer toggles */
+.layer-toggle {{
+  display:flex; align-items:center; gap:6px;
+  margin:4px 0; font-size:0.82rem; color:#2a2a2a; cursor:pointer;
 }}
-
-/* Stats panel */
-#stats-panel {{
-  background:rgba(255,255,255,0.95); padding:12px 16px; border:1px solid #666;
-  border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,0.15);
-  font-size:12px; line-height:1.7; min-width:220px;
+.layer-toggle input {{ margin:0; cursor:pointer; accent-color:var(--navy); }}
+.layer-count {{ color:#888; font-size:0.75rem; font-variant-numeric:tabular-nums; }}
+.layer-separator {{
+  border:none; border-top:1px solid #f0f0f0;
+  margin:6px 0;
 }}
-#stats-panel .stats-header {{
-  font-size:13px; font-weight:bold; border-bottom:1px solid #999;
-  margin-bottom:6px; padding-bottom:3px; cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center;
-}}
-#stats-panel .stats-header .toggle {{ font-size:10px; color:#888; }}
-#stats-panel .stats-body {{ }}
-#stats-panel .stat-group {{ margin-bottom:6px; }}
-#stats-panel .stat-group .stat-title {{ font-weight:bold; font-size:12px; }}
-#stats-panel .stat-row {{ display:flex; justify-content:space-between; gap:12px; }}
-#stats-panel .stat-denied {{ color:#B44040; font-weight:bold; }}
-#stats-panel .stat-approved {{ color:#4A7C59; font-weight:bold; }}
-#stats-panel .stat-crash {{ color:#996633; font-weight:bold; }}
-#stats-panel .stat-aps {{ color:#7B68AE; font-weight:bold; }}
 
 /* Legend */
-#map-legend {{
-  background:rgba(255,255,255,0.95); padding:10px 14px; border:1px solid #666;
-  border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,0.15);
-  font-size:12px; line-height:1.8;
-}}
-#map-legend .legend-header {{
-  font-size:13px; font-weight:bold; border-bottom:1px solid #999;
-  display:block; margin-bottom:4px; padding-bottom:2px;
-}}
-.legend-item {{ display:block; }}
+.legend-item {{ display:block; margin:3px 0; font-size:0.78rem; color:#2a2a2a; }}
 .legend-dot {{
-  display:inline-block; width:12px; height:12px; border:1px solid #999;
-  border-radius:50%; margin-right:6px; vertical-align:middle;
+  display:inline-block; width:10px; height:10px;
+  border:1px solid #999; border-radius:50%;
+  margin-right:6px; vertical-align:middle;
 }}
 .legend-spotlight {{
-  display:inline-block; width:16px; height:16px; border-radius:50%;
+  display:inline-block; width:14px; height:14px; border-radius:50%;
   margin-right:5px; vertical-align:middle; position:relative;
 }}
 .legend-spotlight .inner {{
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:6px; height:6px; border-radius:50%;
+  width:5px; height:5px; border-radius:50%;
 }}
 
-/* Search box */
-#search-container {{
-  position:fixed; right:12px; z-index:1001;
-  font-size:12px; display:none;
+/* Stats */
+.stat-group {{ margin-bottom:8px; }}
+.stat-group .stat-title {{
+  font-weight:600; font-size:0.78rem; color:var(--navy-dark);
+  margin-bottom:2px;
 }}
-#search-container .search-box {{
-  background:rgba(255,255,255,0.95); border:1px solid #666; padding:6px 8px;
-  border-radius:3px; box-shadow:0 1px 4px rgba(0,0,0,0.2);
+.stat-row {{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:2px 0; font-size:0.78rem;
+  border-bottom:1px solid #f0f0f0;
 }}
+.stat-row:last-child {{ border-bottom:none; }}
+.stat-denied {{ color:var(--red); font-weight:600; }}
+.stat-approved {{ color:var(--green); font-weight:600; }}
+.stat-crash {{ color:var(--crash); font-weight:600; }}
+.stat-aps {{ color:var(--aps); font-weight:600; }}
+.stat-value {{ font-weight:600; font-variant-numeric:tabular-nums; }}
+
+/* Search */
+.search-input-row {{ display:flex; gap:4px; }}
 #ref-search {{
-  width:200px; padding:4px 6px; font-family:'Times New Roman',Georgia,serif;
-  font-size:12px; border:1px solid #999; border-radius:2px;
+  flex:1; padding:5px 8px; font-family:var(--font);
+  font-size:0.82rem; border:1px solid var(--border); border-radius:3px;
 }}
+#ref-search:focus {{ outline:none; border-color:var(--navy); }}
 #ref-search-btn {{
-  padding:4px 8px; font-family:'Times New Roman',Georgia,serif;
-  font-size:12px; cursor:pointer; border:1px solid #999; background:#f5f5f5;
-  border-radius:2px; margin-left:2px;
+  padding:5px 10px; font-family:var(--font); font-size:0.82rem;
+  cursor:pointer; border:1px solid var(--border); background:#fff;
+  border-radius:3px; color:var(--navy); font-weight:600;
 }}
+#ref-search-btn:hover {{ background:var(--navy); color:#fff; }}
+#ref-search-msg {{ font-size:0.75rem; margin-top:4px; color:#888; }}
 #ref-search-dropdown {{
-  display:none; position:absolute; background:white; border:1px solid #ccc;
-  max-height:180px; overflow-y:auto; width:270px; font-size:11px;
-  z-index:1002; box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  display:none; position:absolute; background:#fff; border:1px solid var(--border);
+  max-height:180px; overflow-y:auto; width:calc(100% - 40px);
+  font-size:0.78rem; z-index:1002; box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  border-radius:3px;
+}}
+.dropdown-item {{
+  padding:5px 10px; cursor:pointer;
+  border-bottom:1px solid #f0f0f0;
+}}
+.dropdown-item:hover {{ background:rgba(44,95,139,0.04); }}
+
+/* Source citation */
+.source-cite {{
+  font-size:0.75rem; color:#888; font-style:italic;
+  padding:10px 20px; border-top:1px solid var(--border);
+  margin-top:auto;
+}}
+.source-cite a {{
+  color:var(--navy); text-decoration:none;
+  border-bottom:1px dotted var(--gold);
 }}
 
-/* Mobile */
-@media (max-width: 600px) {{
-  .leaflet-control-layers {{ max-width:44px; overflow:hidden; }}
-  .leaflet-control-layers-expanded {{ max-width:220px; overflow:visible; }}
-  .leaflet-control-layers-list {{ font-size:10px; line-height:1.6; }}
-  #left-panel {{ bottom:8px; left:8px; max-height:calc(100vh - 80px); min-width:0; }}
-  #map-legend {{ font-size:10px !important; padding:6px 8px !important; max-width:170px; }}
-  #map-legend .legend-header {{ font-size:11px !important; }}
-  #map-legend .legend-dot {{ width:9px !important; height:9px !important; }}
-  #stats-panel {{ font-size:10px; min-width:0; max-width:170px; padding:8px 10px; }}
-  .map-title {{ font-size:13px !important; padding:5px 12px !important; }}
-  .map-title #title-main {{ font-size:13px !important; }}
-  .map-title #title-sub {{ font-size:9px !important; }}
-  #year-filter {{ top:52px; font-size:11px; padding:4px 8px; }}
-  #year-filter select {{ font-size:11px; }}
-  #search-container {{ display: none !important; }}
+/* Map container */
+.map-wrapper {{ flex:1; min-width:0; position:relative; }}
+#map {{ width:100%; height:100%; }}
+
+/* Leaflet overrides */
+.leaflet-popup-content-wrapper {{
+  font-family:var(--font); font-size:0.82rem;
+  border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}}
+.leaflet-popup-tip-container {{ display:none; }}
+.leaflet-popup-content {{ margin:10px 14px; font-size:12px; line-height:1.5; }}
+.leaflet-popup-content b {{ font-size:13px; }}
+
+/* Spotlight radius circles */
+.leaflet-overlay-pane path[stroke-dasharray] {{ pointer-events:none !important; }}
+
+/* Responsive */
+@media (max-width: 768px) {{
+  .map-and-panel {{ flex-direction:column-reverse; }}
+  .panel {{
+    width:100%; min-width:unset; height:auto;
+    max-height:45vh; border-right:none;
+    border-top:1px solid var(--border);
+  }}
+  .map-wrapper {{ height:55vh; }}
 }}
 </style>
 </head>
 <body>
 
-<!-- Title -->
-<div class="map-title" id="map-title-container">
-  <div id="title-main">Safety Request Outcomes: QCB5 (Queens Community Board 5)</div>
-  <div id="title-sub">Signal Studies &amp; Speed Bumps vs. Injury Crashes (2020&ndash;2025)</div>
-</div>
-
-<!-- Year filter -->
-<div id="year-filter">
-  <label>From:</label>
-  <select id="year-start">
-    <option value="2020" selected>2020</option>
-    <option value="2021">2021</option><option value="2022">2022</option>
-    <option value="2023">2023</option><option value="2024">2024</option>
-    <option value="2025">2025</option>
-  </select>
-  <label>To:</label>
-  <select id="year-end">
-    <option value="2020">2020</option><option value="2021">2021</option>
-    <option value="2022">2022</option><option value="2023">2023</option>
-    <option value="2024">2024</option>
-    <option value="2025" selected>2025</option>
-  </select>
-  <button id="year-reset">Reset</button>
-</div>
-
-<!-- Left panel: legend above stats -->
-<div id="left-panel">
-  <div id="map-legend">
-    <span class="legend-header">Legend</span>
-    <span class="legend-item" data-layers="Denied Signal,Denied Speed"><span class="legend-dot" style="background:#B44040;"></span>Denied request</span>
-    <span class="legend-item" data-layers="Approved Signal,Approved Speed"><span class="legend-dot" style="background:#4A7C59;"></span>Approved request</span>
-    <span class="legend-item" data-layers="APS Installed"><span class="legend-dot" style="background:#7B68AE;"></span>APS installed</span>
-    <span class="legend-item" data-layers="Injury Crashes"><span class="legend-dot" style="background:#888;"></span>Injury crash (dot = 1)</span>
-    <span class="legend-item" data-layers="Injury Crashes"><span class="legend-dot" style="background:#1a1a1a;"></span>Fatal crash</span>
-    <span class="legend-item" data-layers="Top 10 Crash"><span class="legend-spotlight" style="border:1.5px dashed #2C5F8B;"><span class="inner" style="background:#2C5F8B;"></span></span>Top 10 crash intersection</span>
-    <span class="legend-item" data-layers="Top 15 Denied"><span class="legend-spotlight" style="border:1.5px dashed #B44040;"><span class="inner" style="background:#B44040;"></span></span>Top 15 denied spotlight</span>
-    <span class="legend-item" data-layers="DOT Effectiveness"><span class="legend-spotlight" style="border:1.5px dashed #2d7d46;"><span class="inner" style="background:#2d7d46;"></span></span>Installed &mdash; decreased</span>
-    <span class="legend-item" data-layers="DOT Effectiveness"><span class="legend-spotlight" style="border:1.5px dashed #cc8400;"><span class="inner" style="background:#cc8400;"></span></span>Installed &mdash; increased</span>
-  </div>
-  <div id="stats-panel">
-    <div class="stats-header" id="stats-toggle">
-      <span id="stats-title">Statistics (2020&#8211;2025)</span> <span class="toggle">&#9660;</span>
+<div class="map-and-panel">
+  <div class="panel">
+    <div class="panel-header">
+      <h1 id="title-main">Safety Request Outcomes: QCB5</h1>
+      <div class="subtitle" id="title-sub">Signal Studies &amp; Speed Bumps vs. Injury Crashes (2020&ndash;2025)</div>
     </div>
-    <div class="stats-body" id="stats-body"></div>
+
+    <div class="panel-section" style="position:relative;">
+      <div class="section-title">Search</div>
+      <div class="search-input-row">
+        <input id="ref-search" type="text" placeholder="Reference # (e.g. CQ21-0722)" autocomplete="off">
+        <button id="ref-search-btn">Go</button>
+      </div>
+      <div id="ref-search-msg"></div>
+      <div id="ref-search-dropdown"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Year Range</div>
+      <div class="year-filter">
+        <label>From</label>
+        <select id="year-start">
+          <option value="2020">2020</option>
+          <option value="2021">2021</option><option value="2022">2022</option>
+          <option value="2023">2023</option><option value="2024">2024</option>
+          <option value="2025" selected>2025</option>
+        </select>
+        <label>To</label>
+        <select id="year-end">
+          <option value="2020">2020</option><option value="2021">2021</option>
+          <option value="2022">2022</option><option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025" selected>2025</option>
+        </select>
+        <button class="btn-reset" id="year-reset">Reset</button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Layers</div>
+      <label class="layer-toggle"><input type="checkbox" data-layer="deniedSignals" checked> Denied Signals <span class="layer-count" id="count-deniedSignals"></span></label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="approvedSignals" checked> Approved Signals <span class="layer-count" id="count-approvedSignals"></span></label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="deniedSrts" checked> Denied Speed Bumps <span class="layer-count" id="count-deniedSrts"></span></label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="approvedSrts" checked> Approved Speed Bumps <span class="layer-count" id="count-approvedSrts"></span></label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="aps"> APS Installed <span class="layer-count" id="count-aps"></span></label>
+      <hr class="layer-separator">
+      <label class="layer-toggle"><input type="checkbox" data-layer="crashDots" checked> Injury Crashes <span class="layer-count" id="count-crashDots"></span></label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="crashClustered"> Injury Crashes (clustered) <span class="layer-count" id="count-crashClustered"></span></label>
+      <hr class="layer-separator">
+      <label class="layer-toggle"><input type="checkbox" data-layer="top15"> Top 15 Denied Spotlight</label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="top10crashes"> Top 10 Crash Intersections</label>
+      <label class="layer-toggle"><input type="checkbox" data-layer="effectiveness"> DOT Effectiveness <span class="layer-count" id="count-effectiveness"></span></label>
+    </div>
+
+    <div class="panel-section" id="legend-section">
+      <div class="section-title">Legend</div>
+      <span class="legend-item" data-layers="Denied Signal,Denied Speed"><span class="legend-dot" style="background:#B44040;"></span>Denied request</span>
+      <span class="legend-item" data-layers="Approved Signal,Approved Speed"><span class="legend-dot" style="background:#4A7C59;"></span>Approved request</span>
+      <span class="legend-item" data-layers="APS Installed"><span class="legend-dot" style="background:#7B68AE;"></span>APS installed</span>
+      <span class="legend-item" data-layers="Injury Crashes"><span class="legend-dot" style="background:#888;"></span>Injury crash (dot = 1)</span>
+      <span class="legend-item" data-layers="Injury Crashes"><span class="legend-dot" style="background:#1a1a1a;"></span>Fatal crash</span>
+      <span class="legend-item" data-layers="Top 10 Crash"><span class="legend-spotlight" style="border:1.5px dashed #2C5F8B;"><span class="inner" style="background:#2C5F8B;"></span></span>Top 10 crash intersection</span>
+      <span class="legend-item" data-layers="Top 15 Denied"><span class="legend-spotlight" style="border:1.5px dashed #B44040;"><span class="inner" style="background:#B44040;"></span></span>Top 15 denied spotlight</span>
+      <span class="legend-item" data-layers="DOT Effectiveness"><span class="legend-spotlight" style="border:1.5px dashed #2d7d46;"><span class="inner" style="background:#2d7d46;"></span></span>Installed, decreased</span>
+      <span class="legend-item" data-layers="DOT Effectiveness"><span class="legend-spotlight" style="border:1.5px dashed #cc8400;"><span class="inner" style="background:#cc8400;"></span></span>Installed, increased</span>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title" id="stats-title">Statistics (2020&#8211;2025)</div>
+      <div id="stats-body"></div>
+    </div>
+
+    <div class="source-cite">
+      Sources: <a href="https://data.cityofnewyork.us/Transportation/DOT-Signal-Studies/w76s-c5u4" target="_blank" rel="noopener">DOT Signal Studies</a> &middot;
+      <a href="https://data.cityofnewyork.us/Transportation/DOT-SRTS/9n6h-pt9g" target="_blank" rel="noopener">DOT SRTS</a> &middot;
+      <a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95" target="_blank" rel="noopener">Motor Vehicle Crashes</a>
+    </div>
+  </div>
+
+  <div class="map-wrapper">
+    <div id="map"></div>
   </div>
 </div>
-
-<!-- Search box -->
-<div id="search-container">
-  <div class="search-box">
-    <input id="ref-search" type="text" placeholder="Search ref # (e.g. CQ21-0722)" autocomplete="off">
-    <button id="ref-search-btn">Go</button>
-    <div id="ref-search-msg" style="font-size:11px;margin-top:3px;color:#666;"></div>
-    <div id="ref-search-dropdown"></div>
-  </div>
-</div>
-
-<div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -1766,14 +1819,15 @@ body, .leaflet-popup-content, .leaflet-control-layers,
 var DATA = {map_data_json_str};
 
 var COLORS = {{denied:'#B44040',approved:'#4A7C59',crash:'#996633',primary:'#2C5F8B',aps:'#7B68AE'}};
-var popupStyle = "font-family:'Times New Roman',Georgia,serif;font-size:12px;line-height:1.5;";
-var hr = "<hr style='border:0;border-top:1px solid #ccc;margin:4px 0;'>";
+var popupStyle = "font-family:Georgia,'Times New Roman',serif;font-size:12px;line-height:1.5;";
+var hr = "<hr style='border:0;border-top:1px solid #eee;margin:4px 0;'>";
 
 // Current year range
-var yearStart = 2020, yearEnd = 2025;
+var yearStart = 2025, yearEnd = 2025;
 
 // Map
-var map = L.map('map', {{center:[40.714,-73.889], zoom:14, zoomControl:true}});
+var map = L.map('map', {{center:[40.714,-73.889], zoom:14, zoomControl:false}});
+L.control.zoom({{position:'bottomright'}}).addTo(map);
 L.tileLayer('https://{{s}}.basemaps.cartocdn.com/light_nolabels/{{z}}/{{x}}/{{y}}{{r}}.png', {{
   attribution:'&copy; OpenStreetMap &copy; CARTO', maxZoom:19
 }}).addTo(map);
@@ -1816,7 +1870,6 @@ function getRecordsInRange(key) {{
 
 // === Layer builders ===
 var layerGroups = {{}};
-var layerControl;
 
 function crashPopup(r) {{
   var loc = (r.on && r.off) ? r.on+' & '+r.off : (r.on || r.off || 'Location on map');
@@ -1855,9 +1908,9 @@ function buildCrashClustered(records) {{
     iconCreateFunction:function(cl) {{
       var c=cl.getChildCount(), sz=c<10?26:c<50?32:38;
       return L.divIcon({{
-        html:'<div style="background:rgba(136,136,136,0.8);color:white;font-weight:bold;'
-          +'font-family:Times New Roman,serif;font-size:11px;text-align:center;line-height:'
-          +sz+'px;border-radius:50%;border:1.5px solid #666;">'+c+'</div>',
+        html:'<div style="background:rgba(44,95,139,0.82);color:white;font-weight:bold;'
+          +'font-family:Georgia,serif;font-size:11px;text-align:center;line-height:'
+          +sz+'px;border-radius:50%;border:2px solid rgba(184,134,11,0.6);">'+c+'</div>',
         className:'',iconSize:L.point(sz,sz)
       }});
     }}
@@ -1901,8 +1954,8 @@ function buildSignalLayer(records, outcome) {{
   var fillColor = outcome==='denied'?COLORS.denied:COLORS.approved;
   records.forEach(function(r) {{
     var loc = r.main+' & '+r.cross;
-    L.circleMarker([r.lat,r.lon],{{radius:6,color:'#333',fillColor:fillColor,
-      fillOpacity:0.75,weight:1.5}})
+    L.circleMarker([r.lat,r.lon],{{radius:5,color:'#333',fillColor:fillColor,
+      fillOpacity:0.75,weight:1}})
       .bindPopup(signalPopup(r),{{maxWidth:340}})
       .bindTooltip(loc+' — '+r.type+' ('+(outcome==='denied'?'DENIED':'APPROVED')+')')
       .addTo(fg);
@@ -1929,8 +1982,8 @@ function buildSrtsLayer(records, outcome) {{
   var fg = L.featureGroup();
   var fillColor = outcome==='denied'?COLORS.denied:COLORS.approved;
   records.forEach(function(r) {{
-    L.circleMarker([r.lat,r.lon],{{radius:4,color:'#333',fillColor:fillColor,
-      fillOpacity:0.6,weight:1}})
+    L.circleMarker([r.lat,r.lon],{{radius:5,color:'#333',fillColor:fillColor,
+      fillOpacity:0.75,weight:1}})
       .bindPopup(srtsPopup(r),{{maxWidth:340}})
       .bindTooltip(r.on+' ('+r.from+' to '+r.to+') — '+(outcome==='denied'?'DENIED':'APPROVED'))
       .addTo(fg);
@@ -1958,7 +2011,6 @@ function buildApsLayer(records) {{
 
 // === Dynamic layers (recomputed on year filter change) ===
 
-// Haversine distance in meters
 function haversineDist(lat1, lon1, lat2, lon2) {{
   var R = 6371000;
   var dLat = (lat2-lat1)*Math.PI/180;
@@ -1973,7 +2025,6 @@ function buildEffectivenessLayer() {{
   var fg = L.featureGroup();
   if (!DATA.effectiveness) return fg;
   DATA.effectiveness.forEach(function(ba) {{
-    // Filter by installation year
     var instYear = ba.installDt ? parseInt(ba.installDt.split(', ').pop()) : 0;
     if (instYear < yearStart || instYear > yearEnd) return;
     var fillColor, outline, label;
@@ -2001,7 +2052,6 @@ function buildEffectivenessLayer() {{
   return fg;
 }}
 
-// Count effectiveness records in year range
 function countEffectiveness() {{
   var n = 0;
   (DATA.effectiveness||[]).forEach(function(ba) {{
@@ -2014,7 +2064,6 @@ function countEffectiveness() {{
 function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
   var fg = L.featureGroup();
   if (crashes.length === 0) return fg;
-  // Build list of all denied locations
   var locs = [];
   deniedSigs.forEach(function(d) {{
     if (!d.lat || !d.lon) return;
@@ -2025,9 +2074,7 @@ function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
     locs.push({{lat:d.lat,lon:d.lon,name:d.on+' ('+d.from+' to '+d.to+')',dataset:'Speed Bump',type:'Speed Reducer'}});
   }});
   if (locs.length === 0) return fg;
-  // Bounding-box pre-filter constant (~150m in degrees)
   var dLat = 0.00135, dLon = 0.0018;
-  // Count crashes within 150m of each denied location
   locs.forEach(function(loc) {{
     var cr=0, inj=0, pinj=0, fat=0;
     crashes.forEach(function(c) {{
@@ -2038,9 +2085,7 @@ function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
     }});
     loc.cr=cr; loc.inj=inj; loc.pinj=pinj; loc.fat=fat;
   }});
-  // Sort by crash count descending
   locs.sort(function(a,b) {{ return b.cr-a.cr; }});
-  // Spatial dedup at 150m
   var selected = [];
   locs.forEach(function(loc) {{
     if (selected.length >= 15) return;
@@ -2050,7 +2095,6 @@ function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
     }}
     if (!tooClose) selected.push(loc);
   }});
-  // Build markers
   selected.forEach(function(r, idx) {{
     var rank = idx+1;
     L.circle([r.lat,r.lon],{{radius:150,color:COLORS.denied,fillColor:COLORS.denied,
@@ -2065,7 +2109,7 @@ function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
       .bindTooltip('#'+rank+': '+r.name+' ('+r.cr+' crashes)')
       .addTo(fg);
     L.marker([r.lat,r.lon],{{icon:L.divIcon({{
-      html:'<div style="font-family:Times New Roman,serif;font-size:10px;font-weight:bold;'
+      html:'<div style="font-family:Georgia,serif;font-size:10px;font-weight:bold;'
         +'color:white;text-align:center;margin-top:-5px;pointer-events:none;">'+rank+'</div>',
       className:'',iconSize:L.point(20,20),iconAnchor:L.point(10,10)}}),
       interactive:false}}).addTo(fg);
@@ -2076,7 +2120,6 @@ function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
 function buildTop10CrashLayer(crashes) {{
   var fg = L.featureGroup();
   if (crashes.length === 0) return fg;
-  // Group by intersection (on + off, sorted alphabetically)
   var byInt = {{}};
   crashes.forEach(function(c) {{
     if (!c.on || !c.off) return;
@@ -2104,7 +2147,7 @@ function buildTop10CrashLayer(crashes) {{
       .bindTooltip('#'+rank+': '+name+' ('+cr.cr+' crashes)')
       .addTo(fg);
     L.marker([cr.lat,cr.lon],{{icon:L.divIcon({{
-      html:'<div style="font-family:Times New Roman,serif;font-size:10px;font-weight:bold;'
+      html:'<div style="font-family:Georgia,serif;font-size:10px;font-weight:bold;'
         +'color:white;text-align:center;margin-top:-5px;pointer-events:none;">'+rank+'</div>',
       className:'',iconSize:L.point(20,20),iconAnchor:L.point(10,10)}}),
       interactive:false}}).addTo(fg);
@@ -2132,31 +2175,57 @@ layerGroups.effectiveness = buildEffectivenessLayer();
 layerGroups.top15 = buildTop15Layer(crashRecs, denSigRecs, denSrtsRecs);
 layerGroups.top10crashes = buildTop10CrashLayer(crashRecs);
 
-// Layer names for control
+// Layer display names (used for title logic)
 var layerNames = {{
-  crashDots: 'Injury Crashes (n='+crashRecs.length.toLocaleString()+', '+yearRange+')',
-  crashClustered: 'Injury Crashes \\u2014 Clustered (n='+crashRecs.length.toLocaleString()+')',
-  deniedSignals: 'Denied Signal Studies (n='+denSigRecs.length.toLocaleString()+', '+yearRange+')',
-  approvedSignals: 'Approved Signal Studies (n='+appSigRecs.length.toLocaleString()+', '+yearRange+')',
-  deniedSrts: 'Denied Speed Bumps (n='+denSrtsRecs.length.toLocaleString()+', '+yearRange+')',
-  approvedSrts: 'Approved Speed Bumps (n='+appSrtsRecs.length.toLocaleString()+', '+yearRange+')',
-  aps: 'APS Installed (n='+apsRecs.length.toLocaleString()+', '+yearRange+')',
-  effectiveness: 'DOT Effectiveness (n='+countEffectiveness()+', Installed, '+yearRange+')',
-  top15: 'Top 15 Denied Spotlight ('+yearRange+')',
-  top10crashes: 'Top 10 Crash Intersections ('+yearRange+')',
+  crashDots: 'Injury Crashes',
+  crashClustered: 'Injury Crashes',
+  deniedSignals: 'Denied Signal Studies',
+  approvedSignals: 'Approved Signal Studies',
+  deniedSrts: 'Denied Speed Bumps',
+  approvedSrts: 'Approved Speed Bumps',
+  aps: 'APS Installed',
+  effectiveness: 'DOT Effectiveness',
+  top15: 'Top 15 Denied Spotlight',
+  top10crashes: 'Top 10 Crash Intersections',
 }};
 
-// Add default-on layers to map
-layerGroups.crashDots.addTo(map);
-layerGroups.deniedSignals.addTo(map);
-layerGroups.approvedSignals.addTo(map);
-layerGroups.deniedSrts.addTo(map);
-layerGroups.approvedSrts.addTo(map);
+// Default-on layers
+var defaultOn = ['crashDots','deniedSignals','approvedSignals','deniedSrts','approvedSrts'];
+defaultOn.forEach(function(k) {{ layerGroups[k].addTo(map); }});
 
-// Build layer control
-var overlays = {{}};
-for (var k in layerNames) overlays[layerNames[k]] = layerGroups[k];
-layerControl = L.control.layers(null, overlays, {{collapsed:false}}).addTo(map);
+// === Custom layer toggle (sidebar checkboxes) ===
+function updateLayerCounts() {{
+  var counts = {{
+    crashDots: crashRecs.length,
+    crashClustered: crashRecs.length,
+    deniedSignals: denSigRecs.length,
+    approvedSignals: appSigRecs.length,
+    deniedSrts: denSrtsRecs.length,
+    approvedSrts: appSrtsRecs.length,
+    aps: apsRecs.length,
+    effectiveness: countEffectiveness(),
+  }};
+  for (var k in counts) {{
+    var el = document.getElementById('count-'+k);
+    if (el) el.textContent = '('+counts[k].toLocaleString()+')';
+  }}
+}}
+updateLayerCounts();
+
+// Wire up checkboxes
+document.querySelectorAll('.layer-toggle input[data-layer]').forEach(function(cb) {{
+  cb.addEventListener('change', function() {{
+    var key = this.getAttribute('data-layer');
+    if (!layerGroups[key]) return;
+    if (this.checked) {{
+      layerGroups[key].addTo(map);
+    }} else {{
+      map.removeLayer(layerGroups[key]);
+    }}
+    updateTitle();
+    updateLegend();
+  }});
+}});
 
 // === Year filter logic ===
 var selStart = document.getElementById('year-start');
@@ -2172,14 +2241,13 @@ function rebuildYearLayers() {{
   yearEnd = parseInt(selEnd.value);
   yearRange = yearStart+'\\u2013'+yearEnd;
 
-  // Track which layers were on the map
-  var wasOnMap = {{}};
-  ['crashDots','crashClustered','deniedSignals','approvedSignals','deniedSrts','approvedSrts','aps','effectiveness','top15','top10crashes'].forEach(function(k) {{
-    wasOnMap[k] = map.hasLayer(layerGroups[k]);
+  // Track which layers were on the map via checkboxes
+  var wasChecked = {{}};
+  document.querySelectorAll('.layer-toggle input[data-layer]').forEach(function(cb) {{
+    wasChecked[cb.getAttribute('data-layer')] = cb.checked;
   }});
 
-  // Remove old layers from control and map
-  map.removeControl(layerControl);
+  // Remove old layers from map
   for (var k in layerGroups) {{
     if (map.hasLayer(layerGroups[k])) map.removeLayer(layerGroups[k]);
   }}
@@ -2203,32 +2271,15 @@ function rebuildYearLayers() {{
   layerGroups.top15 = buildTop15Layer(crashRecs, denSigRecs, denSrtsRecs);
   layerGroups.top10crashes = buildTop10CrashLayer(crashRecs);
 
-  // Update layer names
-  layerNames.crashDots = 'Injury Crashes (n='+crashRecs.length.toLocaleString()+', '+yearRange+')';
-  layerNames.crashClustered = 'Injury Crashes \\u2014 Clustered (n='+crashRecs.length.toLocaleString()+')';
-  layerNames.deniedSignals = 'Denied Signal Studies (n='+denSigRecs.length.toLocaleString()+', '+yearRange+')';
-  layerNames.approvedSignals = 'Approved Signal Studies (n='+appSigRecs.length.toLocaleString()+', '+yearRange+')';
-  layerNames.deniedSrts = 'Denied Speed Bumps (n='+denSrtsRecs.length.toLocaleString()+', '+yearRange+')';
-  layerNames.approvedSrts = 'Approved Speed Bumps (n='+appSrtsRecs.length.toLocaleString()+', '+yearRange+')';
-  layerNames.aps = 'APS Installed (n='+apsRecs.length.toLocaleString()+', '+yearRange+')';
-  layerNames.effectiveness = 'DOT Effectiveness (n='+countEffectiveness()+', Installed, '+yearRange+')';
-  layerNames.top15 = 'Top 15 Denied Spotlight ('+yearRange+')';
-  layerNames.top10crashes = 'Top 10 Crash Intersections ('+yearRange+')';
+  // Re-add layers that were checked
+  for (var k in wasChecked) {{
+    if (wasChecked[k] && layerGroups[k]) layerGroups[k].addTo(map);
+  }}
 
-  // Re-add layers that were active
-  ['crashDots','crashClustered','deniedSignals','approvedSignals','deniedSrts','approvedSrts','aps','effectiveness','top15','top10crashes'].forEach(function(k) {{
-    if (wasOnMap[k]) layerGroups[k].addTo(map);
-  }});
-
-  // Rebuild layer control
-  overlays = {{}};
-  for (var k in layerNames) overlays[layerNames[k]] = layerGroups[k];
-  layerControl = L.control.layers(null, overlays, {{collapsed:false}}).addTo(map);
-
+  updateLayerCounts();
   updateStats();
   updateTitle();
   updateLegend();
-  positionSearch();
   notifyParentYear();
 }}
 
@@ -2240,45 +2291,32 @@ document.getElementById('year-reset').addEventListener('click', function() {{
 
 // === Stats panel ===
 function updateStats() {{
-  // Update title with year range
   document.getElementById('stats-title').textContent = 'Statistics ('+yearRange+')';
   var html = '';
-  // Signals
   html += '<div class="stat-group"><div class="stat-title">Signal Studies</div>';
-  html += '<div class="stat-row"><span>Denied:</span><span class="stat-denied">'+denSigRecs.length+'</span></div>';
-  html += '<div class="stat-row"><span>Approved:</span><span class="stat-approved">'+appSigRecs.length+'</span></div>';
+  html += '<div class="stat-row"><span>Denied</span><span class="stat-denied">'+denSigRecs.length+'</span></div>';
+  html += '<div class="stat-row"><span>Approved</span><span class="stat-approved">'+appSigRecs.length+'</span></div>';
   var sigTotal = denSigRecs.length+appSigRecs.length;
-  var sigRate = sigTotal>0?(appSigRecs.length/sigTotal*100).toFixed(2):'0.00';
-  html += '<div class="stat-row"><span>Approval rate:</span><span>'+sigRate+'%</span></div></div>';
-  // SRTS
+  var sigRate = sigTotal>0?(appSigRecs.length/sigTotal*100).toFixed(1):'0.0';
+  html += '<div class="stat-row"><span>Approval rate</span><span class="stat-value">'+sigRate+'%</span></div></div>';
   html += '<div class="stat-group"><div class="stat-title">Speed Bumps</div>';
-  html += '<div class="stat-row"><span>Denied:</span><span class="stat-denied">'+denSrtsRecs.length+'</span></div>';
-  html += '<div class="stat-row"><span>Approved:</span><span class="stat-approved">'+appSrtsRecs.length+'</span></div>';
+  html += '<div class="stat-row"><span>Denied</span><span class="stat-denied">'+denSrtsRecs.length+'</span></div>';
+  html += '<div class="stat-row"><span>Approved</span><span class="stat-approved">'+appSrtsRecs.length+'</span></div>';
   var srtsTotal = denSrtsRecs.length+appSrtsRecs.length;
-  var srtsRate = srtsTotal>0?(appSrtsRecs.length/srtsTotal*100).toFixed(2):'0.00';
-  html += '<div class="stat-row"><span>Approval rate:</span><span>'+srtsRate+'%</span></div></div>';
-  // Crashes
+  var srtsRate = srtsTotal>0?(appSrtsRecs.length/srtsTotal*100).toFixed(1):'0.0';
+  html += '<div class="stat-row"><span>Approval rate</span><span class="stat-value">'+srtsRate+'%</span></div></div>';
   var totInj=0, totPedInj=0, totFat=0;
   crashRecs.forEach(function(r){{ totInj+=r.inj; totPedInj+=r.pinj; totFat+=r.k; }});
   html += '<div class="stat-group"><div class="stat-title">Crashes</div>';
-  html += '<div class="stat-row"><span>Total:</span><span class="stat-crash">'+crashRecs.length.toLocaleString()+'</span></div>';
-  html += '<div class="stat-row"><span>Injuries:</span><span>'+totInj.toLocaleString()+'</span></div>';
-  html += '<div class="stat-row"><span>Ped. injuries:</span><span>'+totPedInj.toLocaleString()+'</span></div>';
-  html += '<div class="stat-row"><span>Fatalities:</span><span>'+totFat.toLocaleString()+'</span></div></div>';
-  // APS
+  html += '<div class="stat-row"><span>Total</span><span class="stat-crash">'+crashRecs.length.toLocaleString()+'</span></div>';
+  html += '<div class="stat-row"><span>Injuries</span><span>'+totInj.toLocaleString()+'</span></div>';
+  html += '<div class="stat-row"><span>Ped. injuries</span><span>'+totPedInj.toLocaleString()+'</span></div>';
+  html += '<div class="stat-row"><span>Fatalities</span><span>'+totFat.toLocaleString()+'</span></div></div>';
   html += '<div class="stat-group"><div class="stat-title">APS Installed</div>';
-  html += '<div class="stat-row"><span>Count:</span><span class="stat-aps">'+apsRecs.length+'</span></div></div>';
+  html += '<div class="stat-row"><span>Count</span><span class="stat-aps">'+apsRecs.length+'</span></div></div>';
   document.getElementById('stats-body').innerHTML = html;
 }}
 updateStats();
-
-// Stats toggle
-var statsCollapsed = false;
-document.getElementById('stats-toggle').addEventListener('click', function() {{
-  statsCollapsed = !statsCollapsed;
-  document.getElementById('stats-body').style.display = statsCollapsed?'none':'';
-  this.querySelector('.toggle').innerHTML = statsCollapsed?'&#9650;':'&#9660;';
-}});
 
 // === Dynamic title ===
 function isLayerActive(prefix) {{
@@ -2326,14 +2364,9 @@ function updateLegend() {{
     el.style.display = show?'block':'none';
     if (show) anyVisible = true;
   }});
-  document.getElementById('map-legend').style.display = anyVisible?'':'none';
+  document.getElementById('legend-section').style.display = anyVisible?'':'none';
 }}
 
-// Listen for layer changes
-map.on('overlayadd overlayremove', function() {{
-  updateTitle();
-  updateLegend();
-}});
 updateTitle();
 updateLegend();
 
@@ -2375,7 +2408,7 @@ function doSearch(ref) {{
   }});
   ring.addTo(highlightLayer);
   L.popup({{offset:[0,-8]}}).setLatLng([entry.lat, entry.lon])
-    .setContent('<div style="font-family:Times New Roman,serif;font-size:12px;">'
+    .setContent('<div style="font-family:Georgia,serif;font-size:12px;">'
       +'<b>'+entry.label+'</b><br>'+ref+'<br>Type: '+(entry.type||'N/A')
       +'<br>Outcome: <b>'+entry.outcome+'</b></div>')
     .addTo(highlightLayer);
@@ -2401,10 +2434,8 @@ function showDropdown(query) {{
   matches.forEach(function(ref) {{
     var entry = SEARCH_INDEX[ref];
     var div = document.createElement('div');
-    div.style.cssText='padding:4px 8px;cursor:pointer;border-bottom:1px solid #eee;';
+    div.className = 'dropdown-item';
     div.textContent = ref+' \\u2014 '+(entry.label||'');
-    div.onmouseover = function(){{ this.style.background='#f0f0f0'; }};
-    div.onmouseout = function(){{ this.style.background='white'; }};
     div.onclick = function(){{
       document.getElementById('ref-search').value=ref;
       dd.style.display='none'; doSearch(ref);
@@ -2414,29 +2445,15 @@ function showDropdown(query) {{
   dd.style.display='block';
 }}
 
-// Position search below layer control
-function positionSearch() {{
-  var lc = document.querySelector('.leaflet-control-layers');
-  var sc = document.getElementById('search-container');
-  if (lc && sc) {{
-    var rect = lc.getBoundingClientRect();
-    sc.style.top = (rect.bottom+6)+'px';
-    sc.style.display = 'block';
-  }}
-}}
-
 document.getElementById('ref-search-btn').onclick = function(){{ doSearch(document.getElementById('ref-search').value); }};
 document.getElementById('ref-search').onkeyup = function(e){{
   if (e.key==='Enter'){{ doSearch(this.value); document.getElementById('ref-search-dropdown').style.display='none'; }}
   else showDropdown(this.value);
 }};
 document.addEventListener('click', function(e){{
-  if (!document.getElementById('search-container').contains(e.target))
+  if (!document.getElementById('ref-search').contains(e.target) && !document.getElementById('ref-search-dropdown').contains(e.target))
     document.getElementById('ref-search-dropdown').style.display='none';
 }});
-
-// Initial position
-setTimeout(positionSearch, 300);
 
 // === postMessage API (for embedding in website) ===
 window.addEventListener('message', function(ev) {{
@@ -2450,11 +2467,10 @@ window.addEventListener('message', function(ev) {{
 
 // If embedded in iframe, hide the in-map year filter (page controls it)
 if (window !== window.top) {{
-  var yf = document.getElementById('year-filter');
+  var yf = document.querySelector('.panel-section:nth-child(2)');
   if (yf) yf.style.display = 'none';
 }}
 
-// Expose setYearRange globally so parent page can call it directly
 window.setYearRange = function(s, e) {{
   if (isNaN(s) || isNaN(e) || s < 2020 || e > 2025 || s > e) return;
   selStart.value = String(s);
@@ -2462,7 +2478,6 @@ window.setYearRange = function(s, e) {{
   rebuildYearLayers();
 }};
 
-// Notify parent of year changes so page can stay synced
 function notifyParentYear() {{
   if (window.parent && window.parent !== window) {{
     window.parent.postMessage({{
