@@ -612,7 +612,7 @@ function buildTop10CrashLayer(crashes) {
 }
 
 // === Build all layers ===
-var yearRange = yearStart+'\u2013'+yearEnd;
+var yearRange = yearStart===yearEnd ? String(yearStart) : yearStart+'\u2013'+yearEnd;
 var crashRecs = getRecordsInRange('crashes');
 var denSigRecs = getRecordsInRange('deniedSignals');
 var appSigRecs = getRecordsInRange('approvedSignals');
