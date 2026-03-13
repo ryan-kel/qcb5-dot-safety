@@ -1594,21 +1594,31 @@ html, body {{ margin:0; padding:0; height:100%; font-family:var(--font); }}
   border-bottom:1px solid var(--gold);
 }}
 
-/* Year filter */
+/* Year filter bar (citibike pattern) */
 .year-filter {{
-  display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+  display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;
+  padding:0.6rem 0.8rem; background:#f5f5f5;
+  border:1px solid var(--border); border-radius:6px;
+  font-size:0.9rem; margin-bottom:0.25rem;
 }}
-.year-filter label {{ font-size:0.82rem; color:#555; }}
+.year-filter label {{ font-weight:600; color:var(--navy); font-size:0.85rem; }}
 .year-filter select {{
-  font-family:var(--font); font-size:0.82rem;
-  padding:3px 6px; border:1px solid var(--border);
-  border-radius:3px; background:#fff;
+  font-family:var(--font); font-size:0.85rem;
+  padding:4px 8px; border:1px solid var(--border);
+  border-radius:4px; background:#fff;
 }}
 .year-filter select:focus {{ outline:none; border-color:var(--navy); }}
+.year-filter .btn-apply {{
+  font-family:var(--font); font-size:0.8rem;
+  padding:4px 14px; border:1px solid var(--navy);
+  background:var(--navy); color:#fff; border-radius:4px;
+  cursor:pointer; font-weight:600;
+}}
+.year-filter .btn-apply:hover {{ opacity:0.9; }}
 .year-filter .btn-reset {{
-  font-family:var(--font); font-size:0.75rem;
-  padding:3px 10px; border:1px solid var(--border);
-  background:#fff; border-radius:3px; cursor:pointer;
+  font-family:var(--font); font-size:0.8rem;
+  padding:4px 14px; border:1px solid var(--navy);
+  background:none; border-radius:4px; cursor:pointer;
   color:var(--navy); font-weight:600;
 }}
 .year-filter .btn-reset:hover {{ background:var(--navy); color:#fff; }}
@@ -1760,6 +1770,7 @@ html, body {{ margin:0; padding:0; height:100%; font-family:var(--font); }}
           <option value="2024">2024</option>
           <option value="2025" selected>2025</option>
         </select>
+        <button class="btn-apply" id="year-apply">Apply</button>
         <button class="btn-reset" id="year-reset">Reset</button>
       </div>
     </div>
@@ -2283,8 +2294,11 @@ function rebuildYearLayers() {{
   notifyParentYear();
 }}
 
-selStart.addEventListener('change', function() {{ enforceYearRange(); rebuildYearLayers(); }});
-selEnd.addEventListener('change', function() {{ enforceYearRange(); rebuildYearLayers(); }});
+selStart.addEventListener('change', function() {{ enforceYearRange(); }});
+selEnd.addEventListener('change', function() {{ enforceYearRange(); }});
+document.getElementById('year-apply').addEventListener('click', function() {{
+  enforceYearRange(); rebuildYearLayers();
+}});
 document.getElementById('year-reset').addEventListener('click', function() {{
   selStart.value = '2020'; selEnd.value = '2025'; rebuildYearLayers();
 }});
