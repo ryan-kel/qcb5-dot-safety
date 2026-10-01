@@ -1,6 +1,6 @@
 Request Type,CB5 Resolved,CB5 Denial Rate (%),Citywide Resolved,Citywide Denial Rate (%),Source Dataset
-Traffic Signal,178,89.3,9283,91.2,Signal Studies [w76s-c5u4]
-All-Way Stop,163,85.9,5140,78.4,Signal Studies [w76s-c5u4]
-Left Turn Arrow/Signal,34,100.0,1248,100.0,Signal Studies [w76s-c5u4]
-Leading Pedestrian Interval,54,100.0,927,100.0,Signal Studies [w76s-c5u4]
-Speed Bumps,436,98.6,15475,94.4,Speed Reducer Tracking System [9n6h-pt9g]
+Traffic Signal,178,89.3,9318,91.1,Signal Studies [w76s-c5u4]
+All-Way Stop,163,85.9,5162,78.4,Signal Studies [w76s-c5u4]
+Left Turn Arrow/Signal,34,100.0,1271,100.0,Signal Studies [w76s-c5u4]
+Leading Pedestrian Interval,54,100.0,930,100.0,Signal Studies [w76s-c5u4]
+Speed Bumps,436,98.6,15735,94.4,Speed Reducer Tracking System [9n6h-pt9g]

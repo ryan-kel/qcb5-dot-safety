@@ -1,7 +1,7 @@
 Borough,Total Resolved,Denied,Denial Rate (%),Source Dataset
-Manhattan,1570,1485,94.6,Signal Studies [w76s-c5u4]
-Staten Island,2061,1889,91.7,Signal Studies [w76s-c5u4]
-Queens,6114,5437,88.9,Signal Studies [w76s-c5u4]
-Brooklyn,5197,4589,88.3,Signal Studies [w76s-c5u4]
-Bronx,1807,1418,78.5,Signal Studies [w76s-c5u4]
-Citywide,16777,14846,88.5,Signal Studies [w76s-c5u4]
+Manhattan,1577,1491,94.5,Signal Studies [w76s-c5u4]
+Staten Island,2068,1895,91.6,Signal Studies [w76s-c5u4]
+Queens,6136,5455,88.9,Signal Studies [w76s-c5u4]
+Brooklyn,5222,4609,88.3,Signal Studies [w76s-c5u4]
+Bronx,1829,1438,78.6,Signal Studies [w76s-c5u4]
+Citywide,16860,14916,88.5,Signal Studies [w76s-c5u4]

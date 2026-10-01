@@ -1,7 +1,7 @@
 Year,CB5 Total,CB5 Resolved,CB5 Denied,CB5 Denial Rate (%),CW Total,CW Resolved,CW Denied,CW Denial Rate (%),Source Dataset
 2020,65,64,61,95.3,1819,1794,1507,84.0,Signal Studies [w76s-c5u4]
-2021,64,64,50,78.1,2711,2680,2144,80.0,Signal Studies [w76s-c5u4]
-2022,106,106,94,88.7,2993,2960,2470,83.4,Signal Studies [w76s-c5u4]
-2023,82,82,76,92.7,3250,3188,2897,90.9,Signal Studies [w76s-c5u4]
-2024,74,73,66,90.4,3199,3104,2918,94.0,Signal Studies [w76s-c5u4]
-2025,43,43,43,100.0,3130,3051,2910,95.4,Signal Studies [w76s-c5u4]
+2021,64,64,50,78.1,2714,2683,2147,80.0,Signal Studies [w76s-c5u4]
+2022,106,106,94,88.7,2995,2962,2472,83.5,Signal Studies [w76s-c5u4]
+2023,82,82,76,92.7,3263,3201,2901,90.6,Signal Studies [w76s-c5u4]
+2024,74,73,66,90.4,3202,3107,2918,93.9,Signal Studies [w76s-c5u4]
+2025,43,43,43,100.0,3193,3113,2971,95.4,Signal Studies [w76s-c5u4]

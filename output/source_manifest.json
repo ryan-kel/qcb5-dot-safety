@@ -6,7 +6,7 @@
   },
   "datasets": [
     {
-      "bytes": 26446008,
+      "bytes": 26564471,
       "columns": [
         "id",
         "referencenumber",
@@ -67,7 +67,7 @@
         "otherstudies2"
       ],
       "date_column": "daterequested",
-      "date_max": "2026-08-21",
+      "date_max": "2026-09-01",
       "date_min": "1996-04-11",
       "endpoint": "w76s-c5u4",
       "exists": true,
@@ -84,12 +84,12 @@
       "name": "Traffic Signal and All-Way Stop Study Requests",
       "path": "data_raw/signal_studies_citywide.csv",
       "resource_url": "https://data.cityofnewyork.us/resource/w76s-c5u4.json",
-      "rows": 76461,
-      "sha256": "76a9ba28566a9e7e047b7af160c5f3068deabde87f8c9717e56d9c21983f7f57",
+      "rows": 76748,
+      "sha256": "1fbd398e743d99fa7c901c7e6749bbd2b351f823ea5d77eb3f4ab308d027ac7d",
       "source_url": "https://data.cityofnewyork.us/Transportation/Traffic-Signal-and-All-Way-Stop-Study-Requests/w76s-c5u4"
     },
     {
-      "bytes": 29052495,
+      "bytes": 29307976,
       "columns": [
         "projectcode",
         "groupowner",
@@ -135,7 +135,7 @@
         "secondstudycode"
       ],
       "date_column": "requestdate",
-      "date_max": "2026-08-27",
+      "date_max": "2026-09-23",
       "date_min": "1990-01-01",
       "endpoint": "9n6h-pt9g",
       "exists": true,
@@ -152,12 +152,12 @@
       "name": "Speed Reducer Tracking System",
       "path": "data_raw/srts_citywide.csv",
       "resource_url": "https://data.cityofnewyork.us/resource/9n6h-pt9g.json",
-      "rows": 60353,
-      "sha256": "b070dac261cee72ca5516be12881347fd06cd44fc09e64f3f92b19f2db2d7d21",
+      "rows": 60937,
+      "sha256": "d57e029d6f9df205b826833a24e250448a2b79b02bcea79962d81a68b2498dea",
       "source_url": "https://data.cityofnewyork.us/Transportation/Speed-Reducer-Tracking-System-SRTS-/9n6h-pt9g"
     },
     {
-      "bytes": 1136603,
+      "bytes": 1156914,
       "columns": [
         "the_geom",
         "borocode",
@@ -175,15 +175,15 @@
         "femafldz",
         "femafldt",
         "ntaname",
+        ":@computed_region_efsh_h5xi",
         ":@computed_region_f5dn_yrer",
         ":@computed_region_yeji_bk3q",
         ":@computed_region_92fq_4b7q",
         ":@computed_region_sbqj_enih",
-        "hrcevac",
-        ":@computed_region_efsh_h5xi"
+        "hrcevac"
       ],
       "date_column": "date_insta",
-      "date_max": "2026-07-31",
+      "date_max": "2026-08-31",
       "date_min": "2010-02-03",
       "endpoint": "de3m-c5p4",
       "exists": true,
@@ -200,8 +200,8 @@
       "name": "Accessible Pedestrian Signal Locations",
       "path": "data_raw/aps_installed_citywide.csv",
       "resource_url": "https://data.cityofnewyork.us/resource/de3m-c5p4.json",
-      "rows": 4328,
-      "sha256": "8691304eae8f519b0e3b7e3c3aa80ffcaddb08efd5a4dcb2537766128b033287",
+      "rows": 4404,
+      "sha256": "7de8f24eb3b784d1306567af411490568578a4610d00c78e9cd642cb8d971384",
       "source_url": "https://data.cityofnewyork.us/Transportation/Accessible-Pedestrian-Signal-Locations/de3m-c5p4"
     },
     {
@@ -335,7 +335,7 @@
       "source_url": null
     },
     {
-      "bytes": 331615,
+      "bytes": 331584,
       "columns": [
         "curated_row_id",
         "source_file",
@@ -368,7 +368,7 @@
       "path": "output/data_cb5_signal_studies_provenance.csv",
       "provenance_status": "Row-level scaffold with committed raw-snapshot match metadata; all rows require human review before publication.",
       "rows": 499,
-      "sha256": "9f6935998dd16ace7487a15d43a9e6047c54d8bd9f34bcefc6bd3dcee3bf84db",
+      "sha256": "93df64966f8dcf28f8761e3db99e00a15143c4bac85e74b0568dcdfe0df2051e",
       "source_url": null
     },
     {
@@ -402,7 +402,7 @@
       "source_url": "https://raw.githubusercontent.com/nycehs/NYC_geography/master/CD.geo.json"
     },
     {
-      "bytes": 81131,
+      "bytes": 81130,
       "columns": [
         "referencenumber",
         "mainstreet",
@@ -429,7 +429,7 @@
       "name": "Signal Study Geocode Cache",
       "path": "output/geocode_cache_signal_studies.csv",
       "rows": 432,
-      "sha256": "b500b74a93dafe7577069dbb5bf85ecc77cd6cec4f8fc1cf82eb45bf0f555d88",
+      "sha256": "b7bab7094a8226c06cd7ab48104e99fba924adf64228e74e0e6854c05c0bbcbf",
       "source_url": null
     },
     {
@@ -464,6 +464,6 @@
       "source_url": null
     }
   ],
-  "generated_at_utc": "2026-09-01T10:53:57+00:00",
+  "generated_at_utc": "2026-10-01T12:10:45+00:00",
   "schema_version": 1
 }

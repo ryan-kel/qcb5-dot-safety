@@ -1,7 +1,7 @@
 Reason,Count,Percent,Source Dataset
-Speed < 30 mph,359,83.5,Speed Reducer Tracking System [9n6h-pt9g]
-Not Specified,22,5.1,Speed Reducer Tracking System [9n6h-pt9g]
+Speed < 30 mph,364,84.7,Speed Reducer Tracking System [9n6h-pt9g]
 Other,19,4.4,Speed Reducer Tracking System [9n6h-pt9g]
+Not Specified,17,4.0,Speed Reducer Tracking System [9n6h-pt9g]
 Near Speed Camera,16,3.7,Speed Reducer Tracking System [9n6h-pt9g]
 Street Too Short,11,2.6,Speed Reducer Tracking System [9n6h-pt9g]
 Driveways,3,0.7,Speed Reducer Tracking System [9n6h-pt9g]

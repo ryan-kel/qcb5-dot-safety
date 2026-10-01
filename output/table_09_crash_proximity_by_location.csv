@@ -10,8 +10,8 @@ CQ24-0154B,Grand Avenue & Borden Avenue,Signal Study,Left Turn Arrow/Signal,deni
 SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.692317,-73.882678,87,130,2,0.0
 SR-20250806-39341,62 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.713843,-73.900939,78,93,21,1.0
 CQ23-3520B,Metropolitan Avenue & Aubrey Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.711994,-73.86073,70,105,5,0.0
-CQ21-2789B,Metropolitan Avenue & Aubrey Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.711994,-73.86073,70,105,5,0.0
 CQ21-2787B,Metropolitan Avenue & Aubrey Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.711994,-73.86073,70,105,5,0.0
+CQ21-2789B,Metropolitan Avenue & Aubrey Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.711994,-73.86073,70,105,5,0.0
 CQ22-1598B,Aubrey Avenue & Metropolitan Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.711994,-73.86073,70,105,5,0.0
 CQ24-1539B,Bleecker Street & Fresh Pond Road,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.711903,-73.90019,69,79,18,1.0
 CQ20-0921B,Fresh Pond Road & Bleecker Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.711903,-73.90019,69,79,18,1.0
@@ -20,13 +20,13 @@ CQ22-1495,Perry Avenue & Hamilton Place,Signal Study,All-Way Stop,denied,2022.0,
 CQ23-0750B,61 Street & Metropolitan Avenue,Signal Study,Left Turn Arrow/Signal,denied,2023.0,data_cb5_signal_studies.csv,40.712757,-73.90225,65,76,20,0.0
 SR-20210426-25674,62 Road,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.713173,-73.900749,65,72,18,0.0
 SR-20251215-39849,Onderdonk Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700718,-73.901694,64,84,19,0.0
-CQ24-2502B,Metropolitan Avenue & Forest Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
+CQ25-0094B,Metropolitan Avenue & Forest Avenue,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
 CQ24-1274B,Metropolitan Avenue & Forest Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
 CQ21-1974B,Metropolitan Avenue & Forest Avenue,Signal Study,Leading Pedestrian Interval,denied,2021.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
 CQ23-2677B,Forest Avenue & Metropolitan Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
 CQ23-1852B,Metropolitan Avenue & Forest Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
 CQ20-0698B,Metropolitan Avenue & 60 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.7129023175027,-73.906077007385,64,75,19,0.0
-CQ25-0094B,Metropolitan Avenue & Forest Avenue,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
+CQ24-2502B,Metropolitan Avenue & Forest Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712902,-73.90608,64,75,19,0.0
 CQ22-0432B,Cooper Avenue & Cypress Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
 CQ23-1349B,Cypress Avenue & Cooper Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
 CQ21-1280B,Cypress Avenue & Cooper Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
@@ -34,8 +34,8 @@ SR-20220809-27601,Cypress Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv
 CQ20-0552B,Cypress Avenue & Cooper Avenue,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
 CQ23-1576B,Cooper Avenue & Cypress Avenue,Signal Study,Left Turn Arrow/Signal,denied,2023.0,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
 SR-20251215-39849,Onderdonk Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.701229,-73.902559,60,69,15,1.0
-SR-20220329-26997,69 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.701229,-73.902559,60,69,15,1.0
 CQ24-2047,69 Avenue & Onderdonk Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.70123,-73.902565,60,69,15,1.0
+SR-20220329-26997,69 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.701229,-73.902559,60,69,15,1.0
 CQ24-2498B,Fresh Pond Road & Metropolitan Avenue,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712696,-73.900604,59,66,18,0.0
 CQ24-1951B,Fresh Pond Road & Metropolitan Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712696,-73.900604,59,66,18,0.0
 CQ25-3033B,Cypress Avenue & Vermont Place,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.691433,-73.89063,59,85,2,0.0
@@ -48,13 +48,13 @@ CQ24-3516B,Seneca Avenue & Catalpa Avenue,Signal Study,Traffic Signal,denied,202
 CQ22-0218,Myrtle Avenue & 81 Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.70337374346303,-73.85939346916709,54,79,4,0.0
 SR-20221005-28851,59 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.694477,-73.896464,53,67,12,0.0
 CQ25-0172,Cypress Avenue & Putnam Avenue,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.700367,-73.906624,52,56,13,0.0
-CQ24-0508B,Woodhaven Boulevard & 81 Road,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.70456,-73.856735,50,78,0,0.0
+CQ24-2132B,Grand Avenue & Hamilton Place,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.72428,-73.898445,50,72,6,0.0
 SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.726025,-73.893236,50,72,5,0.0
 CQ20-0924B,Myrtle Avenue & Seneca Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.70041,-73.90368,50,60,15,1.0
 CQ21-0868B,Metropolitan Avenue & Woodhaven Boulevard,Signal Study,Left Turn Arrow/Signal,denied,2021.0,data_cb5_signal_studies.csv,40.711845,-73.859764,50,73,4,0.0
-CQ22-2383B,Myrtle Avenue & Seneca Avenue,Signal Study,Left Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.70041,-73.90368,50,60,15,1.0
 CQ22-2381B,Myrtle Avenue & Hancock Street,Signal Study,Left Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.70041,-73.90368,50,60,15,1.0
-CQ24-2132B,Grand Avenue & Hamilton Place,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.72428,-73.898445,50,72,6,0.0
+CQ22-2383B,Myrtle Avenue & Seneca Avenue,Signal Study,Left Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.70041,-73.90368,50,60,15,1.0
+CQ24-0508B,Woodhaven Boulevard & 81 Road,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.70456,-73.856735,50,78,0,0.0
 SR-20210901-26370,61 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.721031,-73.904096,49,55,14,0.0
 CQ21-0387B,Myrtle Avenue & Forest Avenue,Signal Study,Traffic Signal Removal,denied,2021.0,data_cb5_signal_studies.csv,40.700497,-73.90021,48,58,20,0.0
 CQ24-1255B,80 Street & Cooper Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.709415,-73.87022,48,55,9,0.0
@@ -73,25 +73,25 @@ CQ20-1355B,Fresh Pond Road & Putnam Avenue,Signal Study,Traffic Signal,denied,20
 CQ25-2943B,Flushing Avenue & 53 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.714424,-73.914246,44,52,4,0.0
 CQ22-1863B,Maspeth Avenue & Grand Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7228,-73.90182,43,44,5,1.0
 SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.70052,-73.897962,42,53,17,1.0
-SR-20251215-39849,Onderdonk Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.701457,-73.902948,42,47,12,1.0
+CQ24-0295B,Fresh Pond Road & Eliot Avenue,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.714622,-73.90117,42,50,9,2.0
 SR-20241104-35527,Queens Midtown Expressway Sr S,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725424,-73.899508,42,61,3,1.0
 CQ20-0551B,Eliot Avenue & Fresh Pond Road,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.714622,-73.90117,42,50,9,2.0
 CQ20-1068,Myrtle Avenue & Summerfield Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.70052,-73.897962,42,53,17,1.0
 CQ21-2822B,Eliot Avenue & Fresh Pond Road,Signal Study,Left Turn Arrow/Signal,denied,2021.0,data_cb5_signal_studies.csv,40.714622,-73.90117,42,50,9,2.0
+SR-20251215-39849,Onderdonk Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.701457,-73.902948,42,47,12,1.0
 SR-20230307-29312,63 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722144,-73.902269,42,45,7,1.0
-CQ24-0295B,Fresh Pond Road & Eliot Avenue,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.714622,-73.90117,42,50,9,2.0
-CQ20-1334B,Myrtle Avenue & Norman Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.700516,-73.89799,41,52,16,1.0
 CQ23-2561B,58 Avenue & 69 Lane,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72603245689385,-73.89294966706467,41,54,4,0.0
-CQ22-0657,69 Street & 60 Drive,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72021,-73.89178,40,49,9,1.0
-SR-20221031-28965,62 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.713614,-73.90683,40,49,14,0.0
-SR-20240318-31442,69 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720213,-73.89177,40,49,9,1.0
-CQ24-2501B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
-CQ24-0024B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
+CQ20-1334B,Myrtle Avenue & Norman Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.700516,-73.89799,41,52,16,1.0
 CQ22-3213B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
+CQ24-0024B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
+SR-20240318-31442,69 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720213,-73.89177,40,49,9,1.0
+SR-20221031-28965,62 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.713614,-73.90683,40,49,14,0.0
+CQ24-2501B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
 SR-20250407-37912,Grove Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.710095,-73.900281,40,45,4,1.0
+CQ22-0657,69 Street & 60 Drive,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72021,-73.89178,40,49,9,1.0
 SR-20240625-31912,69 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720156,-73.889663,39,49,10,2.0
-SR-20210901-26365,Linden Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.709682,-73.898904,39,45,5,0.0
 CQ23-1913B,69 Place & Queens Midtown Expressway,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72618992958762,-73.89237629589852,39,59,1,0.0
+SR-20210901-26365,Linden Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.709682,-73.898904,39,45,5,0.0
 CQ22-1228,69 Place & Queens Midtown Expressway,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72618992958762,-73.89237629589852,39,59,1,0.0
 SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700517,-73.898348,38,48,16,1.0
 SR-20240917-32327,Eliot Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718987,-73.892129,38,48,9,1.0
@@ -101,57 +101,57 @@ SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.7
 CQ24-0736B,Borden Avenue & Hamilton Place,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.72616,-73.90012,37,48,3,1.0
 CQ22-2600B,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
 CQ22-2601B,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
-CQ22-2603B,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
 CQ22-2604B,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
 CQ22-1605B,Cypress Hills Street & Fresh Pond Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.70697661724096,-73.89780783898678,36,49,13,0.0
+CQ22-2603B,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
 CQ21-0391B,Metropolitan Avenue & Flushing Avenue,Signal Study,Left Turn Arrow/Signal,denied,2021.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
 CQ22-2602B,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
 CQ20-2281,Metropolitan Avenue & Flushing Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.713295,-73.916238,36,47,1,0.0
-SR-20230711-30162,81 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.70327,-73.861422,36,51,1,0.0
-CQ24-2734B,64 Place & Central Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.702126,-73.89164,36,44,8,0.0
-CQ22-1028,Flushing Avenue & 60 Lane,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.720604,-73.9047875,36,40,10,0.0
 SR-20240917-32327,Eliot Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718806,-73.892512,36,54,6,1.0
-SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723535,-73.901827,35,36,6,1.0
-CQ25-1762B,Woodhaven Boulevard & Union Turnpike,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.70559,-73.85823,35,46,3,0.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701103,-73.890867,35,41,9,0.0
+SR-20230711-30162,81 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.70327,-73.861422,36,51,1,0.0
+CQ22-1028,Flushing Avenue & 60 Lane,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.720604,-73.9047875,36,40,10,0.0
+CQ24-2734B,64 Place & Central Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.702126,-73.89164,36,44,8,0.0
 SR-20210827-26313,Cypress Hills Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.701103,-73.890867,35,41,9,0.0
+CQ25-1762B,Woodhaven Boulevard & Union Turnpike,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.70559,-73.85823,35,46,3,0.0
+CQ25-0179B,Myrtle Avenue & Cypress Hills Street,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.701103,-73.89088,35,41,9,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701103,-73.890867,35,41,9,0.0
+SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723535,-73.901827,35,36,6,1.0
+CQ20-0334B,58 Avenue & 69 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.72462,-73.89455,35,52,3,0.0
 CQ20-2507B,Woodhaven Boulevard & Union Turnpike,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.70559,-73.85823,35,46,3,0.0
 CQ22-3384B,Myrtle Avenue & Cypress Hills Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.701103,-73.89088,35,41,9,0.0
-CQ20-0334B,58 Avenue & 69 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.72462,-73.89455,35,52,3,0.0
 SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.701103,-73.890867,35,41,9,0.0
-CQ25-0179B,Myrtle Avenue & Cypress Hills Street,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.701103,-73.89088,35,41,9,0.0
-SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.726913,-73.900321,34,45,3,1.0
 CQ22-3501,69 Street & 60 Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72143,-73.892746,34,41,1,0.0
-CQ23-2241,Jay Avenue & 65 Place,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7267,-73.90034,34,46,3,1.0
 CQ20-2167,58 Avenue & 79 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.72779360283702,-73.88155395951152,34,56,0,0.0
-SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725077,-73.89248,33,47,1,0.0
+CQ23-2241,Jay Avenue & 65 Place,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7267,-73.90034,34,46,3,1.0
+SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.726913,-73.900321,34,45,3,1.0
 SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.726701,-73.900328,33,44,3,1.0
-CQ24-0468,Caldwell Avenue & 69 Lane,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.724839,-73.892293,33,47,1,0.0
 SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724839,-73.892293,33,47,1,0.0
-SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725077,-73.89248,33,47,1,0.0
+CQ24-0468,Caldwell Avenue & 69 Lane,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.724839,-73.892293,33,47,1,0.0
 SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701149,-73.890247,33,40,11,0.0
+SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725077,-73.89248,33,47,1,0.0
+SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725077,-73.89248,33,47,1,0.0
+SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725596,-73.90178,32,52,0,1.0
 SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.706245,-73.898,32,41,15,0.0
 SR-20241204-35622,69 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723921,-73.894336,32,42,3,0.0
-SR-20241104-35527,Queens Midtown Expressway Sr S,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725596,-73.90178,32,52,0,1.0
-SR-20220114-26801,Brown Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.724243,-73.895819,32,47,5,0.0
-SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725596,-73.90178,32,52,0,1.0
 SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706245,-73.898,32,41,15,0.0
-CQ24-2214B,Fresh Pond Road & 67 Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.705765,-73.896576,31,33,17,0.0
+SR-20220114-26801,Brown Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.724243,-73.895819,32,47,5,0.0
+SR-20241104-35527,Queens Midtown Expressway Sr S,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725596,-73.90178,32,52,0,1.0
+SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700617,-73.896721,31,39,7,1.0
 SR-20230721-30231,Palmetto Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.708403,-73.898004,31,40,4,0.0
-SR-20250926-39540,Traffic Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.711225,-73.898631,31,34,3,1.0
+CQ20-2012B,Metropolitan Avenue & 80 Street,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.713287,-73.87163,31,34,5,0.0
 CQ22-2347B,Palmetto Street & Fresh Pond Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7084,-73.89801,31,40,4,0.0
-SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.711225,-73.898631,31,34,3,1.0
+SR-20250926-39540,Traffic Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.711225,-73.898631,31,34,3,1.0
 CQ22-1319,58 Road & 69 Lane,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72583856349958,-73.89280619319487,31,44,1,0.0
 CQ22-1778,Fresh Pond Road & 67 Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.705765,-73.896576,31,33,17,0.0
-SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700617,-73.896721,31,39,7,1.0
+SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.711225,-73.898631,31,34,3,1.0
+CQ24-2214B,Fresh Pond Road & 67 Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.705765,-73.896576,31,33,17,0.0
 SR-20230601-29824,Woodbine Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.700169,-73.909204,31,33,8,0.0
-CQ20-2012B,Metropolitan Avenue & 80 Street,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.713287,-73.87163,31,34,5,0.0
 CQ22-1261B,Myrtle Avenue & Central Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.70086,-73.893845,30,37,7,0.0
 CQ25-2410B,Myrtle Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.700653,-73.89628,30,36,6,1.0
-SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700653,-73.89627,30,36,6,1.0
+SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721,-73.893688,30,36,0,0.0
 SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.700474,-73.889692,30,40,8,0.0
-CQ23-3628,Woodbine Street & 64 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.70776,-73.897565,30,43,8,0.0
 CQ20-0606B,Fresh Pond Road & Myrtle Avenue,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.700798,-73.894585,30,37,6,0.0
+CQ23-3628,Woodbine Street & 64 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.70776,-73.897565,30,43,8,0.0
 SR-20210625-25909,Cooper Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.701281,-73.881677,30,35,7,0.0
 CQ24-0873B,Myrtle Avenue & Fresh Pond Road,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.700798,-73.894585,30,37,6,0.0
 SR-20231019-30827,Forest Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.703665,-73.901513,30,33,9,0.0
@@ -159,12 +159,12 @@ SR-20210827-26313,Cypress Hills Street,SRTS,Speed Bump,denied,2021.0,srts_citywi
 SR-20200928-19964,68 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.703665,-73.901513,30,33,9,0.0
 CQ24-1014,68 Avenue & Forest Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.703663,-73.90152,30,33,9,0.0
 SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700666,-73.896097,30,36,8,1.0
+SR-20251027-39682,Myrtle Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.700653,-73.89627,30,36,6,1.0
 SR-20240827-32230,Woodbine Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70776,-73.897565,30,43,8,0.0
-SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721,-73.893688,30,36,0,0.0
 CQ23-0515,71 Place & Cooper Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.702625,-73.8794,30,42,10,0.0
 SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704608,-73.902291,29,35,11,0.0
-SR-20221230-29142,81 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.725396,-73.878369,29,36,13,0.0
 SR-20230307-29309,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701863,-73.892716,29,35,8,0.0
+SR-20221230-29142,81 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.725396,-73.878369,29,36,13,0.0
 CQ24-0220,Linden Street & Onderdonk Avenue,Signal Study,All-Way Stop,approved,2024.0,data_cb5_signal_studies.csv,40.704594,-73.90826,29,42,7,0.0
 CQ25-1622B,Central Avenue & Cypress Hills Street,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.701862,-73.89272,29,35,8,0.0
 SR-20230918-30597,74 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.713215,-73.878583,29,40,14,0.0
@@ -172,27 +172,27 @@ CQ22-0469B,Cooper Avenue & 70 Street,Signal Study,Leading Pedestrian Interval,de
 CQ25-0296B,86 Street & Eliot Avenue,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.72911,-73.87161,28,36,4,1.0
 SR-20230613-29927,Gates Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.70904,-73.898454,28,33,4,0.0
 CQ22-3427B,Cooper Avenue & Metropolitan Avenue,Signal Study,Left Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7122,-73.86208,28,44,2,0.0
-SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721604,-73.89416,28,33,0,0.0
-CQ23-2785B,Metropolitan Avenue & Tonsor Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.71306,-73.90879,28,36,3,0.0
 SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.700292,-73.889527,28,38,6,0.0
+CQ23-2785B,Metropolitan Avenue & Tonsor Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.71306,-73.90879,28,36,3,0.0
+CQ22-0484B,Cooper Avenue & Metropolitan Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.7122,-73.86208,28,44,2,0.0
 SR-20210226-25427,60 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.716893,-73.901797,28,33,5,2.0
 SR-20201127-20144,Gates Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.70904,-73.898454,28,33,4,0.0
 CQ24-0875B,Metropolitan Avenue & 74 Street,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.71283,-73.878296,28,39,14,0.0
-CQ22-0484B,Cooper Avenue & Metropolitan Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.7122,-73.86208,28,44,2,0.0
+SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721604,-73.89416,28,33,0,0.0
 SR-20241023-34491,81 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725728,-73.878636,28,38,12,0.0
 CQ21-1518,69 Street & 59 Drive,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72203,-73.89322,28,33,0,0.0
-SR-20230502-29499,Linden Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704593,-73.908246,27,40,6,0.0
+CQ20-0360B,Grand Avenue & 74 Street,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.7301969282631,-73.8875611761351,27,30,16,0.0
 SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701478,-73.886484,27,29,11,0.0
-SR-20230428-29469,Linden Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704593,-73.908246,27,40,6,0.0
+SR-20230502-29499,Linden Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704593,-73.908246,27,40,6,0.0
 CQ24-1707B,67 Avenue & Forest Avenue,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.704384,-73.90182250000001,27,33,9,0.0
 SR-20230807-30313,Menahan Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.710851,-73.901268,27,30,6,1.0
-CQ21-0748B,Fresh Pond Road & Menahan Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.710851,-73.901268,27,30,6,1.0
-CQ20-2509B,Grand Avenue & 74 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.7301969282631,-73.8875611761351,27,30,16,0.0
 CQ21-2955,Cornelia Street & Forest Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.70405,-73.90168,27,33,9,0.0
 CQ21-0912B,Forest Avenue & 67 Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.704384,-73.90182250000001,27,33,9,0.0
-CQ20-0360B,Grand Avenue & 74 Street,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.7301969282631,-73.8875611761351,27,30,16,0.0
-CQ23-1958B,Grand Avenue & 74 Street,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7301969282631,-73.8875611761351,27,30,16,0.0
+SR-20230428-29469,Linden Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704593,-73.908246,27,40,6,0.0
+CQ21-0748B,Fresh Pond Road & Menahan Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.710851,-73.901268,27,30,6,1.0
 SR-20240722-32053,Cypress Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.702124,-73.909583,27,31,5,0.0
+CQ23-1958B,Grand Avenue & 74 Street,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7301969282631,-73.8875611761351,27,30,16,0.0
+CQ20-2509B,Grand Avenue & 74 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.7301969282631,-73.8875611761351,27,30,16,0.0
 SR-20230426-29450,Catalpa Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.702337,-73.901367,26,30,6,0.0
 CQ24-1569,Cooper Avenue & 65 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.69855,-73.8893,26,37,2,0.0
 SR-20240613-31825,79 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724626,-73.880027,26,36,10,0.0
@@ -202,541 +202,541 @@ CQ23-0471B,Caldwell Avenue & Eliot Avenue,Signal Study,Leading Pedestrian Interv
 CQ23-0860B,Flushing Avenue & 54 Street,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7148898460946,-73.91349073239209,26,36,4,0.0
 CQ23-0075,Woodward Avenue & Catalpa Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.702335,-73.901375,26,30,6,0.0
 CQ22-3326,Cypress Hills Street & 70 Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.702778,-73.89457,26,33,8,0.0
-CQ22-3561,69 Street & 60 Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72082,-73.892265,25,32,2,0.0
-CQ20-2399,60 Road & 69 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.72082,-73.892265,25,32,2,0.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701233,-73.889298,25,30,10,0.0
-SR-20221230-29140,68 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.720382,-73.893216,25,32,2,0.0
 CQ24-1479,62 Street & 68 Avenue,Signal Study,All-Way Stop,approved,2024.0,data_cb5_signal_studies.csv,40.705513,-73.89538,25,27,13,0.0
+SR-20240318-31442,69 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720823,-73.892256,25,32,2,0.0
+SR-20221230-29140,68 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.720382,-73.893216,25,32,2,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701233,-73.889298,25,30,10,0.0
+CQ22-0486B,Cooper Avenue & Woodhaven Boulevard,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.713057975976746,-73.86204125524468,25,41,1,0.0
+CQ24-1264B,Metropolitan Avenue & 75 Street,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712887,-73.877716,25,35,13,0.0
+CQ22-3561,69 Street & 60 Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72082,-73.892265,25,32,2,0.0
 SR-20231019-30827,Forest Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.703215,-73.901323,25,28,8,0.0
 SR-20210713-25981,62 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.704181,-73.894808,25,30,9,0.0
-CQ24-1264B,Metropolitan Avenue & 75 Street,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712887,-73.877716,25,35,13,0.0
-CQ22-0486B,Cooper Avenue & Woodhaven Boulevard,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.713057975976746,-73.86204125524468,25,41,1,0.0
 SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703538,-73.903382,25,28,8,0.0
-SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703538,-73.903382,25,28,8,0.0
+SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.720382,-73.893216,25,32,2,0.0
+CQ20-1090,68 Avenue & 62 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.705513,-73.89538,25,27,13,0.0
+CQ23-3380,64 Place & 74 Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.700333,-73.89145,25,29,9,0.0
+CQ22-0485B,Cooper Avenue & Cypress Hills Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.698882550838,-73.8882054375238,25,37,1,0.0
 SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704112,-73.904358,25,28,10,0.0
+SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703538,-73.903382,25,28,8,0.0
 SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704112,-73.904358,25,28,10,0.0
 SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,approved,2025.0,srts_citywide.csv,40.702664,-73.901897,25,30,5,0.0
 CQ20-0745,Catalpa Avenue & 62 Street,Signal Study,All-Way Stop,approved,2020.0,data_cb5_signal_studies.csv,40.704178,-73.89481,25,30,9,0.0
-CQ23-3380,64 Place & 74 Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.700333,-73.89145,25,29,9,0.0
-CQ20-1090,68 Avenue & 62 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.705513,-73.89538,25,27,13,0.0
-CQ22-0485B,Cooper Avenue & Cypress Hills Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.698882550838,-73.8882054375238,25,37,1,0.0
-SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.720382,-73.893216,25,32,2,0.0
-CQ21-0791,69 Street & 55 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.727787,-73.89551,25,30,5,0.0
 CQ23-1380B,Forest Avenue & Norman Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.69966,-73.8988,25,34,11,0.0
-SR-20240318-31442,69 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720823,-73.892256,25,32,2,0.0
+CQ21-0791,69 Street & 55 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.727787,-73.89551,25,30,5,0.0
 SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.698858,-73.88818,25,37,1,0.0
-CQ25-1904B,Forest Avenue & Catalpa Avenue,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.702446,-73.90099,24,28,4,0.0
-SR-20240111-31241,Onderdonk Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.701963,-73.903802,24,25,8,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705047,-73.90303,24,27,9,0.0
-SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705148,-73.902121,24,28,10,0.0
-CQ24-0509B,Woodhaven Boulevard & 62 Road,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.726185,-73.87022,24,35,5,1.0
-SR-20220128-26815,Cooper Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.700862,-73.88245,24,29,6,0.0
+CQ20-2399,60 Road & 69 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.72082,-73.892265,25,32,2,0.0
 CQ23-3043,69 Street & Cooper Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.70086,-73.882454,24,29,6,0.0
-SR-20201009-20014,Catalpa Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.702449,-73.900985,24,28,4,0.0
-SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725105,-73.901795,24,41,0,1.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701402,-73.887401,24,26,10,0.0
-SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705148,-73.902121,24,28,10,0.0
+CQ24-0509B,Woodhaven Boulevard & 62 Road,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.726185,-73.87022,24,35,5,1.0
 SR-20240111-31240,Cornelia Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.701963,-73.903802,24,25,8,0.0
-CQ23-3227B,Metropolitan Avenue & 73 Place,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.712727,-73.87935,23,28,12,0.0
-CQ23-1367B,Forest Avenue & Grove Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.70913,-73.90436,23,32,5,0.0
-CQ20-0076,Myrtle Avenue & 72 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.702145,-73.87826,23,34,6,0.0
-CQ21-1506B,Myrtle Avenue & 62 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.70089,-73.89336,23,27,7,0.0
-SR-20241224-35663,Grove Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70913,-73.904351,23,32,5,0.0
-SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703101,-73.902639,23,26,10,0.0
-SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.712727,-73.879341,23,28,12,0.0
+SR-20240111-31241,Onderdonk Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.701963,-73.903802,24,25,8,0.0
+SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.725105,-73.901795,24,41,0,1.0
+SR-20201009-20014,Catalpa Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.702449,-73.900985,24,28,4,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701402,-73.887401,24,26,10,0.0
+SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705148,-73.902121,24,28,10,0.0
+SR-20220128-26815,Cooper Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.700862,-73.88245,24,29,6,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705047,-73.90303,24,27,9,0.0
+CQ25-1904B,Forest Avenue & Catalpa Avenue,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.702446,-73.90099,24,28,4,0.0
+SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705148,-73.902121,24,28,10,0.0
 CQ24-2026,Cornelia Street & Woodward Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.7031,-73.90264,23,26,10,0.0
-SR-20240419-31593,61 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.700826,-73.894236,23,26,6,0.0
-SR-20231114-30982,60 Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.716143,-73.901585,23,23,4,2.0
 CQ23-3093B,Fresh Pond Road & 60 Road,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.716143,-73.901585,23,23,4,2.0
-CQ22-1264B,Myrtle Avenue & 62 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.70089,-73.89336,23,27,7,0.0
-CQ18-2390B,Metropolitan Avenue & 73 Place,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.712727,-73.87935,23,28,12,0.0
-CQ22-0471B,Cooper Avenue & 72 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.70307,-73.87864,23,33,4,0.0
-SR-20230322-29346,67 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701508,-73.88607,23,24,8,0.0
-CQ23-0002,61 Street & 60 Lane,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.700826,-73.894236,23,26,6,0.0
-CQ25-2566B,Fresh Pond Road & 60 Road,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.716143,-73.901585,23,23,4,2.0
-CQ21-2188B,Fresh Pond Road & 60 Road,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.716143,-73.901585,23,23,4,2.0
-CQ22-1088,Wyckoff Avenue & Madison Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.698677,-73.90954,23,28,8,0.0
+SR-20240419-31593,61 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.700826,-73.894236,23,26,6,0.0
 CQ22-0451,Myrtle Avenue & 61 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.700826,-73.894236,23,26,6,0.0
+SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703101,-73.902639,23,26,10,0.0
+CQ23-1367B,Forest Avenue & Grove Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.70913,-73.90436,23,32,5,0.0
+CQ21-2188B,Fresh Pond Road & 60 Road,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.716143,-73.901585,23,23,4,2.0
+CQ25-2566B,Fresh Pond Road & 60 Road,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.716143,-73.901585,23,23,4,2.0
+CQ21-1506B,Myrtle Avenue & 62 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.70089,-73.89336,23,27,7,0.0
+CQ23-3227B,Metropolitan Avenue & 73 Place,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.712727,-73.87935,23,28,12,0.0
+CQ23-0002,61 Street & 60 Lane,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.700826,-73.894236,23,26,6,0.0
+CQ20-0076,Myrtle Avenue & 72 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.702145,-73.87826,23,34,6,0.0
+CQ18-2390B,Metropolitan Avenue & 73 Place,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.712727,-73.87935,23,28,12,0.0
+CQ22-1264B,Myrtle Avenue & 62 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.70089,-73.89336,23,27,7,0.0
+SR-20230322-29346,67 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701508,-73.88607,23,24,8,0.0
+SR-20231114-30982,60 Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.716143,-73.901585,23,23,4,2.0
+CQ22-0471B,Cooper Avenue & 72 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.70307,-73.87864,23,33,4,0.0
+CQ22-1088,Wyckoff Avenue & Madison Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.698677,-73.90954,23,28,8,0.0
+SR-20241224-35663,Grove Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70913,-73.904351,23,32,5,0.0
+SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.712727,-73.879341,23,28,12,0.0
 CQ25-0271,Myrtle Avenue & 72 Street,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.702145,-73.87826,23,34,6,0.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701432,-73.887,22,24,9,0.0
-CQ22-0504,Cooper Avenue & 65 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.699539,-73.888615,22,31,2,0.0
 SR-20210726-26111,66 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.701432,-73.887,22,24,9,0.0
-CQ22-1320,Mazeau Street & Queens Midtown Expressway,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.726981372775455,-73.88825085688839,22,34,2,0.0
-CQ22-1393B,Forest Avenue & Summerfield Street,Signal Study,Right Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.69923,-73.89807,22,26,5,0.0
-CQ24-3431,Putnam Avenue & Woodward Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.703537,-73.90339,22,25,8,0.0
-CQ23-2703,Seneca Avenue & Greene Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705437,-73.91214,22,30,4,0.0
 SR-20240904-32269,61 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.727379,-73.872564,22,24,10,1.0
+CQ23-2703,Seneca Avenue & Greene Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705437,-73.91214,22,30,4,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701432,-73.887,22,24,9,0.0
+CQ22-1393B,Forest Avenue & Summerfield Street,Signal Study,Right Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.69923,-73.89807,22,26,5,0.0
+CQ22-0504,Cooper Avenue & 65 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.699539,-73.888615,22,31,2,0.0
+CQ24-3431,Putnam Avenue & Woodward Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.703537,-73.90339,22,25,8,0.0
+CQ22-1320,Mazeau Street & Queens Midtown Expressway,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.726981372775455,-73.88825085688839,22,34,2,0.0
 CQ22-0473B,Cooper Avenue & 64 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.697933,-73.892006,22,30,3,0.0
-CQ23-0344,Woodward Avenue & Gates Avenue,Signal Study,Traffic Signal,approved,2023.0,data_cb5_signal_studies.csv,40.705284,-73.90636,21,23,8,0.0
-SR-20230328-29360,69 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722123,-73.89124,21,26,2,0.0
-SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704849,-73.905609,21,23,9,0.0
-CQ24-1263B,Metropolitan Avenue & 69 Street,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712204,-73.88638,21,24,6,0.0
-SR-20240812-32153,Gates Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705286,-73.906351,21,23,8,0.0
 CQ23-1983,Onderdonk Avenue & Menahan Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705467,-73.90974,21,25,2,0.0
-CQ22-0961,57 Avenue & 74 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72861,-73.88721,21,33,5,0.0
-CQ23-0570B,57 Avenue & 74 Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.72861,-73.88721,21,33,5,0.0
-CQ23-1372B,Forest Avenue & Madison Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.705684,-73.902372,21,26,8,0.0
-SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703975,-73.904124,21,24,9,0.0
+CQ23-0526,Woodward Avenue & Palmetto Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.70485,-73.90562,21,23,9,0.0
 CQ25-2441B,Putnam Avenue & Forest Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.705684,-73.902372,21,26,8,0.0
+SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705286,-73.906351,21,23,8,0.0
 SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704849,-73.905609,21,23,9,0.0
 CQ20-0607B,Metropolitan Avenue & 69 Street,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.712204,-73.88638,21,24,6,0.0
-CQ23-0526,Woodward Avenue & Palmetto Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.70485,-73.90562,21,23,9,0.0
-CQ23-1375B,Forest Avenue & Putnam Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.705684,-73.902372,21,26,8,0.0
-SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705286,-73.906351,21,23,8,0.0
+CQ23-0570B,57 Avenue & 74 Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.72861,-73.88721,21,33,5,0.0
+CQ23-0344,Woodward Avenue & Gates Avenue,Signal Study,Traffic Signal,approved,2023.0,data_cb5_signal_studies.csv,40.705284,-73.90636,21,23,8,0.0
+SR-20230328-29360,69 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722123,-73.89124,21,26,2,0.0
+CQ23-1372B,Forest Avenue & Madison Street,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.705684,-73.902372,21,26,8,0.0
 SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703975,-73.904124,21,24,9,0.0
+SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.703975,-73.904124,21,24,9,0.0
 SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705484,-73.903772,21,26,8,0.0
+SR-20240812-32153,Gates Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705286,-73.906351,21,23,8,0.0
+CQ23-1375B,Forest Avenue & Putnam Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.705684,-73.902372,21,26,8,0.0
+SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704849,-73.905609,21,23,9,0.0
+CQ22-0961,57 Avenue & 74 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72861,-73.88721,21,33,5,0.0
+CQ24-1263B,Metropolitan Avenue & 69 Street,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712204,-73.88638,21,24,6,0.0
+SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.699394,-73.88867,20,29,1,0.0
+CQ22-0656,69 Street & 59 Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.722622,-73.89368,20,25,2,0.0
+SR-20220825-27661,65 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.712479,-73.895025,20,22,1,0.0
+SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.694743,-73.895789,20,21,5,0.0
+CQ22-2924,Juniper Valley Road & 79 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.71774,-73.87321,20,25,2,0.0
+SR-20210908-26408,73 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.713655,-73.880032,20,25,7,0.0
+CQ22-0035B,Metropolitan Avenue & 65 Place,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.71248,-73.895035,20,22,1,0.0
 SR-20240709-31993,70 Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.701539,-73.898855,20,26,9,0.0
 SR-20240702-31952,George Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.699161,-73.901523,20,31,4,0.0
-SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.699394,-73.88867,20,29,1,0.0
-CQ22-2924,Juniper Valley Road & 79 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.71774,-73.87321,20,25,2,0.0
-CQ22-0035B,Metropolitan Avenue & 65 Place,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.71248,-73.895035,20,22,1,0.0
-SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.694743,-73.895789,20,21,5,0.0
-CQ21-1921B,Metropolitan Avenue & Woodward Avenue,Signal Study,Leading Pedestrian Interval,denied,2021.0,data_cb5_signal_studies.csv,40.713816,-73.92084249999999,20,25,2,0.0
-SR-20210908-26408,73 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.713655,-73.880032,20,25,7,0.0
-SR-20220825-27661,65 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.712479,-73.895025,20,22,1,0.0
 SR-20241003-33400,79 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71774,-73.87321,20,25,2,0.0
-CQ22-0656,69 Street & 59 Road,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.722622,-73.89368,20,25,2,0.0
-CQ24-2152B,67 Road & 73 Place,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712025,-73.87923,19,23,13,0.0
+CQ21-1921B,Metropolitan Avenue & Woodward Avenue,Signal Study,Leading Pedestrian Interval,denied,2021.0,data_cb5_signal_studies.csv,40.713816,-73.92084249999999,20,25,2,0.0
+SR-20240625-31912,69 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.719502,-73.889156,19,26,3,1.0
+SR-20210427-25680,Decatur Street,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.69622,-73.899869,19,25,6,0.0
 CQ23-2567,Onderdonk Avenue & Himrod Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.707222,-73.912695,19,28,4,0.0
 CQ20-1293,Woodward Avenue & Bleecker Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.70703,-73.909325,19,20,4,0.0
+CQ22-0051B,Penelope Avenue & 80 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.719395,-73.87471,19,30,2,0.0
+CQ24-2152B,67 Road & 73 Place,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.712025,-73.87923,19,23,13,0.0
 SR-20250912-39479,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704409,-73.904866,19,22,6,0.0
-SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705723,-73.907093,19,20,8,0.0
-SR-20241023-34491,81 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.728415,-73.880778,19,33,0,0.0
-SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704409,-73.904866,19,22,6,0.0
-SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722208,-73.894584,19,24,2,0.0
-SR-20210427-25680,Decatur Street,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.69622,-73.899869,19,25,6,0.0
-CQ24-0955,Bleecker Street & Woodward Avenue,Signal Study,All-Way Stop,approved,2024.0,data_cb5_signal_studies.csv,40.70703,-73.909325,19,20,4,0.0
 SR-20240418-31583,80 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71879,-73.874218,19,24,3,0.0
 SR-20240610-31807,Grandview Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.713334,-73.913038,19,25,1,0.0
 CQ24-0797,69 Road & 79 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.709083,-73.873281,19,25,4,0.0
-CQ22-0051B,Penelope Avenue & 80 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.719395,-73.87471,19,30,2,0.0
-CQ21-2390,Eliot Avenue & 69 Lane,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.720535,-73.88885,19,26,3,1.0
-SR-20240625-31912,69 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.719502,-73.889156,19,26,3,1.0
-CQ24-1265B,Myrtle Avenue & 79 Lane,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.702892,-73.86916,19,24,5,0.0
-SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.712027,-73.879216,19,23,13,0.0
-SR-20230608-29880,69 Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.709083,-73.873281,19,25,4,0.0
+CQ24-0955,Bleecker Street & Woodward Avenue,Signal Study,All-Way Stop,approved,2024.0,data_cb5_signal_studies.csv,40.70703,-73.909325,19,20,4,0.0
 CQ24-2742B,Metropolitan Avenue & Grandview Avenue,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.713333,-73.91305,19,25,1,0.0
 SR-20240419-31593,61 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.700508,-73.8942,19,20,5,0.0
+SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722208,-73.894584,19,24,2,0.0
+SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.712027,-73.879216,19,23,13,0.0
+CQ24-1265B,Myrtle Avenue & 79 Lane,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.702892,-73.86916,19,24,5,0.0
+SR-20230608-29880,69 Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.709083,-73.873281,19,25,4,0.0
+SR-20241023-34491,81 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.728415,-73.880778,19,33,0,0.0
+SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705723,-73.907093,19,20,8,0.0
+SR-20251203-39806,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704409,-73.904866,19,22,6,0.0
+CQ21-2390,Eliot Avenue & 69 Lane,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.720535,-73.88885,19,26,3,1.0
 SR-20220809-27601,Cypress Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.693195,-73.895744,18,19,3,0.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701356,-73.887931,18,19,9,0.0
-CQ25-2807B,Dry Harbor Road & 80 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.717827,-73.8724,18,23,2,0.0
-CQ24-2699,Andrews Avenue & 55 Street,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.714363,-73.909614,18,26,2,0.0
-CQ21-2747,78 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.697144,-73.89169,18,26,1,0.0
-CQ21-1009,Cypress Avenue & Clover Place,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.69319,-73.89575,18,19,3,0.0
-CQ24-2150B,Grand Avenue & 72 Street,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.72816,-73.891525,18,20,3,0.0
 SR-20221028-28953,57 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.728268,-73.890628,18,20,6,0.0
+CQ24-2150B,Grand Avenue & 72 Street,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.72816,-73.891525,18,20,3,0.0
+CQ24-2699,Andrews Avenue & 55 Street,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.714363,-73.909614,18,26,2,0.0
 CQ25-2631,78 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.697144,-73.89169,18,26,1,0.0
-CQ23-0850,60 Street & Bleecker Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.710755,-73.90509199999998,18,27,4,0.0
-SR-20210726-26106,Fresh Pond Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.718276,-73.902184,18,23,1,0.0
 SR-20231002-30678,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.695157,-73.898616,18,22,4,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701356,-73.887931,18,19,9,0.0
 SR-20230718-30204,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.695157,-73.898616,18,22,4,0.0
-SR-20240906-32277,65 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716236,-73.897822,17,28,2,0.0
-SR-20240610-31807,Grandview Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.712215,-73.91116,17,22,2,0.0
-SR-20240111-31241,Onderdonk Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.7024,-73.904541,17,17,4,0.0
-CQ25-0457B,Eliot Avenue & Lutheran Avenue,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.722525000000005,-73.884555,17,21,3,0.0
-CQ20-1155,Metropolitan Avenue & 65 Lane,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71244,-73.894025,17,19,2,0.0
+SR-20210726-26106,Fresh Pond Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.718276,-73.902184,18,23,1,0.0
+CQ21-2747,78 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.697144,-73.89169,18,26,1,0.0
+CQ23-0850,60 Street & Bleecker Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.710755,-73.90509199999998,18,27,4,0.0
+CQ25-2807B,Dry Harbor Road & 80 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.717827,-73.8724,18,23,2,0.0
+CQ21-1009,Cypress Avenue & Clover Place,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.69319,-73.89575,18,19,3,0.0
+CQ22-3497B,73 Avenue & Woodhaven Boulevard,Signal Study,Left Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.71042,-73.85964,17,21,0,0.0
 SR-20201109-20098,Putnam Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.7024,-73.904541,17,17,4,0.0
-CQ21-2187B,Lutheran Avenue & Eliot Avenue,Signal Study,Leading Pedestrian Interval,denied,2021.0,data_cb5_signal_studies.csv,40.722525000000005,-73.884555,17,21,3,0.0
-SR-20230512-29660,Rene Court,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.712215,-73.91116,17,22,2,0.0
 SR-20240402-31495,61 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718182,-73.891997,17,32,0,0.0
 SR-20220607-27303,Lutheran Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.722525,-73.884551,17,21,3,0.0
-CQ22-3237,Grandview Avenue & Rene Court,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.712215,-73.91116,17,22,2,0.0
-CQ22-3497B,73 Avenue & Woodhaven Boulevard,Signal Study,Left Turn Arrow/Signal,denied,2022.0,data_cb5_signal_studies.csv,40.71042,-73.85964,17,21,0,0.0
+SR-20240610-31807,Grandview Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.712215,-73.91116,17,22,2,0.0
+SR-20240906-32277,65 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716236,-73.897822,17,28,2,0.0
+CQ21-2187B,Lutheran Avenue & Eliot Avenue,Signal Study,Leading Pedestrian Interval,denied,2021.0,data_cb5_signal_studies.csv,40.722525000000005,-73.884555,17,21,3,0.0
 CQ24-1127,68 Street & 61 Road,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.718182,-73.891997,17,32,0,0.0
+CQ22-3237,Grandview Avenue & Rene Court,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.712215,-73.91116,17,22,2,0.0
+SR-20240111-31241,Onderdonk Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.7024,-73.904541,17,17,4,0.0
+CQ25-0457B,Eliot Avenue & Lutheran Avenue,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.722525000000005,-73.884555,17,21,3,0.0
+SR-20230512-29660,Rene Court,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.712215,-73.91116,17,22,2,0.0
 CQ24-2118,Metropolitan Avenue & 65 Lane,Signal Study,Traffic Signal,approved,2024.0,data_cb5_signal_studies.csv,40.71244,-73.894025,17,19,2,0.0
 SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724902,-73.901803,17,28,0,1.0
-SR-20220308-26862,Central Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.702762,-73.888935,16,18,5,0.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701277,-73.888861,16,20,7,0.0
-SR-20230928-30663,66 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.702972,-73.888043,16,22,5,0.0
-SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.70132,-73.888353,16,18,7,0.0
-SR-20230518-29719,58 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721162,-73.906332,16,20,3,0.0
+CQ20-1155,Metropolitan Avenue & 65 Lane,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71244,-73.894025,17,19,2,0.0
 SR-20240126-31277,Linden Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708463,-73.904009,16,17,4,0.0
-SR-20220330-27015,Linden Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707991,-73.904778,16,17,4,0.0
-SR-20200928-19964,68 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.704068,-73.900113,16,18,5,0.0
+SR-20230928-30663,66 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.702972,-73.888043,16,22,5,0.0
 SR-20220705-27454,Starr Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.711404,-73.916749,16,20,1,0.0
-CQ25-0412,Fairview Avenue & Greene Avenue,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.708553,-73.908966,16,19,5,0.0
-SR-20210319-25531,64 Street,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.699905,-73.892301,16,16,5,0.0
-CQ23-3242,Seneca Avenue & Stockholm Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.70719,-73.91511,16,27,5,0.0
-SR-20210726-26106,Fresh Pond Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.71868,-73.902292,16,21,1,0.0
-CQ22-0247,Myrtle Avenue & 81 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7030515,-73.867253,16,25,3,0.0
+SR-20220308-26862,Central Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.702762,-73.888935,16,18,5,0.0
 CQ23-0477,68 Road & 60 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.704068,-73.900113,16,18,5,0.0
+SR-20230518-29719,58 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721162,-73.906332,16,20,3,0.0
+SR-20220916-27748,60 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.725205,-73.906172,16,20,3,0.0
+SR-20220330-27015,Linden Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707991,-73.904778,16,17,4,0.0
 SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708555,-73.908961,16,19,5,0.0
 CQ21-0425B,Flushing Avenue & Onderdonk Avenue,Signal Study,Left Turn Arrow/Signal,denied,2021.0,data_cb5_signal_studies.csv,40.711452,-73.91987,16,21,1,0.0
-SR-20220916-27748,60 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.725205,-73.906172,16,20,3,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.70132,-73.888353,16,18,7,0.0
+SR-20200928-19964,68 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.704068,-73.900113,16,18,5,0.0
+CQ22-0247,Myrtle Avenue & 81 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7030515,-73.867253,16,25,3,0.0
+SR-20230428-29478,Myrtle Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.701277,-73.888861,16,20,7,0.0
+SR-20210319-25531,64 Street,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.699905,-73.892301,16,16,5,0.0
+SR-20210726-26106,Fresh Pond Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.71868,-73.902292,16,21,1,0.0
+CQ25-0412,Fairview Avenue & Greene Avenue,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.708553,-73.908966,16,19,5,0.0
+CQ23-3242,Seneca Avenue & Stockholm Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.70719,-73.91511,16,27,5,0.0
+SR-20240917-32327,Eliot Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716384,-73.897501,15,20,2,0.0
+CQ21-0557,60 Street & 67 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.7046605130931,-73.9004080569593,15,17,6,0.0
+SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724256,-73.891818,15,17,1,0.0
+SR-20251103-39723,69 Lane,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.724256,-73.891818,15,17,1,0.0
+CQ23-0131B,70 Street & Central Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.704403,-73.88202,15,15,3,1.0
+SR-20210513-25735,69 Lane,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.724256,-73.891818,15,17,1,0.0
+SR-20220128-26815,Cooper Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.700476,-73.883431,15,22,4,0.0
+SR-20220706-27457,Norman Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.695117,-73.903217,15,16,7,0.0
+SR-20231024-30865,Dry Harbor Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.72048,-73.873587,15,27,2,0.0
+SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.725752,-73.877557,15,18,7,0.0
 CQ22-0474B,Cooper Avenue & 66 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.699678,-73.887714,15,22,0,0.0
 SR-20250515-38055,82 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.725752,-73.877557,15,18,7,0.0
-SR-20251103-39723,69 Lane,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.724256,-73.891818,15,17,1,0.0
-CQ24-0933,58 Street & 57 Drive,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.721636,-73.91198799999998,15,17,1,0.0
-SR-20220128-26815,Cooper Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.700476,-73.883431,15,22,4,0.0
 SR-20211021-26625,70 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.704405,-73.882011,15,15,3,1.0
 CQ21-1833B,Eliot Avenue & 72 Street,Signal Study,Leading Pedestrian Interval,denied,2021.0,data_cb5_signal_studies.csv,40.7216515,-73.88644199999999,15,21,2,1.0
-CQ23-0131B,70 Street & Central Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.704403,-73.88202,15,15,3,1.0
-SR-20231024-30865,Dry Harbor Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.72048,-73.873587,15,27,2,0.0
-SR-20210513-25735,69 Lane,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.724256,-73.891818,15,17,1,0.0
-SR-20220706-27457,Norman Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.695117,-73.903217,15,16,7,0.0
-CQ21-0557,60 Street & 67 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.7046605130931,-73.9004080569593,15,17,6,0.0
-CQ22-1231,Cooper Avenue & 64 Lane,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.698345,-73.890205,15,17,2,0.0
+CQ24-0933,58 Street & 57 Drive,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.721636,-73.91198799999998,15,17,1,0.0
 CQ23-0416,Cooper Avenue & 68 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.700474,-73.88344,15,22,4,0.0
-SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.725752,-73.877557,15,18,7,0.0
-SR-20240709-31983,Mount Olivet Crescent,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716384,-73.897501,15,20,2,0.0
-SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724256,-73.891818,15,17,1,0.0
-CQ24-3675,67 Avenue & 60 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.7046605130931,-73.9004080569593,15,17,6,0.0
-SR-20240917-32327,Eliot Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716384,-73.897501,15,20,2,0.0
 CQ24-2733B,Eliot Avenue & 74 Street,Signal Study,Leading Pedestrian Interval,denied,2024.0,data_cb5_signal_studies.csv,40.72202,-73.88565,15,17,3,1.0
+CQ22-1231,Cooper Avenue & 64 Lane,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.698345,-73.890205,15,17,2,0.0
+CQ24-3675,67 Avenue & 60 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.7046605130931,-73.9004080569593,15,17,6,0.0
 SR-20240318-31430,58 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.721636,-73.911988,15,17,1,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709429,-73.910443,14,16,3,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708992,-73.9097,14,17,4,0.0
-SR-20240801-32110,Harman Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708992,-73.9097,14,17,4,0.0
-CQ20-0088,60 Street & 59 Road,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.718044,-73.90655,14,21,3,0.0
-SR-20240514-31682,58 Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724068,-73.895776,14,16,3,0.0
-SR-20231120-31033,64 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.697348,-73.890797,14,21,1,0.0
-SR-20240805-32122,56 Drive,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723921,-73.907566,14,18,3,0.0
-CQ22-2358,69 Place & Caldwell Avenue,Signal Study,Traffic Signal Removal,denied,2022.0,data_cb5_signal_studies.csv,40.72389,-73.892654,14,17,2,0.0
-SR-20231116-31005,Summerfield Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.694694,-73.902511,14,15,7,0.0
-SR-20220114-26801,Brown Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.724068,-73.895776,14,16,3,0.0
-SR-20210408-25623,Juniper Boulevard North,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.72175,-73.87545,14,17,4,2.0
-SR-20220329-26999,Grandview Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.708428,-73.905517,14,16,4,0.0
-SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,approved,2022.0,srts_citywide.csv,40.698015,-73.887882,14,20,1,0.0
-CQ25-2632,78 Avenue & 64 Place,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.697346,-73.89081,14,21,1,0.0
-CQ22-0479B,Cooper Avenue & 83 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.7104,-73.866625,14,17,4,2.0
-CQ21-2876,Rust Street & Maspeth Avenue,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.72205984333144,-73.91329813158207,14,16,1,0.0
-CQ21-2730,78 Avenue & 62 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.696936,-73.892598,14,21,1,0.0
-CQ21-2748,78 Avenue & 64 Place,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.697346,-73.89081,14,21,1,0.0
+SR-20240709-31983,Mount Olivet Crescent,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716384,-73.897501,15,20,2,0.0
 CQ21-0579,Brown Place & 58 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.724068,-73.895776,14,16,3,0.0
+CQ21-2730,78 Avenue & 62 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.696936,-73.892598,14,21,1,0.0
+SR-20231120-31033,64 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.697348,-73.890797,14,21,1,0.0
+SR-20231116-31005,Summerfield Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.694694,-73.902511,14,15,7,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708992,-73.9097,14,17,4,0.0
+CQ20-0088,60 Street & 59 Road,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.718044,-73.90655,14,21,3,0.0
+CQ22-2358,69 Place & Caldwell Avenue,Signal Study,Traffic Signal Removal,denied,2022.0,data_cb5_signal_studies.csv,40.72389,-73.892654,14,17,2,0.0
+SR-20220329-26999,Grandview Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.708428,-73.905517,14,16,4,0.0
+SR-20210408-25623,Juniper Boulevard North,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.72175,-73.87545,14,17,4,2.0
+SR-20240805-32122,56 Drive,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723921,-73.907566,14,18,3,0.0
+SR-20220114-26801,Brown Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.724068,-73.895776,14,16,3,0.0
+SR-20240801-32110,Harman Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708992,-73.9097,14,17,4,0.0
+SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,approved,2022.0,srts_citywide.csv,40.698015,-73.887882,14,20,1,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709429,-73.910443,14,16,3,0.0
+CQ25-2632,78 Avenue & 64 Place,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.697346,-73.89081,14,21,1,0.0
+CQ21-2876,Rust Street & Maspeth Avenue,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.72205984333144,-73.91329813158207,14,16,1,0.0
+CQ22-0479B,Cooper Avenue & 83 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.7104,-73.866625,14,17,4,2.0
 CQ21-1386,Grandview Avenue & Grove Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.708427,-73.905525,14,16,4,0.0
-CQ23-0611,Myrtle Avenue & 72 Place,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.70222,-73.87734,13,17,3,0.0
-CQ20-1796B,Central Avenue & 69 Place,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.7042,-73.88288,13,13,3,1.0
-SR-20210408-25623,Juniper Boulevard North,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.722007,-73.874555,13,20,2,1.0
-SR-20220621-27347,Central Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.705432,-73.877688,13,13,6,0.0
-SR-20230613-29927,Gates Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.707804,-73.903624,13,13,5,0.0
-CQ21-2749,78 Avenue & 65 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.697551,-73.889899,13,15,2,0.0
-CQ23-1700B,Dry Harbor Road & 63 Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72219,-73.87417,13,20,2,1.0
-CQ23-1379B,Forest Avenue & Gates Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.707804,-73.903624,13,13,5,0.0
+CQ21-2748,78 Avenue & 64 Place,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.697346,-73.89081,14,21,1,0.0
+SR-20240514-31682,58 Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724068,-73.895776,14,16,3,0.0
+SR-20230602-29828,59 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719408,-73.902496,13,14,0,0.0
+CQ25-2240,Dekalb Avenue & Onderdonk Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.707632,-73.915841,13,18,4,0.0
 CQ21-0722,74 Street & Myrtle Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.7024,-73.8749,13,16,1,0.0
-SR-20241223-35660,Jefferson Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.697572,-73.90757,13,19,5,0.0
-SR-20220816-27617,69 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.704202,-73.882873,13,13,3,1.0
-SR-20220323-26927,Seneca Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707632,-73.915841,13,18,4,0.0
-SR-20251020-39648,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.727912,-73.873241,13,15,7,0.0
-CQ22-0482,Flushing Avenue & 58 Drive,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.719711,-73.908257,13,21,3,0.0
+SR-20210726-26106,Fresh Pond Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.719408,-73.902496,13,14,0,0.0
 CQ22-3370B,78 Avenue & 80 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.705376,-73.86861,13,16,3,0.0
+CQ23-1700B,Dry Harbor Road & 63 Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72219,-73.87417,13,20,2,1.0
+CQ23-0611,Myrtle Avenue & 72 Place,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.70222,-73.87734,13,17,3,0.0
+SR-20220621-27347,Central Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.705432,-73.877688,13,13,6,0.0
+CQ23-1379B,Forest Avenue & Gates Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.707804,-73.903624,13,13,5,0.0
 CQ22-3568,75 Place & Juniper Boulevard North,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72167925541021,-73.88396912157482,13,16,3,0.0
 SR-20220607-27303,Lutheran Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.722062,-73.884588,13,16,3,0.0
+SR-20220323-26927,Seneca Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707632,-73.915841,13,18,4,0.0
 CQ24-2064,Fresh Pond Road & 59 Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.719406,-73.902504,13,14,0,0.0
 SR-20220707-27469,70 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.713293,-73.88514,13,20,2,0.0
-SR-20210726-26106,Fresh Pond Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.719408,-73.902496,13,14,0,0.0
-CQ25-2240,Dekalb Avenue & Onderdonk Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.707632,-73.915841,13,18,4,0.0
-SR-20211029-26679,73 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705432,-73.877688,13,13,6,0.0
 SR-20250115-35688,73 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705432,-73.877688,13,13,6,0.0
-SR-20230602-29828,59 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719408,-73.902496,13,14,0,0.0
+SR-20241223-35660,Jefferson Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.697572,-73.90757,13,19,5,0.0
+CQ20-1796B,Central Avenue & 69 Place,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.7042,-73.88288,13,13,3,1.0
+SR-20230613-29927,Gates Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.707804,-73.903624,13,13,5,0.0
+SR-20220816-27617,69 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.704202,-73.882873,13,13,3,1.0
+CQ21-2749,78 Avenue & 65 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.697551,-73.889899,13,15,2,0.0
+CQ22-0482,Flushing Avenue & 58 Drive,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.719711,-73.908257,13,21,3,0.0
 SR-20201006-20003,Dekalb Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.707632,-73.915841,13,18,4,0.0
-SR-20210304-25455,Caldwell Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.724946,-73.890175,12,20,1,0.0
-SR-20220114-26801,Brown Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.723425,-73.895416,12,16,3,0.0
-CQ22-0405,68 Avenue & 80 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.711246,-73.87095,12,17,2,0.0
-SR-20220114-26803,58 Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.723425,-73.895416,12,16,3,0.0
-SR-20240419-31592,Metropolitan Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.712455,-73.882054,12,16,3,0.0
-SR-20250911-39469,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708345,-73.911548,12,12,3,0.0
-SR-20221118-29046,Grand Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.719051,-73.913399,12,13,0,1.0
-SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705518,-73.900836,12,15,6,0.0
-CQ21-2556,56 Street & Grand Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.719051,-73.913399,12,13,0,1.0
-SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.698739,-73.893042,12,16,1,0.0
-CQ22-3244,Caldwell Avenue & 71 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7249241488426,-73.89030478755059,12,20,1,0.0
-SR-20221118-29046,Grand Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.71881,-73.914265,12,16,0,1.0
-CQ22-2741,60 Street & 60 Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.71642,-73.90618,12,13,5,0.0
-SR-20250519-38066,69 Lane,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.729098,-73.894505,12,15,4,0.0
-SR-20230605-29844,60 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.718796,-73.906707,12,20,2,0.0
-CQ22-0194,Cooper Avenue & 61 Street,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.696912,-73.893564,12,14,2,0.0
-CQ21-0215,Metropolitan Avenue & 64 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.712555,-73.89711,12,13,0,0.0
-CQ22-1950,Himrod Street & Fairview Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.708345,-73.91154799999998,12,12,3,0.0
-CQ21-0256,59 Street & 59 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.719028,-73.908215,12,20,2,0.0
-SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705518,-73.900836,12,15,6,0.0
-CQ20-2017,64 Street & 75 Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.698814,-73.89215,12,16,2,0.0
-CQ20-1328,Gates Avenue & Grandview Avenue,Signal Study,All-Way Stop,approved,2020.0,data_cb5_signal_studies.csv,40.70755,-73.90404,12,12,5,0.0
-CQ20-0087,60 Street & 59 Avenue,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.718796,-73.90671,12,20,2,0.0
-SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722824,-73.894973,12,16,2,0.0
+SR-20211029-26679,73 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705432,-73.877688,13,13,6,0.0
+SR-20210408-25623,Juniper Boulevard North,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.722007,-73.874555,13,20,2,1.0
+SR-20251020-39648,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.727912,-73.873241,13,15,7,0.0
 CQ25-1196,Gates Avenue & Grandview Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.70755,-73.90404,12,12,5,0.0
+CQ21-2556,56 Street & Grand Avenue,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.719051,-73.913399,12,13,0,1.0
+SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705518,-73.900836,12,15,6,0.0
+SR-20210304-25455,Caldwell Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.724946,-73.890175,12,20,1,0.0
+SR-20221118-29046,Grand Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.719051,-73.913399,12,13,0,1.0
 SR-20220418-27132,Putnam Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.698256,-73.908774,12,17,6,0.0
-SR-20240621-31877,60 Drive,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.728435,-73.873908,12,14,6,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708115,-73.908215,12,15,3,1.0
-CQ25-1511,Flushing Avenue & 56 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.716404,-73.911959,12,24,3,0.0
+SR-20230421-29422,68 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722824,-73.894973,12,16,2,0.0
 CQ22-0475B,73 Place & Cooper Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.70547251451677,-73.87649615255108,12,16,4,0.0
+SR-20240621-31877,60 Drive,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.728435,-73.873908,12,14,6,0.0
+CQ22-0405,68 Avenue & 80 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.711246,-73.87095,12,17,2,0.0
+SR-20220114-26801,Brown Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.723425,-73.895416,12,16,3,0.0
+CQ22-0194,Cooper Avenue & 61 Street,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.696912,-73.893564,12,14,2,0.0
+SR-20221118-29046,Grand Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.71881,-73.914265,12,16,0,1.0
+SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.698739,-73.893042,12,16,1,0.0
+SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705518,-73.900836,12,15,6,0.0
+CQ20-0087,60 Street & 59 Avenue,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.718796,-73.90671,12,20,2,0.0
+CQ20-2017,64 Street & 75 Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.698814,-73.89215,12,16,2,0.0
+SR-20250911-39469,Woodward Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708345,-73.911548,12,12,3,0.0
+SR-20230605-29844,60 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.718796,-73.906707,12,20,2,0.0
+CQ25-1511,Flushing Avenue & 56 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.716404,-73.911959,12,24,3,0.0
+SR-20240419-31592,Metropolitan Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.712455,-73.882054,12,16,3,0.0
+CQ22-3244,Caldwell Avenue & 71 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7249241488426,-73.89030478755059,12,20,1,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708115,-73.908215,12,15,3,1.0
+CQ20-1328,Gates Avenue & Grandview Avenue,Signal Study,All-Way Stop,approved,2020.0,data_cb5_signal_studies.csv,40.70755,-73.90404,12,12,5,0.0
+CQ21-0256,59 Street & 59 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.719028,-73.908215,12,20,2,0.0
+CQ21-0215,Metropolitan Avenue & 64 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.712555,-73.89711,12,13,0,0.0
+CQ22-2741,60 Street & 60 Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.71642,-73.90618,12,13,5,0.0
+CQ22-1950,Himrod Street & Fairview Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.708345,-73.91154799999998,12,12,3,0.0
+SR-20250519-38066,69 Lane,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.729098,-73.894505,12,15,4,0.0
+SR-20220114-26803,58 Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.723425,-73.895416,12,16,3,0.0
+CQ23-1985,Fairview Avenue & Menahan Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.707676,-73.907486,11,11,3,1.0
+SR-20240722-32049,Pleasant View Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71343,-73.882294,11,15,3,0.0
+SR-20251006-39599,Starr Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.71029,-73.917883,11,17,4,0.0
 SR-20210820-26255,Aubrey Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.710083,-73.864445,11,15,3,1.0
+SR-20240916-32316,Menahan Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.703435,-73.911807,11,13,2,1.0
+SR-20250808-39350,55 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.71519,-73.911052,11,20,1,0.0
+SR-20221118-29046,Grand Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.718556,-73.915167,11,15,0,0.0
+CQ24-0872B,Myrtle Avenue & 73 Place,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.702374,-73.87544,11,14,1,0.0
+CQ22-1149,77 Avenue & 81 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.7066131053992,-73.8686363313541,11,11,4,0.0
+CQ22-1103,Queens Midtown Expressway & 73 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7271691486146,-73.88727206550593,11,18,2,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.707238,-73.906738,11,11,3,1.0
+CQ21-2527,57 Road & 61 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.722599,-73.90456299999998,11,13,3,0.0
+CQ22-3653,84 Street & Dry Harbor Road,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.72191393073102,-73.87281837440547,11,20,2,0.0
+CQ25-2292,Starr Street & Onderdonk Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.71029,-73.91789,11,17,4,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.707678,-73.907477,11,11,3,1.0
+SR-20230608-29878,59 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.717381,-73.907683,11,12,1,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706361,-73.905257,11,11,3,0.0
 CQ25-0725B,Juniper Valley Road & 80 Street,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.71599,-73.87209,11,14,1,0.0
+SR-20251014-39630,Gates Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706361,-73.905257,11,11,3,0.0
+SR-20251029-39708,72 Place,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705225,-73.878565,11,11,3,0.0
+CQ20-0086,Flushing Avenue & 60 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.719334,-73.906845,11,18,2,0.0
+SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.70898,-73.90183,11,11,2,0.0
+SR-20240419-31592,Metropolitan Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71223,-73.884352,11,14,3,0.0
 CQ22-0674,Onderdonk Avenue & Starr Street,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.71029,-73.91789,11,17,4,0.0
 CQ23-0412,54 Street & Grand Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.718555,-73.91518,11,15,0,0.0
-CQ22-1103,Queens Midtown Expressway & 73 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7271691486146,-73.88727206550593,11,18,2,0.0
 CQ23-2319,66 Drive & Pleasantview Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.71343,-73.882295,11,15,3,0.0
-CQ23-1985,Fairview Avenue & Menahan Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.707676,-73.907486,11,11,3,1.0
-SR-20240916-32316,Menahan Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.703435,-73.911807,11,13,2,1.0
-CQ20-0086,Flushing Avenue & 60 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.719334,-73.906845,11,18,2,0.0
-SR-20250808-39350,55 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.71519,-73.911052,11,20,1,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706361,-73.905257,11,11,3,0.0
-CQ25-2292,Starr Street & Onderdonk Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.71029,-73.91789,11,17,4,0.0
 SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706613,-73.868636,11,11,4,0.0
-SR-20221118-29046,Grand Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.718556,-73.915167,11,15,0,0.0
-SR-20251014-39630,Gates Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706361,-73.905257,11,11,3,0.0
-SR-20251006-39599,Starr Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.71029,-73.917883,11,17,4,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.707678,-73.907477,11,11,3,1.0
-SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.70898,-73.90183,11,11,2,0.0
-CQ21-2527,57 Road & 61 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.722599,-73.90456299999998,11,13,3,0.0
-SR-20240419-31592,Metropolitan Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71223,-73.884352,11,14,3,0.0
 SR-20240126-31276,Linden Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70898,-73.90183,11,11,2,0.0
-CQ22-3653,84 Street & Dry Harbor Road,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.72191393073102,-73.87281837440547,11,20,2,0.0
-CQ24-0872B,Myrtle Avenue & 73 Place,Signal Study,Left Turn Arrow/Signal,denied,2024.0,data_cb5_signal_studies.csv,40.702374,-73.87544,11,14,1,0.0
-SR-20251029-39708,72 Place,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705225,-73.878565,11,11,3,0.0
 CQ25-1510,61 Street & 57 Road,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.722599,-73.90456299999998,11,13,3,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.707238,-73.906738,11,11,3,1.0
-CQ22-1149,77 Avenue & 81 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.7066131053992,-73.8686363313541,11,11,4,0.0
-SR-20230608-29878,59 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.717381,-73.907683,11,12,1,0.0
-SR-20240722-32049,Pleasant View Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71343,-73.882294,11,15,3,0.0
-SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707013,-73.900661,10,11,2,0.0
-SR-20210604-25807,Woodbine Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.707013,-73.900661,10,11,2,0.0
-CQ22-3347,65 Street & Shaler Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.704846,-73.89212999999998,10,10,4,0.0
-CQ25-2062,Cooper Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.6965692144966,-73.8945563503407,10,11,2,0.0
-SR-20251006-39594,62 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.733659,-73.900069,10,13,0,0.0
-CQ21-2826,60 Lane & St Felix Avenue,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.697061,-73.894631,10,11,2,0.0
-CQ25-1999,Menahan Street & 60 Place,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.710445,-73.902655,10,12,3,0.0
-SR-20220701-27447,65 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.729018,-73.900242,10,10,1,0.0
-SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.729018,-73.900242,10,10,1,0.0
-CQ23-1132,77 Road & 80 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.70608,-73.86882,10,10,3,0.0
-CQ24-2090,Fairview Avenue & Linden Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.7068,-73.906006,10,10,3,0.0
-CQ22-0262,70 Avenue & 65 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.703968,-73.89041,10,11,1,0.0
-CQ23-1381B,Decatur Street & Forest Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.698753,-73.89726,10,10,0,0.0
-CQ21-1143,Cooper Avenue & 60 Lane,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.6965692144966,-73.8945563503407,10,11,2,0.0
-SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.728076,-73.900272,10,10,1,0.0
-CQ24-2945,65 Street & Catalpa Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.704845,-73.892136,10,10,4,0.0
-SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706018,-73.898945,10,11,5,0.0
-CQ20-2164,Catalpa Avenue & 65 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.704845,-73.892136,10,10,4,0.0
-CQ23-2629,Putnam Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.706017,-73.89896,10,11,5,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706798,-73.905995,10,10,3,0.0
-CQ21-0261,82 Place & Penelope Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72238,-73.873753,10,18,2,0.0
-SR-20230613-29927,Gates Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.708323,-73.901438,10,10,2,0.0
-SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.708323,-73.901438,10,10,2,0.0
-SR-20220701-27447,65 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.728076,-73.900272,10,10,1,0.0
-SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.706018,-73.898945,10,11,5,0.0
-CQ20-0347,60 Road & 60 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.71574,-73.90603,10,11,5,0.0
-SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.726354,-73.876297,10,12,4,0.0
-CQ22-0974,61 Street & St Felix Avenue,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.697061,-73.894631,10,11,2,0.0
-SR-20240918-32340,65 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.703971,-73.890408,10,11,1,0.0
-SR-20230807-30313,Menahan Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.710446,-73.90265,10,12,3,0.0
-SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.726726,-73.875499,10,15,3,0.0
 CQ23-1009,78 Avenue & 82 Street,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.705519,-73.866878,10,13,3,0.0
+SR-20230807-30313,Menahan Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.710446,-73.90265,10,12,3,0.0
+CQ24-2945,65 Street & Catalpa Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.704845,-73.892136,10,10,4,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706798,-73.905995,10,10,3,0.0
+CQ21-2826,60 Lane & St Felix Avenue,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.697061,-73.894631,10,11,2,0.0
+CQ23-1132,77 Road & 80 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.70608,-73.86882,10,10,3,0.0
+SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.726726,-73.875499,10,15,3,0.0
+SR-20240918-32340,65 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.703971,-73.890408,10,11,1,0.0
+CQ22-0262,70 Avenue & 65 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.703968,-73.89041,10,11,1,0.0
+SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.726354,-73.876297,10,12,4,0.0
 SR-20221031-28969,62 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.733659,-73.900069,10,13,0,0.0
 CQ24-3662,60 Road & 60 Street,Signal Study,All-Way Stop,approved,2024.0,data_cb5_signal_studies.csv,40.71574,-73.90603,10,11,5,0.0
+SR-20220701-27447,65 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.728076,-73.900272,10,10,1,0.0
+CQ22-3347,65 Street & Shaler Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.704846,-73.89212999999998,10,10,4,0.0
+SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.729018,-73.900242,10,10,1,0.0
+SR-20210604-25807,Woodbine Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.707013,-73.900661,10,11,2,0.0
+SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706018,-73.898945,10,11,5,0.0
+SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.706018,-73.898945,10,11,5,0.0
+CQ23-2629,Putnam Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.706017,-73.89896,10,11,5,0.0
+SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.708323,-73.901438,10,10,2,0.0
+SR-20230613-29927,Gates Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.708323,-73.901438,10,10,2,0.0
+CQ20-0347,60 Road & 60 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.71574,-73.90603,10,11,5,0.0
+SR-20220701-27447,65 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.729018,-73.900242,10,10,1,0.0
+CQ21-1143,Cooper Avenue & 60 Lane,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.6965692144966,-73.8945563503407,10,11,2,0.0
+SR-20230816-30383,65 Place,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.728076,-73.900272,10,10,1,0.0
+CQ22-0974,61 Street & St Felix Avenue,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.697061,-73.894631,10,11,2,0.0
+CQ24-2090,Fairview Avenue & Linden Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.7068,-73.906006,10,10,3,0.0
 CQ20-2144,Gates Avenue & 60 Place,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.70832,-73.90144,10,10,2,0.0
+CQ20-2164,Catalpa Avenue & 65 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.704845,-73.892136,10,10,4,0.0
+CQ21-0261,82 Place & Penelope Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72238,-73.873753,10,18,2,0.0
+SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707013,-73.900661,10,11,2,0.0
 SR-20250528-38108,65 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704846,-73.89213,10,10,4,0.0
-SR-20210902-26379,59 Drive,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.717363,-73.906392,9,9,2,0.0
-CQ20-0191B,59 Drive & 60 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71736,-73.9064,9,9,2,0.0
-CQ23-2646,Putnam Avenue & 60 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705772,-73.89997,9,10,4,0.0
-CQ24-3155,Stephen Street & Wyckoff Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.695526,-73.903946,9,10,4,0.0
-CQ20-1785,66 Street & 52 Avenue,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.73392493844332,-73.901059551749,9,12,0,0.0
+CQ25-2062,Cooper Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.6965692144966,-73.8945563503407,10,11,2,0.0
+CQ25-1999,Menahan Street & 60 Place,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.710445,-73.902655,10,12,3,0.0
+CQ23-1381B,Decatur Street & Forest Avenue,Signal Study,Leading Pedestrian Interval,denied,2023.0,data_cb5_signal_studies.csv,40.698753,-73.89726,10,10,0,0.0
+SR-20251006-39594,62 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.733659,-73.900069,10,13,0,0.0
 CQ20-1575,Grove Street & 60 Place,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.709633,-73.90223,9,10,1,0.0
+SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.70767,-73.901049,9,9,2,0.0
+CQ20-1017,51 Road & 69 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.734257,-73.89603,9,10,1,0.0
+CQ24-3155,Stephen Street & Wyckoff Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.695526,-73.903946,9,10,4,0.0
+SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705772,-73.899963,9,10,4,0.0
+CQ22-3350,62 Avenue & 56 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.714455,-73.908275,9,10,4,0.0
+SR-20210902-26379,59 Drive,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.717363,-73.906392,9,9,2,0.0
+CQ23-2252,59 Drive & Mt Olivet Crescent,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7180192187358,-73.90033759153769,9,14,1,0.0
+CQ20-2345,Metropolitan Avenue & Admiral Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71258,-73.897684,9,10,0,0.0
+SR-20230620-29970,81 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.723486,-73.87684,9,11,0,0.0
+CQ24-1501,60 Place & Grove Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.709633,-73.90223,9,10,1,0.0
+CQ20-1785,66 Street & 52 Avenue,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.73392493844332,-73.901059551749,9,12,0,0.0
+CQ21-0194,Palmetto Street & 60 Place,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.70767,-73.901054,9,9,2,0.0
+SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705772,-73.899963,9,10,4,0.0
+CQ22-2096,60 Road & 59 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.715538,-73.90725,9,10,5,0.0
+CQ22-1377,84 Place & Penelope Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.72201,-73.86907,9,10,3,0.0
+SR-20231113-30977,Central Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704607,-73.881148,9,9,2,0.0
+CQ21-3036B,Eliot Avenue & 71 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.72128,-73.887245,9,13,1,1.0
+SR-20241003-33402,Cooper Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.693437,-73.900032,9,10,1,0.0
+SR-20230811-30358,Mt Oliver Crescent,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.71802,-73.900338,9,14,1,0.0
+SR-20241101-35515,Andrews Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714455,-73.908275,9,10,4,0.0
+SR-20210108-24283,59 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.716261,-73.907436,9,10,4,0.0
+CQ23-1269B,69 Street & Juniper Valley Road,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72184062371875,-73.89068898306941,9,11,3,0.0
+CQ23-2646,Putnam Avenue & 60 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705772,-73.89997,9,10,4,0.0
+SR-20210908-26408,73 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.714323,-73.880561,9,11,4,0.0
 SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705924,-73.904514,9,9,2,0.0
 CQ25-0497B,69 Street & Juniper Valley Road,Signal Study,Left Turn Arrow/Signal,denied,2025.0,data_cb5_signal_studies.csv,40.72184062371875,-73.89068898306941,9,11,3,0.0
-SR-20240719-32048,Putnam Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705772,-73.899963,9,10,4,0.0
-SR-20241003-33402,Cooper Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.693437,-73.900032,9,10,1,0.0
-SR-20210108-24283,59 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.716261,-73.907436,9,10,4,0.0
-SR-20250407-37912,Grove Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709636,-73.902222,9,10,1,0.0
-SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.70767,-73.901049,9,9,2,0.0
-CQ24-1501,60 Place & Grove Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.709633,-73.90223,9,10,1,0.0
-CQ21-0194,Palmetto Street & 60 Place,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.70767,-73.901054,9,9,2,0.0
-CQ22-1377,84 Place & Penelope Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.72201,-73.86907,9,10,3,0.0
-SR-20210908-26408,73 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.714323,-73.880561,9,11,4,0.0
-SR-20250407-37912,Grove Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.70989,-73.901147,9,10,1,0.0
-CQ20-2345,Metropolitan Avenue & Admiral Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71258,-73.897684,9,10,0,0.0
-CQ22-2096,60 Road & 59 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.715538,-73.90725,9,10,5,0.0
-SR-20231113-30977,Central Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704607,-73.881148,9,9,2,0.0
-SR-20250828-39407,81 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.723486,-73.87684,9,11,0,0.0
-CQ22-3350,62 Avenue & 56 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.714455,-73.908275,9,10,4,0.0
-CQ23-1269B,69 Street & Juniper Valley Road,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72184062371875,-73.89068898306941,9,11,3,0.0
-SR-20230811-30358,Mt Oliver Crescent,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.71802,-73.900338,9,14,1,0.0
-CQ23-2252,59 Drive & Mt Olivet Crescent,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.7180192187358,-73.90033759153769,9,14,1,0.0
-CQ20-1017,51 Road & 69 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.734257,-73.89603,9,10,1,0.0
-SR-20241101-35515,Andrews Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714455,-73.908275,9,10,4,0.0
 SR-20230515-29673,56 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.714455,-73.908275,9,10,4,0.0
-CQ21-3036B,Eliot Avenue & 71 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.72128,-73.887245,9,13,1,1.0
-CQ21-1545,Fairview Avenue & Palmetto Street,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.70592,-73.90452,9,9,2,0.0
-SR-20230620-29970,81 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.723486,-73.87684,9,11,0,0.0
+SR-20250407-37912,Grove Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709636,-73.902222,9,10,1,0.0
+SR-20250828-39407,81 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.723486,-73.87684,9,11,0,0.0
 SR-20221230-29142,81 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723486,-73.87684,9,11,0,0.0
-SR-20211202-26763,Putnam Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705772,-73.899963,9,10,4,0.0
-SR-20250630-38228,Willoughby Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709851,-73.91714,8,12,2,0.0
-SR-20250604-38129,59 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.719692,-73.90158,8,8,0,1.0
-CQ23-3191,73 Place & 66 Road,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.715053,-73.881151,8,9,4,0.0
-CQ25-0556,60 Street & 56 Drive,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.7238375,-73.90633700000001,8,10,2,0.0
-SR-20231011-30757,69 Lane,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722509,-73.890421,8,10,3,0.0
-CQ20-0756B,Juniper Boulevard South & 71 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71752,-73.88423,8,9,3,0.0
-CQ20-1838,68 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.705734,-73.89449,8,8,3,0.0
-CQ23-3228,72 Street & Central Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.705017,-73.87944,8,8,2,0.0
-SR-20211029-26673,Dana Court,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.722619,-73.869554,8,9,3,0.0
-CQ20-0109B,Juniper Boulevard North & 80 Street,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.721592,-73.87647,8,7,2,2.0
-SR-20250312-35837,76 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706729,-73.874241,8,9,1,0.0
+CQ21-1545,Fairview Avenue & Palmetto Street,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.70592,-73.90452,9,9,2,0.0
+SR-20250407-37912,Grove Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.70989,-73.901147,9,10,1,0.0
+CQ20-0191B,59 Drive & 60 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71736,-73.9064,9,9,2,0.0
+CQ22-3289,Dana Court & 84 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.722619,-73.869554,8,9,3,0.0
+CQ23-0147,75 Avenue & 60 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.698405,-73.896663,8,8,0,0.0
 SR-20241003-33402,Cooper Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.693352,-73.900403,8,9,1,0.0
-SR-20210408-25623,Juniper Boulevard North,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.721595,-73.876464,8,7,2,2.0
-CQ24-1056,77 Avenue & 78 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.70652,-73.87322,8,9,1,0.0
-CQ24-1249B,Woodhaven Boulevard & Dana Court,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.722619,-73.869554,8,9,3,0.0
-CQ21-1549,Cooper Avenue & 60 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.69513,-73.895615,8,8,3,0.0
-SR-20230307-29312,63 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719692,-73.90158,8,8,0,1.0
-SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.698405,-73.896663,8,8,0,0.0
-SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.722509,-73.890421,8,10,3,0.0
-SR-20210908-26408,73 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.715053,-73.881151,8,9,4,0.0
 CQ21-3126,63 Street & 59 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.719692,-73.90158,8,8,0,1.0
-CQ22-2569,Maspeth Avenue & Maurice Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.723238,-73.91257250000001,8,8,0,0.0
-CQ22-2724,60 Street & 60 Drive,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.715068,-73.905868,8,9,5,0.0
-SR-20210119-24318,Myrtle Avenue,SRTS,Speed Bump,approved,2020.0,srts_citywide.csv,40.703182,-73.865639,8,10,2,0.0
-CQ21-1190,60 Street & 56 Drive,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.7238375,-73.90633700000001,8,10,2,0.0
-CQ21-2816,60 Avenue & 69 Lane,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.722507,-73.89043,8,10,3,0.0
-SR-20240402-31495,61 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.717574,-73.893322,8,21,0,0.0
-SR-20220707-27469,70 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.713962,-73.885092,8,18,2,0.0
 SR-20231113-30977,Central Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.70502,-73.879431,8,8,2,0.0
 SR-20241016-33465,77 Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70652,-73.873214,8,9,1,0.0
-SR-20201224-24224,60 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.698511,-73.895779,8,10,0,0.0
-SR-20230213-29246,Norman Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.69832,-73.9001,8,14,0,0.0
-SR-20221103-28989,56 Drive,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723838,-73.906336,8,10,2,0.0
-CQ23-0147,75 Avenue & 60 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.698405,-73.896663,8,8,0,0.0
-SR-20251229-39879,71 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.717524,-73.884228,8,9,3,0.0
-CQ24-2089,Woodward Avenue & Stockholm Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.709219,-73.913033,8,8,1,0.0
-CQ25-1652B,Wyckoff Avenue & Cooper Avenue,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.69335,-73.90041,8,9,1,0.0
+SR-20210408-25623,Juniper Boulevard North,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.721595,-73.876464,8,7,2,2.0
+SR-20230307-29312,63 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719692,-73.90158,8,8,0,1.0
+SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.698405,-73.896663,8,8,0,0.0
 SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.698511,-73.895779,8,10,0,0.0
-CQ22-3590,84 Street & 63 Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.72349,-73.87136,8,10,1,0.0
-CQ22-3289,Dana Court & 84 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.722619,-73.869554,8,9,3,0.0
+CQ25-0556,60 Street & 56 Drive,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.7238375,-73.90633700000001,8,10,2,0.0
+CQ25-1652B,Wyckoff Avenue & Cooper Avenue,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.69335,-73.90041,8,9,1,0.0
+SR-20211029-26673,Dana Court,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.722619,-73.869554,8,9,3,0.0
+SR-20210119-24318,Myrtle Avenue,SRTS,Speed Bump,approved,2020.0,srts_citywide.csv,40.703182,-73.865639,8,10,2,0.0
+CQ23-3228,72 Street & Central Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.705017,-73.87944,8,8,2,0.0
+CQ21-2816,60 Avenue & 69 Lane,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.722507,-73.89043,8,10,3,0.0
+CQ23-3191,73 Place & 66 Road,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.715053,-73.881151,8,9,4,0.0
+SR-20250312-35837,76 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706729,-73.874241,8,9,1,0.0
 CQ22-3242,56 Road & 60 Street,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.72452,-73.90626,8,10,2,0.0
 SR-20221006-28863,Cypress Hills Street,SRTS,Speed Bump,approved,2022.0,srts_citywide.csv,40.696669,-73.88681,8,11,0,0.0
-SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706357,-73.900268,7,8,3,0.0
-CQ25-1507,69 Place & 65 Drive,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.715369,-73.88653999999998,7,9,1,0.0
-SR-20230420-29406,59 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.720461,-73.908303,7,8,1,0.0
-SR-20240917-32327,Eliot Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718206,-73.893757,7,20,0,0.0
+CQ22-3590,84 Street & 63 Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.72349,-73.87136,8,10,1,0.0
+SR-20220707-27469,70 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.713962,-73.885092,8,18,2,0.0
+SR-20210908-26408,73 Place,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.715053,-73.881151,8,9,4,0.0
+CQ20-0109B,Juniper Boulevard North & 80 Street,Signal Study,Left Turn Arrow/Signal,denied,2020.0,data_cb5_signal_studies.csv,40.721592,-73.87647,8,7,2,2.0
+CQ21-1549,Cooper Avenue & 60 Street,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.69513,-73.895615,8,8,3,0.0
+CQ24-2089,Woodward Avenue & Stockholm Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.709219,-73.913033,8,8,1,0.0
+SR-20221103-28989,56 Drive,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723838,-73.906336,8,10,2,0.0
+SR-20250630-38228,Willoughby Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709851,-73.91714,8,12,2,0.0
+SR-20231011-30757,69 Lane,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.722509,-73.890421,8,10,3,0.0
+CQ22-2569,Maspeth Avenue & Maurice Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.723238,-73.91257250000001,8,8,0,0.0
+SR-20230213-29246,Norman Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.69832,-73.9001,8,14,0,0.0
+SR-20240402-31495,61 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.717574,-73.893322,8,21,0,0.0
+SR-20241009-33426,69 Lane,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.722509,-73.890421,8,10,3,0.0
+CQ24-1056,77 Avenue & 78 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.70652,-73.87322,8,9,1,0.0
+SR-20201224-24224,60 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.698511,-73.895779,8,10,0,0.0
+SR-20250604-38129,59 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.719692,-73.90158,8,8,0,1.0
+CQ21-1190,60 Street & 56 Drive,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.7238375,-73.90633700000001,8,10,2,0.0
+CQ20-1838,68 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.705734,-73.89449,8,8,3,0.0
+CQ24-1249B,Woodhaven Boulevard & Dana Court,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.722619,-73.869554,8,9,3,0.0
+CQ20-0756B,Juniper Boulevard South & 71 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.71752,-73.88423,8,9,3,0.0
+SR-20251229-39879,71 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.717524,-73.884228,8,9,3,0.0
+CQ22-2724,60 Street & 60 Drive,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.715068,-73.905868,8,9,5,0.0
 SR-20221103-28989,56 Drive,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723707,-73.904449,7,10,4,0.0
-SR-20240501-31621,70 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.722882,-73.889619,7,8,2,0.0
+SR-20230918-30597,74 Street,SRTS,Speed Bump,approved,2023.0,srts_citywide.csv,40.715245,-73.880206,7,8,4,0.0
+SR-20231018-30822,60 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706357,-73.900268,7,8,3,0.0
+CQ22-1551,59 Road & 60 Lane,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.71839,-73.90417,7,9,0,0.0
+CQ24-2882,Dry Harbor Road & 85 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.723061763633645,-73.87145518130095,7,9,1,0.0
+SR-20241007-33417,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.704972,-73.889843,7,8,0,0.0
+CQ23-0081,Penelope Avenue & 72 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.716187,-73.884111,7,9,1,0.0
+SR-20220901-27698,76 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723136,-73.883237,7,9,2,0.0
+SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.727091,-73.874708,7,10,2,0.0
+CQ21-2708,60 Place & Madison Street,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.706356,-73.900276,7,8,3,0.0
+SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.709352,-73.89424,7,10,0,0.0
+CQ23-1086,59 Street & 58 Drive,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.720461,-73.908303,7,8,1,0.0
+CQ23-0399,77 Street & 62 Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72605634929975,-73.8744731422483,7,10,3,0.0
 SR-20210608-25823,61 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.698666,-73.893936,7,10,1,0.0
 CQ24-2581,60 Avenue & 71 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.72325,-73.888824,7,9,2,0.0
-CQ24-2230B,Juniper Boulevard South & 69 Place,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.716393,-73.886665,7,9,1,0.0
-SR-20241017-33472,Penelope Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716017,-73.886351,7,9,1,0.0
-CQ22-1726,Eliot Avenue & 76 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.723136,-73.883237,7,9,2,0.0
-SR-20230918-30597,74 Street,SRTS,Speed Bump,approved,2023.0,srts_citywide.csv,40.715245,-73.880206,7,8,4,0.0
-SR-20250130-35729,Eliot Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.727091,-73.874708,7,10,2,0.0
-SR-20241023-34491,81 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.727368,-73.879946,7,10,0,0.0
-SR-20240419-31593,61 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.698666,-73.893936,7,10,1,0.0
-CQ24-1960,81 Street & 58 Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.727367,-73.87995,7,10,0,0.0
 SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.698666,-73.893936,7,10,1,0.0
-SR-20220922-27786,72 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723624,-73.888016,7,8,3,0.0
-SR-20220330-27020,68 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.705207,-73.885176,7,9,1,0.0
-CQ24-1128,67 Street & Eliot Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.718204,-73.89377,7,20,0,0.0
-SR-20220901-27698,76 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723136,-73.883237,7,9,2,0.0
-CQ25-0286B,Eliot Avenue & 84 Street,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.72709,-73.87472,7,10,2,0.0
-CQ24-2882,Dry Harbor Road & 85 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.723061763633645,-73.87145518130095,7,9,1,0.0
-CQ25-0285B,Eliot Avenue & 84 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.72709,-73.87472,7,10,2,0.0
-CQ20-0285,Penelope Avenue & 69 Place,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.716017,-73.886351,7,9,1,0.0
-SR-20241007-33417,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.704972,-73.889843,7,8,0,0.0
-CQ23-0399,77 Street & 62 Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72605634929975,-73.8744731422483,7,10,3,0.0
-CQ21-2708,60 Place & Madison Street,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.706356,-73.900276,7,8,3,0.0
-CQ23-1086,59 Street & 58 Drive,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.720461,-73.908303,7,8,1,0.0
 CQ21-1754,66 Street & 53 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.731358,-73.89918,7,9,2,0.0
-SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.709352,-73.89424,7,10,0,0.0
-SR-20230518-29719,58 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721084,-73.908342,7,8,1,0.0
-CQ22-1551,59 Road & 60 Lane,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.71839,-73.90417,7,9,0,0.0
-CQ23-0081,Penelope Avenue & 72 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.716187,-73.884111,7,9,1,0.0
-CQ23-1616,61 Street & 56 Drive,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.723705,-73.90446,7,10,4,0.0
-CQ21-0614,60 Avenue & 71 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72325,-73.888824,7,9,2,0.0
-CQ23-2566,68 Place & 70 Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705204,-73.885185,7,9,1,0.0
+CQ24-1128,67 Street & Eliot Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.718204,-73.89377,7,20,0,0.0
+CQ20-0285,Penelope Avenue & 69 Place,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.716017,-73.886351,7,9,1,0.0
+SR-20241023-34491,81 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.727368,-73.879946,7,10,0,0.0
+CQ24-1960,81 Street & 58 Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.727367,-73.87995,7,10,0,0.0
+SR-20220330-27020,68 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.705207,-73.885176,7,9,1,0.0
+SR-20220922-27786,72 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.723624,-73.888016,7,8,3,0.0
+CQ22-1726,Eliot Avenue & 76 Street,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.723136,-73.883237,7,9,2,0.0
 CQ20-1781,58 Avenue & 81 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.727367,-73.87995,7,10,0,0.0
+CQ23-2566,68 Place & 70 Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705204,-73.885185,7,9,1,0.0
+CQ24-2230B,Juniper Boulevard South & 69 Place,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.716393,-73.886665,7,9,1,0.0
+SR-20240917-32327,Eliot Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718206,-73.893757,7,20,0,0.0
+SR-20230420-29406,59 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.720461,-73.908303,7,8,1,0.0
+SR-20241017-33472,Penelope Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.716017,-73.886351,7,9,1,0.0
+SR-20240501-31621,70 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.722882,-73.889619,7,8,2,0.0
+SR-20240419-31593,61 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.698666,-73.893936,7,10,1,0.0
 CQ20-2303,65 Drive & 70 Street,Signal Study,Traffic Signal,approved,2020.0,data_cb5_signal_studies.csv,40.715369,-73.88653999999998,7,9,1,0.0
-SR-20251014-39628,St Felix Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.696482,-73.897564,6,7,3,0.0
+CQ23-1616,61 Street & 56 Drive,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.723705,-73.90446,7,10,4,0.0
+CQ25-0286B,Eliot Avenue & 84 Street,Signal Study,Leading Pedestrian Interval,denied,2025.0,data_cb5_signal_studies.csv,40.72709,-73.87472,7,10,2,0.0
+CQ21-0614,60 Avenue & 71 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72325,-73.888824,7,9,2,0.0
+CQ25-1507,69 Place & 65 Drive,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.715369,-73.88653999999998,7,9,1,0.0
+CQ25-0285B,Eliot Avenue & 84 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.72709,-73.87472,7,10,2,0.0
+SR-20230518-29719,58 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.721084,-73.908342,7,8,1,0.0
 SR-20251003-39583,Greene Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.710258,-73.907217,6,7,4,0.0
-CQ22-2698,Juniper Valley Road & 75 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.715482,-73.8793,6,7,3,0.0
-SR-20210322-25534,Butler Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.710258,-73.907217,6,7,4,0.0
-SR-20240722-32049,Pleasant View Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714838,-73.882389,6,11,2,0.0
-SR-20250811-39362,Grandview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709745,-73.907741,6,7,3,0.0
+SR-20251014-39628,St Felix Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.696482,-73.897564,6,7,3,0.0
+SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.709825,-73.895354,6,9,1,0.0
 CQ24-3719,72 Place & 53 Road,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.7308484188404,-73.8914460268618,6,9,2,0.0
-SR-20241101-35515,Andrews Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.715314,-73.907484,6,7,4,0.0
-SR-20240612-31811,Edsall Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706541,-73.87515,6,10,1,0.0
-SR-20230531-29810,78 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704628,-73.872442,6,9,1,0.0
-CQ23-3623,Palmetto Street & 64 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.708942,-73.895872,6,9,0,0.0
-SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708693,-73.87537,6,6,2,0.0
-SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709868,-73.911178,6,8,2,0.0
-SR-20240910-32287,78 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708948,-73.874507,6,6,2,0.0
+SR-20230502-29495,63 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719547,-73.90154,6,6,0,1.0
+SR-20210322-25534,Butler Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.710258,-73.907217,6,7,4,0.0
+CQ24-2843,66 Road & 71 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.71395,-73.884209,6,13,2,0.0
 CQ24-2408,St Felix Avenue & 60 Street,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.696482,-73.897564,6,7,3,0.0
 SR-20230502-29495,63 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719547,-73.90154,6,6,0,1.0
-CQ24-2843,66 Road & 71 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.71395,-73.884209,6,13,2,0.0
-SR-20230502-29495,63 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719547,-73.90154,6,6,0,1.0
+SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708693,-73.87537,6,6,2,0.0
+SR-20250923-39520,Fairview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709868,-73.911178,6,8,2,0.0
+SR-20230531-29810,78 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704628,-73.872442,6,9,1,0.0
 SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708948,-73.874507,6,6,2,0.0
-SR-20240717-32039,56 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724391,-73.904369,6,9,3,0.0
+SR-20240910-32287,78 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708948,-73.874507,6,6,2,0.0
+SR-20240612-31811,Edsall Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706541,-73.87515,6,10,1,0.0
 SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706123,-73.884597,6,7,1,0.0
-CQ23-1727,69 Street & 53 Road,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.73037303589712,-73.89340819721393,6,7,3,0.0
-CQ21-1181,74 Street & 58 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.726143,-73.88714,6,9,2,0.0
-SR-20240827-32230,Woodbine Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708266,-73.895577,6,7,3,0.0
+SR-20250811-39362,Grandview Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709745,-73.907741,6,7,3,0.0
+CQ23-3623,Palmetto Street & 64 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.708942,-73.895872,6,9,0,0.0
+SR-20241101-35515,Andrews Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.715314,-73.907484,6,7,4,0.0
+SR-20240717-32039,56 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724391,-73.904369,6,9,3,0.0
+SR-20240722-32049,Pleasant View Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714838,-73.882389,6,11,2,0.0
 CQ23-2082,59 Street & 56 Drive,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.723995,-73.90864,6,8,1,0.0
-SR-20210902-26379,59 Drive,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.717587,-73.904862,6,9,1,0.0
 CQ23-1602,67 Drive & 78 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.71171,-73.8754,6,8,2,0.0
-SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.709825,-73.895354,6,9,1,0.0
-CQ22-0468B,Cooper Avenue & 67 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.699963,-73.88585,6,8,0,0.0
+CQ23-1727,69 Street & 53 Road,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.73037303589712,-73.89340819721393,6,7,3,0.0
+SR-20240827-32230,Woodbine Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708266,-73.895577,6,7,3,0.0
+SR-20210902-26379,59 Drive,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.717587,-73.904862,6,9,1,0.0
+CQ21-1181,74 Street & 58 Avenue,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.726143,-73.88714,6,9,2,0.0
 CQ21-3127,63 Street & 59 Drive,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.719547,-73.90154,6,6,0,1.0
+CQ22-0468B,Cooper Avenue & 67 Street,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.699963,-73.88585,6,8,0,0.0
 CQ22-2129,66 Road & 78 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.714589,-73.87529,6,7,1,0.0
-CQ22-1455,Stanhope Street & Fairview Avenue,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.709868,-73.911185,6,8,2,0.0
 CQ22-1442,78 Street & 69 Road,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.708946,-73.87451,6,6,2,0.0
+CQ22-1455,Stanhope Street & Fairview Avenue,Signal Study,Traffic Signal,approved,2022.0,data_cb5_signal_studies.csv,40.709868,-73.911185,6,8,2,0.0
+CQ22-2698,Juniper Valley Road & 75 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.715482,-73.8793,6,7,3,0.0
 CQ25-1492,Edsall Avenue & 75 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.706541,-73.87515,6,10,1,0.0
 SR-20250926-39540,Traffic Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.709825,-73.895354,6,9,1,0.0
 CQ25-2359,78 Avenue & 60 Street,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.69609,-73.89632,5,5,1,0.0
 CQ25-2040,76 Street & 78 Avenue,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.70455,-73.873355,5,8,1,0.0
 CQ25-2000,72 Place & Cooper Avenue,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.70352,-73.877875,5,8,1,0.0
-SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.710484,-73.87893,5,6,3,0.0
 SR-20251003-39583,Greene Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.710156,-73.907329,5,6,4,0.0
-SR-20241211-35639,82 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723859,-73.876042,5,6,1,0.0
-SR-20230509-29582,Pleasantview Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.714146,-73.882343,5,7,1,0.0
 SR-20200928-19964,68 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.704607,-73.898244,5,5,2,0.0
+SR-20230509-29582,Pleasantview Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.714146,-73.882343,5,7,1,0.0
+SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.710484,-73.87893,5,6,3,0.0
+SR-20241211-35639,82 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.723859,-73.876042,5,6,1,0.0
 SR-20231113-30977,Central Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704815,-73.880286,5,5,0,0.0
-SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.709584,-73.876811,5,5,1,0.0
 SR-20241011-33443,58 Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.721001,-73.910561,5,5,0,0.0
-SR-20210304-25455,Caldwell Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.724639,-73.887076,5,6,3,0.0
-SR-20230612-29896,Greene Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.710156,-73.907329,5,6,4,0.0
+SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.709584,-73.876811,5,5,1,0.0
 SR-20240405-31519,Decatur Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.697435,-73.898601,5,6,3,0.0
+SR-20210304-25455,Caldwell Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.724639,-73.887076,5,6,3,0.0
 SR-20201009-20015,60 Lane,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.704019,-73.897946,5,5,2,0.0
+SR-20201009-20015,60 Lane,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.704607,-73.898244,5,5,2,0.0
 SR-20220928-27825,Cooper Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.703522,-73.877872,5,8,1,0.0
-CQ20-0251,79 Street & 68 Road,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.710453,-73.87339,5,5,1,0.0
+SR-20230612-29896,Greene Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.710156,-73.907329,5,6,4,0.0
 CQ20-0199B,69 Street & Long Island Expressway,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.73288011770822,-73.89420718490693,5,5,2,0.0
-CQ20-0871B,69 Street & Long Island Expressway,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.73288011770822,-73.89420718490693,5,5,2,0.0
+SR-20240722-32049,Pleasant View Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714146,-73.882343,5,7,1,0.0
+CQ20-1732,78 Avenue & 60 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.69609,-73.89632,5,5,1,0.0
+SR-20231002-30678,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.696094,-73.89631,5,5,1,0.0
 SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708184,-73.877041,5,8,2,0.0
 SR-20240711-32011,71 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.704815,-73.880286,5,5,0,0.0
-SR-20201009-20015,60 Lane,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.704607,-73.898244,5,5,2,0.0
-SR-20231002-30678,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.696094,-73.89631,5,5,1,0.0
-CQ22-0455,60 Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.716746,-73.903698,5,7,1,0.0
 SR-20250131-35738,70 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.732248,-73.893955,5,6,1,0.0
+CQ22-0455,60 Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.716746,-73.903698,5,7,1,0.0
 CQ22-1173B,88 Street & 77 Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.7064593049998,-73.8615312271111,5,7,3,0.0
 CQ22-2925,Juniper Valley Road & 77 Place,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.71567,-73.87626,5,6,1,0.0
-CQ20-1732,78 Avenue & 60 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.69609,-73.89632,5,5,1,0.0
+CQ23-3634,Rust Street & Flushing Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.71677820600362,-73.9090663474871,5,5,2,0.0
 CQ20-1458B,77 Avenue & 88 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.7064593049998,-73.8615312271111,5,7,3,0.0
-SR-20240722-32049,Pleasant View Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714146,-73.882343,5,7,1,0.0
+CQ20-0871B,69 Street & Long Island Expressway,Signal Study,Leading Pedestrian Interval,denied,2020.0,data_cb5_signal_studies.csv,40.73288011770822,-73.89420718490693,5,5,2,0.0
 SR-20210902-26379,59 Drive,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.717721,-73.903971,5,8,0,0.0
-CQ24-3522,63 Avenue & 83 Place,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.72312,-73.87216,5,7,1,0.0
+CQ20-0463,52 Drive & 70 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.732248,-73.893955,5,6,1,0.0
 SR-20251117-39766,69 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.70977,-73.873334,5,5,2,0.0
 SR-20251029-39709,52 Road,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.732942,-73.899103,5,7,0,0.0
 CQ25-3180,52 Road & 66 Street,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.73294,-73.89911,5,7,0,0.0
-CQ23-3634,Rust Street & Flushing Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.71677820600362,-73.9090663474871,5,5,2,0.0
+CQ24-3522,63 Avenue & 83 Place,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.72312,-73.87216,5,7,1,0.0
 CQ23-2270,70 Avenue & 60 Lane,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.702076,-73.89698,5,5,1,0.0
 CQ23-1519B,Dry Harbor Road & Furmanville Avenue,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.716160233060826,-73.88138506979227,5,6,4,0.0
 CQ23-1831,Furmanville Avenue & 79 Street,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.7175725,-73.8744025,5,5,0,0.0
-CQ20-0463,52 Drive & 70 Street,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.732248,-73.893955,5,6,1,0.0
-SR-20240705-31973,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720743,-73.900914,4,3,0,1.0
+CQ20-0251,79 Street & 68 Road,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.710453,-73.87339,5,5,1,0.0
+SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706716,-73.862389,4,4,0,0.0
 SR-20210304-25455,Caldwell Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.724819,-73.888974,4,4,1,0.0
 SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.695257,-73.893888,4,5,0,0.0
-SR-20210421-25658,68 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.711015,-73.875355,4,4,1,0.0
-SR-20201009-20015,60 Lane,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.703415,-73.897647,4,4,1,0.0
-SR-20230613-29917,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.705811,-73.888262,4,4,0,0.0
-SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706154,-73.885549,4,5,1,0.0
 SR-20230621-29993,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704473,-73.874307,4,6,1,0.0
-SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706716,-73.862389,4,4,0,0.0
+SR-20201009-20015,60 Lane,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.703415,-73.897647,4,4,1,0.0
+SR-20210421-25658,68 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.711015,-73.875355,4,4,1,0.0
 SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705811,-73.888262,4,4,0,0.0
-SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70796,-73.877777,4,7,1,0.0
+CQ21-1061,69 Road & 76 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.708439,-73.876204,4,7,2,0.0
+SR-20230613-29917,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.705811,-73.888262,4,4,0,0.0
+SR-20230816-30386,64 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.720743,-73.900914,4,3,0,1.0
 SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.709814,-73.878531,4,4,1,0.0
 SR-20220803-27582,62 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.718255,-73.888144,4,7,2,0.0
-SR-20230816-30386,64 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.720743,-73.900914,4,3,0,1.0
+SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.70796,-73.877777,4,7,1,0.0
 SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706701,-73.863327,4,4,0,0.0
-CQ22-0217,79 Street & 78 Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.704704,-73.87154,4,6,0,0.0
+SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706154,-73.885549,4,5,1,0.0
+CQ21-2383,57 Road & 59 Street,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.722373,-73.910645,4,4,1,0.0
 CQ22-1152,77 Avenue & 87 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.706707926767,-73.86286162702419,4,4,0,0.0
-CQ22-3484B,69 Street & Borden Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.723712622225975,-73.89128557459745,4,5,0,0.0
 CQ22-1835,78 Street & 68 Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.711015,-73.875355,4,4,1,0.0
-CQ23-0429B,Borden Avenue & 69 Street,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72371262222595,-73.89128557459745,4,5,0,0.0
 CQ23-0517,68 Avenue & 64 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.705956,-73.8936,4,4,1,0.0
-CQ23-0442,Otto Road & 68 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.706154,-73.88555,4,5,1,0.0
+CQ23-0429B,Borden Avenue & 69 Street,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.72371262222595,-73.89128557459745,4,5,0,0.0
 CQ23-0441,75 Street & 78 Avenue,Signal Study,All-Way Stop,approved,2023.0,data_cb5_signal_studies.csv,40.704473,-73.874307,4,6,1,0.0
+CQ23-0442,Otto Road & 68 Place,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.706154,-73.88555,4,5,1,0.0
+CQ22-3484B,69 Street & Borden Avenue,Signal Study,Leading Pedestrian Interval,denied,2022.0,data_cb5_signal_studies.csv,40.723712622225975,-73.89128557459745,4,5,0,0.0
 CQ24-0418,78 Avenue & 87 Street,Signal Study,All-Way Stop,approved,2024.0,data_cb5_signal_studies.csv,40.705832,-73.862265,4,4,0,0.0
 CQ24-0798,69 Road & 74 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.70796,-73.877777,4,7,1,0.0
 CQ25-1333,69 Street & 62 Avenue,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.717617,-73.88954,4,7,2,0.0
@@ -746,113 +746,113 @@ CQ24-0796,69 Road & 73 Place,Signal Study,All-Way Stop,denied,2024.0,data_cb5_si
 SR-20250917-39496,Otto Road,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705811,-73.888262,4,4,0,0.0
 CQ23-1689,72 Street & Caldwell Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.72482,-73.888985,4,4,1,0.0
 SR-20251208-39826,Juniper Boulevard North,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.721416,-73.881306,4,4,1,0.0
-CQ20-1132,58 Road & 64 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.720743,-73.900914,4,3,0,1.0
-CQ21-2383,57 Road & 59 Street,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.722373,-73.910645,4,4,1,0.0
+SR-20251209-39827,68 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705956,-73.893593,4,4,1,0.0
+CQ22-0217,79 Street & 78 Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.704704,-73.87154,4,6,0,0.0
 CQ22-0452,62 Avenue & 69 Place,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.718254,-73.8881475,4,7,2,0.0
 SR-20240308-31399,69 Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.708439,-73.876204,4,7,2,0.0
-SR-20251209-39827,68 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.705956,-73.893593,4,4,1,0.0
 SR-20220401-27068,76 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.707377,-73.862283,4,4,0,0.0
-SR-20230621-29995,75 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704473,-73.874307,4,6,1,0.0
+SR-20240705-31973,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.720743,-73.900914,4,3,0,1.0
+CQ20-1132,58 Road & 64 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.720743,-73.900914,4,3,0,1.0
 SR-20230622-30018,69 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.702745,-73.897313,4,4,1,0.0
-CQ21-1061,69 Road & 76 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.708439,-73.876204,4,7,2,0.0
 CQ20-2280B,69 Street & 62 Avenue,Signal Study,Traffic Signal,denied,2020.0,data_cb5_signal_studies.csv,40.717617,-73.88954,4,7,2,0.0
 CQ21-1339,69 Avenue & 73 Place,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.709814,-73.87853099999998,4,4,1,0.0
+SR-20230621-29995,75 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704473,-73.874307,4,6,1,0.0
 SR-20221031-28969,62 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.73172,-73.901764,3,3,1,0.0
+SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.69859,-73.894849,3,5,0,0.0
+SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.695492,-73.893004,3,4,0,0.0
 SR-20241016-33465,77 Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706315,-73.87408,3,3,1,0.0
-SR-20251229-39878,74 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708331,-73.863042,3,3,1,0.0
-SR-20240625-31912,69 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718871,-73.888637,3,3,2,0.0
 SR-20250910-39468,79 Place,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.704898,-73.870667,3,4,0,0.0
 CQ23-1956B,69 Lane & Long Island Expressway,Signal Study,Traffic Signal,denied,2023.0,data_cb5_signal_studies.csv,40.73248713329137,-73.89772588651475,3,3,0,0.0
 CQ24-1018,77 Avenue & 76 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.706315,-73.87408,3,3,1,0.0
-SR-20240502-31623,74 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718272,-73.882628,3,3,2,0.0
+CQ23-1843,59 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.719765,-73.900635,3,2,0,1.0
 CQ22-3572,76 Street & Juniper Boulevard North,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.72138,-73.88185,3,3,1,0.0
 CQ22-2869,78 Street & Furmanville Avenue,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.71745,-73.875374,3,3,0,0.0
-CQ23-1843,59 Avenue & 64 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.719765,-73.900635,3,2,0,1.0
 CQ23-0862,73 Place & 67 Drive,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.711163,-73.87907,3,4,4,0.0
 CQ22-1923,70 Street & 52 Avenue,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.7335956143277,-73.8940647658594,3,5,2,0.0
-CQ21-0749,69 Lane & Long Island Expressway,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.73248713329137,-73.89772588651475,3,3,0,0.0
 CQ22-1141,Juniper Boulevard North & 76 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.72138,-73.88185,3,3,1,0.0
+SR-20240502-31623,74 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718272,-73.882628,3,3,2,0.0
 SR-20250131-35738,70 Street,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.733596,-73.894065,3,5,2,0.0
+SR-20240604-31777,52 Court,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.731959,-73.890477,3,4,1,0.0
 SR-20230710-30136,59 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.719765,-73.900627,3,2,0,1.0
-SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.711162,-73.87907,3,4,4,0.0
-SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.695492,-73.893004,3,4,0,0.0
-SR-20230621-29989,75 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.69859,-73.894849,3,5,0,0.0
-SR-20220802-27575,Penelope Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.716172,-73.882379,3,3,0,0.0
-CQ25-2472B,78 Street & Juniper Boulevard South,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.71979,-73.877266,3,4,0,0.0
+SR-20251229-39878,74 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.708331,-73.863042,3,3,1,0.0
+CQ21-0749,69 Lane & Long Island Expressway,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.73248713329137,-73.89772588651475,3,3,0,0.0
 SR-20230807-30298,72 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.733682,-73.892131,3,6,0,0.0
 SR-20220803-27582,62 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.718631,-73.887314,3,3,2,0.0
+CQ25-2472B,78 Street & Juniper Boulevard South,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.71979,-73.877266,3,4,0,0.0
+SR-20220802-27575,Penelope Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.716172,-73.882379,3,3,0,0.0
+SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.710128,-73.877041,3,3,0,0.0
 CQ21-0749,69 Lane & Long Island Expressway,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.73248713329137,-73.89772588651475,3,3,0,0.0
-CQ21-0749,69 Lane & Long Island Expressway,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.73248713329137,-73.89772588651475,3,3,0,0.0
-SR-20240604-31777,52 Court,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.731959,-73.890477,3,4,1,0.0
 CQ20-1587,53 Avenue & 62 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.73172,-73.901767,3,3,1,0.0
 SR-20240719-32046,Penelope Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718641,-73.876336,3,4,0,0.0
+SR-20240625-31912,69 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718871,-73.888637,3,3,2,0.0
+SR-20230302-29297,73 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.711162,-73.87907,3,4,4,0.0
+SR-20210803-26160,85 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705722,-73.864137,3,3,0,0.0
+SR-20251209-39827,68 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706177,-73.892702,3,3,1,0.0
 SR-20251208-39826,Juniper Boulevard North,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.721378,-73.881844,3,3,1,0.0
 SR-20230717-30197,76 Street,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.706315,-73.87408,3,3,1,0.0
-SR-20251209-39827,68 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706177,-73.892702,3,3,1,0.0
-SR-20210803-26160,85 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.705722,-73.864137,3,3,0,0.0
-SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.710128,-73.877041,3,3,0,0.0
-SR-20210917-26523,60 Lane,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.715398,-73.903328,2,2,1,0.0
-SR-20230103-29148,66 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.7056,-73.889118,2,2,0,0.0
-SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706226,-73.886527,2,3,0,0.0
-SR-20240719-32046,Penelope Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718269,-73.877141,2,2,0,0.0
-CQ20-2463,53 Drive & 67 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.729603,-73.89784,2,2,0,0.0
-SR-20240815-32169,86 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705775,-73.863199,2,2,0,0.0
-CQ25-3181,52 Road & 67 Street,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.732924,-73.897919,2,2,0,0.0
-SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.7056,-73.889118,2,2,0,0.0
-SR-20241007-33417,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.7056,-73.889118,2,2,0,0.0
-SR-20260112-39914,65 Place,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.707201,-73.892155,2,3,0,0.0
+CQ21-0749,69 Lane & Long Island Expressway,Signal Study,Traffic Signal,approved,2021.0,data_cb5_signal_studies.csv,40.73248713329137,-73.89772588651475,3,3,0,0.0
 SR-20230811-30358,Mt Oliver Crescent,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.717967,-73.900049,2,3,0,0.0
 SR-20210916-26516,76 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.726478,-73.884475,2,3,3,0.0
-SR-20230613-29917,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.706226,-73.886527,2,3,0,0.0
+SR-20240815-32169,86 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.705775,-73.863199,2,2,0,0.0
+SR-20240719-32046,Penelope Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.718269,-73.877141,2,2,0,0.0
+CQ20-2463,53 Drive & 67 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.729603,-73.89784,2,2,0,0.0
+SR-20260112-39914,65 Place,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.707201,-73.892155,2,3,0,0.0
+SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.7056,-73.889118,2,2,0,0.0
+SR-20241007-33417,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.7056,-73.889118,2,2,0,0.0
+SR-20240502-31623,74 Street,SRTS,Speed Bump,approved,2024.0,srts_citywide.csv,40.717917,-73.882355,2,2,2,0.0
+SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706226,-73.886527,2,3,0,0.0
 SR-20260112-39914,65 Place,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.706399,-73.891814,2,2,1,0.0
+SR-20210917-26523,60 Lane,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.715398,-73.903328,2,2,1,0.0
 SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.70895,-73.876477,2,2,1,0.0
-CQ24-3033,Penelope Avenue & 79 Street,Signal Study,Traffic Signal,approved,2024.0,data_cb5_signal_studies.csv,40.716185,-73.88164,2,2,1,0.0
+SR-20230103-29148,66 Place,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.7056,-73.889118,2,2,0,0.0
+SR-20230613-29917,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.706226,-73.886527,2,3,0,0.0
+CQ25-3181,52 Road & 67 Street,Signal Study,All-Way Stop,denied,2025.0,data_cb5_signal_studies.csv,40.732924,-73.897919,2,2,0,0.0
 SR-20251029-39709,52 Road,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.732924,-73.897919,2,2,0,0.0
 CQ24-2689,76 Street & 58 Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.726478,-73.884475,2,3,3,0.0
 CQ24-1792,52 Court & 74 Street,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.731895,-73.88826,2,2,1,0.0
+CQ24-3033,Penelope Avenue & 79 Street,Signal Study,Traffic Signal,approved,2024.0,data_cb5_signal_studies.csv,40.716185,-73.88164,2,2,1,0.0
 CQ24-1257,67 Street & Otto Road,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.7056,-73.889118,2,2,0,0.0
-SR-20240502-31623,74 Street,SRTS,Speed Bump,approved,2024.0,srts_citywide.csv,40.717917,-73.882355,2,2,2,0.0
-CQ22-3042,74 Street & Calamus Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.73437626541044,-73.88953953143351,1,1,0,0.0
-SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706685,-73.864268,1,1,0,0.0
-SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.710735,-73.877184,1,1,0,0.0
-SR-20230613-29917,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.706018,-73.887396,1,1,0,0.0
-SR-20210917-26533,Otto Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.706018,-73.887396,1,1,0,0.0
-CQ21-2868,Otto Road & 68 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.706018,-73.88739599999998,1,1,0,0.0
 SR-20250926-39540,Traffic Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.710298,-73.896461,1,2,0,0.0
-SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706642,-73.867038,1,1,0,0.0
-SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706018,-73.887396,1,1,0,0.0
-SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724216,-73.901815,1,1,1,0.0
-SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724216,-73.901815,1,1,1,0.0
-SR-20230621-29994,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704215,-73.876161,1,1,1,0.0
-CQ21-1060,54 Avenue & 61 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72784,-73.904076,1,1,0,0.0
-CQ23-2077,52 Avenue & 74 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.733852,-73.88845,1,1,0,0.0
-SR-20250925-39537,52 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.733605,-73.897893,1,1,0,0.0
-CQ24-0613,Pleasant View Street & Penelope Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.71637375498335,-73.8824929995786,1,1,0,0.0
+SR-20221004-28843,75 Street,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.710735,-73.877184,1,1,0,0.0
 SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.710298,-73.896461,1,2,0,0.0
-CQ22-0901,78 Avenue & 74 Street,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.704215,-73.876161,1,1,1,0.0
-CQ20-2242,76 Street & 60 Road,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.71487910247034,-73.9170547061539,1,1,0,0.0
-CQ21-1868,69 Street & 52 Avenue,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.733605,-73.897893,1,1,0,0.0
-CQ21-1219,74 Street & Long Island Expressway,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.73325234109461,-73.89087437329368,1,1,0,0.0
-CQ20-2241,Caldwell Avenue & 76 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.7247871573391,-73.88493300424899,1,1,1,0.0
-SR-20210426-25674,62 Road,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.717021,-73.888987,1,4,0,0.0
-SR-20201026-20043,79 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.706262,-73.871219,1,1,1,0.0
-SR-20201026-20043,79 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.706798,-73.871442,1,1,1,0.0
-SR-20210916-26516,76 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.725569,-73.8843,1,1,1,0.0
-SR-20240709-31983,Mount Olivet Crescent,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714818,-73.896284,1,1,0,0.0
-SR-20240815-32170,73 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.704215,-73.876161,1,1,1,0.0
-CQ22-1150,77 Avenue & 85 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.706685,-73.86426799999998,1,1,0,0.0
-CQ22-1153,77 Avenue & 82 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.7066414632302,-73.86703845623569,1,1,0,0.0
-CQ22-1154,77 Avenue & 83 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.706649167493296,-73.866580375248,1,1,0,0.0
+SR-20210917-26533,Otto Road,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.706018,-73.887396,1,1,0,0.0
+SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706685,-73.864268,1,1,0,0.0
+SR-20230613-29917,Otto Road,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.706018,-73.887396,1,1,0,0.0
+CQ22-3042,74 Street & Calamus Avenue,Signal Study,Traffic Signal,denied,2022.0,data_cb5_signal_studies.csv,40.73437626541044,-73.88953953143351,1,1,0,0.0
 CQ22-1151,77 Avenue & 86 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.706685,-73.86426799999998,1,1,0,0.0
-SR-20210916-26506,78 Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.704392,-73.875255,0,0,0,0.0
+CQ21-2868,Otto Road & 68 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.706018,-73.88739599999998,1,1,0,0.0
+SR-20201026-20043,79 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.706262,-73.871219,1,1,1,0.0
+SR-20230621-29994,78 Avenue,SRTS,Speed Bump,denied,2023.0,srts_citywide.csv,40.704215,-73.876161,1,1,1,0.0
+SR-20210426-25674,62 Road,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.717021,-73.888987,1,4,0,0.0
+SR-20240409-31526,Otto Road,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.706018,-73.887396,1,1,0,0.0
+CQ21-1219,74 Street & Long Island Expressway,Signal Study,Traffic Signal,denied,2021.0,data_cb5_signal_studies.csv,40.73325234109461,-73.89087437329368,1,1,0,0.0
+SR-20250925-39537,52 Avenue,SRTS,Speed Bump,denied,2025.0,srts_citywide.csv,40.733605,-73.897893,1,1,0,0.0
+CQ23-2077,52 Avenue & 74 Street,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.733852,-73.88845,1,1,0,0.0
+CQ24-0613,Pleasant View Street & Penelope Avenue,Signal Study,All-Way Stop,denied,2024.0,data_cb5_signal_studies.csv,40.71637375498335,-73.8824929995786,1,1,0,0.0
+CQ22-1150,77 Avenue & 85 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.706685,-73.86426799999998,1,1,0,0.0
+SR-20240709-31983,Mount Olivet Crescent,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.714818,-73.896284,1,1,0,0.0
+CQ21-1060,54 Avenue & 61 Street,Signal Study,All-Way Stop,denied,2021.0,data_cb5_signal_studies.csv,40.72784,-73.904076,1,1,0,0.0
+CQ21-1868,69 Street & 52 Avenue,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.733605,-73.897893,1,1,0,0.0
+SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706642,-73.867038,1,1,0,0.0
+SR-20201026-20043,79 Place,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.706798,-73.871442,1,1,1,0.0
+SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724216,-73.901815,1,1,1,0.0
+SR-20240715-32025,64 Street,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.724216,-73.901815,1,1,1,0.0
+SR-20210916-26516,76 Street,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.725569,-73.8843,1,1,1,0.0
+CQ20-2242,76 Street & 60 Road,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.71487910247034,-73.9170547061539,1,1,0,0.0
+CQ20-2241,Caldwell Avenue & 76 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.7247871573391,-73.88493300424899,1,1,1,0.0
+SR-20240815-32170,73 Place,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.704215,-73.876161,1,1,1,0.0
+CQ22-1154,77 Avenue & 83 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.706649167493296,-73.866580375248,1,1,0,0.0
+CQ22-0901,78 Avenue & 74 Street,Signal Study,All-Way Stop,approved,2022.0,data_cb5_signal_studies.csv,40.704215,-73.876161,1,1,1,0.0
+CQ22-1153,77 Avenue & 82 Street,Signal Study,All-Way Stop,denied,2022.0,data_cb5_signal_studies.csv,40.7066414632302,-73.86703845623569,1,1,0,0.0
+SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.710774,-73.897575,0,0,0,0.0
 SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.706657,-73.86613,0,0,0,0.0
 SR-20240402-31496,61 Drive,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.71667,-73.892692,0,0,0,0.0
+SR-20210916-26506,78 Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.704392,-73.875255,0,0,0,0.0
 SR-20211221-26777,77 Avenue,SRTS,Speed Bump,denied,2021.0,srts_citywide.csv,40.706657,-73.86613,0,0,0,0.0
-SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.695469,-73.892016,0,0,0,0.0
 CQ21-1538,84 Street & 78 Avenue,Signal Study,All-Way Stop,approved,2021.0,data_cb5_signal_studies.csv,40.70667,-73.865206,0,0,0,0.0
-CQ20-1166,62 Street & 61 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.686420099510116,-73.88930182608618,0,0,0,0.0
+CQ20-1166,62 Street & 61 Street,Signal Study,All-Way Stop,denied,2020.0,data_cb5_signal_studies.csv,40.68642009951012,-73.88930182608618,0,0,0,0.0
+SR-20210107-24269,80 Avenue,SRTS,Speed Bump,denied,2020.0,srts_citywide.csv,40.695469,-73.892016,0,0,0,0.0
 SR-20221107-28997,77 Avenue,SRTS,Speed Bump,denied,2022.0,srts_citywide.csv,40.70667,-73.865206,0,0,0,0.0
-SR-20260413-40245,Traffic Avenue,SRTS,Speed Bump,denied,2024.0,srts_citywide.csv,40.710774,-73.897575,0,0,0,0.0
 CQ24-0499B,Woodhaven Boulevard & Furmanville Avenue,Signal Study,Traffic Signal,denied,2024.0,data_cb5_signal_studies.csv,40.719641,-73.867168,0,0,0,0.0
 CQ23-1390,Cody Avenue & Wyckoff Avenue,Signal Study,All-Way Stop,denied,2023.0,data_cb5_signal_studies.csv,40.68692617586851,-73.88898363304652,0,0,0,0.0
 CQ25-1194,78 Avenue & 84 Street,Signal Study,Traffic Signal,denied,2025.0,data_cb5_signal_studies.csv,40.70667,-73.865206,0,0,0,0.0
