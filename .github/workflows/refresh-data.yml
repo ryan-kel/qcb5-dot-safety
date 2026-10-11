@@ -2,9 +2,9 @@ name: Refresh Data & Regenerate Outputs
 
 on:
   workflow_dispatch:
-  schedule:
-    # 1st of each month at 06:00 UTC
-    - cron: '0 6 1 * *'
+    # Run by hand monthly or when data changes (Actions → Refresh Data, or
+    # gh workflow run refresh-data.yml). Scheduled automation retired
+    # 2026-10-10 at the owner's direction.
 
 jobs:
   refresh:
