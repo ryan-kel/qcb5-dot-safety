@@ -4,9 +4,7 @@ __pycache__/
 .env
 output/ESSAY.md
 node_modules/
-.claude/
-
 # Downloaded by scripts_fetch_data.py but NOT consumed by the analysis pipeline
-# (see CLAUDE.md). A snapshot of a daily-updated dataset, regenerated every run,
+# (see AGENTS.md). A snapshot of a daily-updated dataset, regenerated every run,
 # so it should not be committed by the automated refresh job.
 data_raw/311_cb5_dot_2020plus.csv

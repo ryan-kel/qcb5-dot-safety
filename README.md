@@ -49,9 +49,7 @@ After a live refresh, review `data_raw/fetch_manifest.json`, `output/source_mani
 
 ## Live site
 
-`master` is the only branch that matters for electoralanalytics.net. Committed changes under
-`output/` auto-trigger a site deploy. The monthly refresh workflow (1st of each month, 06:00 UTC)
-fetches NYC Open Data, regenerates charts/maps, and pushes to `master` when sources change.
+`main` is the active branch. GitHub Actions workflows are retired; publish updated artifacts through `electoralanalytics-site` (`npm run publish:project -- qcb5-dot-safety`) and deploy to `ea-server` via `bash scripts/deploy-vps.sh`.
 
 ## Key Documentation
 
