@@ -1,4 +1,4 @@
-# QCB5 DOT Safety — AGENTS.md
+# QCB5 DOT Safety: AGENTS.md
 
 **Ops:** `~/sites/electoralanalytics-site/docs/ops.md`. Read `README.md` for pipeline.
 Orientation for AI agents. Read `README.md`. **Reproduce outputs from committed `data_raw/` before changing methodology.**
@@ -26,9 +26,4 @@ python -m unittest discover -s tests
 
 ## Deployment
 
-**`master` is the live line.** Pushes that change `output/` trigger an automatic site rebuild
-(`.github/workflows/notify-site.yml` → `electoralanalytics-site` deploy). Monthly data refresh
-runs on `master` via `.github/workflows/refresh-data.yml`.
-
-Manual publish when needed: `npm run publish:project -- qcb5-dot-safety` from `electoralanalytics-site`
-(see `publish/projects/qcb5-dot-safety.json`). CI also fetches maps from `master` at build time.
+**`main` is the live branch.** Publish updates via `npm run publish:project -- qcb5-dot-safety` from `electoralanalytics-site` (see `publish/projects/qcb5-dot-safety.json` and `_build/fetch-maps.sh`).
