@@ -287,7 +287,7 @@ def chart_01a_request_volume_by_type(data):
 
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Hatch APS bar to flag court-mandated status
+    # Hatch APS bar to flag exclusion from discretionary denial-rate calculations.
     bar_colors = [COLORS['secondary'] if label == 'Accessible Pedestrian Signal' else COLORS['primary']
                   for label in top_types.index]
     bars = ax.barh(top_types.index, top_types.values,
@@ -303,7 +303,7 @@ def chart_01a_request_volume_by_type(data):
     # APS annotation
     from matplotlib.patches import Patch
     aps_legend = Patch(facecolor=COLORS['secondary'], edgecolor='black', hatch='///',
-                       label='Court-mandated (excl. from denial rates)')
+                       label='APS inventory (excl. from denial rates)')
     ax.legend(handles=[aps_legend], loc='lower right', fontsize=8, framealpha=0.9)
 
     ax.set_xlabel('Number of Requests', fontweight='bold')
@@ -538,7 +538,7 @@ def chart_01c_cb5_requests_by_type(data):
 # ============================================================
 
 def chart_01d_signal_outcomes(data):
-    """Chart 01d: QCB5 Signal Study Outcomes — Denied vs Approved."""
+    """Chart 01d: QCB5 signal study outcomes, denied and approved."""
     print("  Generating Chart 01d: Signal Study Outcomes...")
 
     cb5_resolved_no_aps = data['cb5_resolved_no_aps']
@@ -587,7 +587,7 @@ def chart_01d_signal_outcomes(data):
 # ============================================================
 
 def chart_01e_srts_outcomes(data):
-    """Chart 01e: QCB5 Speed Bump Outcomes — Denied vs Approved."""
+    """Chart 01e: QCB5 speed bump outcomes, denied and approved."""
     print("  Generating Chart 01e: Speed Bump Outcomes...")
 
     cb5_srts = data['cb5_srts']
@@ -637,10 +637,12 @@ def save_table_01d(sig_denied, sig_approved, sig_approval_rate,
     table_01d = pd.DataFrame([
         {'Dataset': 'Signal Studies (Excl. APS)', 'Period': f'{STUDY_START_YEAR}–{LAST_COMPLETE_YEAR}',
          'Denied': sig_denied, 'Approved': sig_approved,
-         'Approval Rate (%)': round(sig_approval_rate, 1)},
+         'Approval Rate (%)': round(sig_approval_rate, 1),
+         'Source Dataset': 'Signal Studies [w76s-c5u4]'},
         {'Dataset': 'Speed Bumps', 'Period': f'{STUDY_START_YEAR}–{LAST_COMPLETE_YEAR}',
          'Denied': srts_denied, 'Approved': srts_approved,
-         'Approval Rate (%)': round(srts_approval_rate, 1)},
+         'Approval Rate (%)': round(srts_approval_rate, 1),
+         'Source Dataset': 'Speed Reducer Tracking System [9n6h-pt9g]'},
     ])
     table_01d.to_csv(f'{OUTPUT_DIR}/table_01d_denied_vs_approved.csv', index=False)
 
@@ -824,7 +826,7 @@ def chart_03a_signal_volume(data):
 # ============================================================
 
 def chart_03b_signal_denial_rates(data):
-    """Chart 03b: QCB5 Signal Study Denial Rates by Year, vs. Citywide."""
+    """Chart 03b: QCB5 and citywide signal study denial rates by year."""
     yoy = _compute_yoy_data(data, STUDY_START_YEAR, LAST_COMPLETE_YEAR)
     cb5_sig = yoy['cb5_sig']
     cw_sig = yoy['cw_sig']
@@ -841,7 +843,7 @@ def chart_03b_signal_denial_rates(data):
     ax.text(cb5_sig.index.min() - 0.1, sig_avg_rate + 1.2,
             f'QCB5 Avg {sig_avg_rate:.0f}%', fontsize=8, color=COLORS['denied'], ha='left')
 
-    ax.set_title(f'QCB5 Signal Study Denial Rates by Year, vs. Citywide\n(Excl. APS, n={int(cb5_sig["total"].sum()):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
+    ax.set_title(f'QCB5 and Citywide Signal Study Denial Rates by Year\n(Excl. APS, n={int(cb5_sig["total"].sum()):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
     ax.set_xlabel('Year')
     ax.set_ylabel('Denial Rate (%)')
     ax.legend(loc='lower right')
@@ -900,7 +902,7 @@ def chart_03c_srts_volume(data):
 # ============================================================
 
 def chart_03d_srts_denial_rates(data):
-    """Chart 03d: QCB5 Speed Bump Denial Rates by Year, vs. Citywide."""
+    """Chart 03d: QCB5 and citywide speed bump denial rates by year."""
     yoy = _compute_yoy_data(data, STUDY_START_YEAR, LAST_COMPLETE_YEAR)
     cb5_srts = yoy['cb5_srts']
     cw_srts = yoy['cw_srts']
@@ -917,7 +919,7 @@ def chart_03d_srts_denial_rates(data):
     ax.text(cb5_srts.index.min() - 0.1, srts_avg_rate + 1.2,
             f'QCB5 Avg {srts_avg_rate:.0f}%', fontsize=8, color=COLORS['denied'], ha='left')
 
-    ax.set_title(f'QCB5 Speed Bump Denial Rates by Year, vs. Citywide\n(n={int(cb5_srts["total"].sum()):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
+    ax.set_title(f'QCB5 and Citywide Speed Bump Denial Rates by Year\n(n={int(cb5_srts["total"].sum()):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
     ax.set_xlabel('Year')
     ax.set_ylabel('Denial Rate (%)')
     ax.legend(loc='lower right')
@@ -1097,7 +1099,7 @@ def chart_04_denial_rates_by_type(data):
     ax.set_ylabel('Denial Rate (%)', fontweight='bold')
     n_cb5 = sum(cb5_ns)
     n_cw = sum(cw_ns)
-    ax.set_title(f'DOT Denial Rates by Request Type: QCB5 vs. Citywide\n(Excl. APS, n={n_title:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
+    ax.set_title(f'DOT Denial Rates by Request Type: QCB5 and Citywide\n(Excl. APS, n={n_title:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
     ax.set_xticks(x)
     xlabels = [f'{t}\n(n={cb5_ns[i]:,} / {cw_ns[i]:,})' for i, t in enumerate(request_types)]
     ax.set_xticklabels(xlabels, fontsize=9)
@@ -1739,7 +1741,7 @@ def chart_08b_crash_injuries(data, street_crashes=None):
 # ============================================================
 
 def chart_12_request_types(data):
-    """Chart 12: Request Type Mix — CB5 vs Citywide (study window)."""
+    """Chart 12: Request type mix for CB5 and citywide records."""
     cb5_no_aps = data['cb5_no_aps']
     signal_no_aps = data['signal_no_aps']
     srts_resolved = data['srts_resolved']
@@ -1887,7 +1889,7 @@ def chart_14_aps_installed(data):
                   fontweight='bold', fontsize=12)
 
     fig.text(0.01, -0.02,
-             'Source: NYC Open Data — APS Installed [de3m-c5p4] | Court-mandated (American Council of the Blind v. NYC)',
+             'Source: NYC Open Data — APS Installed [de3m-c5p4] | Excluded from discretionary denial-rate calculations',
              ha='left', fontsize=9, style='italic', color='#333333')
 
     plt.tight_layout()

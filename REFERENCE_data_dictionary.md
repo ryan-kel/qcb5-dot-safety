@@ -12,7 +12,7 @@ This document describes all datasets used in the CB5 safety infrastructure analy
 | Speed Reducer (SRTS) | https://data.cityofnewyork.us/Transportation/Speed-Reducer-Tracking-System-SRTS-/9n6h-pt9g | `9n6h-pt9g` |
 | APS Installed | https://data.cityofnewyork.us/Transportation/Accessible-Pedestrian-Signal-Locations/de3m-c5p4 | `de3m-c5p4` |
 | Motor Vehicle Crashes | https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95 | `h9gi-nx95` |
-| 311 Service Requests | https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9 | `erm2-nwe9` |
+| 311 Service Requests | https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2020-to-Present/erm2-nwe9 | `erm2-nwe9` |
 
 ---
 
@@ -21,14 +21,14 @@ This document describes all datasets used in the CB5 safety infrastructure analy
 **Purpose**: Primary dataset for tracking formal infrastructure requests to NYC DOT for traffic signals, stop signs, APS, and related infrastructure.
 
 **File**: `data_raw/signal_studies_citywide.csv`
-**Records**: ~74,485 citywide
-**Time Range**: 2006 - Present
+**Records in current committed raw snapshot**: 75,339 citywide
+**Time Range in current committed raw snapshot**: 1996 - 2026
 
 ### Key Fields
 
 | Field | Description | Example Values |
 |-------|-------------|----------------|
-| `referencenumber` | Unique request ID | CQ25-3181, CM22-1234 |
+| `referencenumber` | Request identifier; not guaranteed unique in the committed raw snapshot because duplicate source rows exist | CQ25-3181, CM22-1234 |
 | `daterequested` | Date request was submitted | 2025-10-06T00:00:00.000 |
 | `statusdescription` | **CRITICAL** - Current outcome status | See status table below |
 | `studystatus` | Open/Closed indicator | OPEN, CLOSED |
@@ -70,13 +70,13 @@ This document describes all datasets used in the CB5 safety infrastructure analy
 
 | Type | Description | Citywide Count | Denial Rate |
 |------|-------------|----------------|-------------|
-| Traffic Signal | New traffic light | 28,626 | 85.2% |
-| All-Way Stop | All-way stop sign at intersection | 21,682 | 86.3% |
-| Accessible Pedestrian Signal | APS for visually impaired | 4,905 | 12.3%* |
-| Left Turn Arrow/Signal | Dedicated left turn signal | 5,208 | 91.2% |
-| Leading Pedestrian Interval | Head start for pedestrians | 2,379 | 88.6% |
+| Traffic Signal | New traffic light | 29,736 | 85.4% |
+| All-Way Stop | All-way stop sign at intersection | 22,270 | 86.2% |
+| Accessible Pedestrian Signal | APS for visually impaired | 5,163 | 16.9%* |
+| Left Turn Arrow/Signal | Dedicated left turn signal | 5,347 | 91.5% |
+| Leading Pedestrian Interval | Head start for pedestrians | 2,496 | 89.2% |
 
-*APS has special treatment due to federal lawsuit mandating installation
+*APS is tracked separately because installed APS inventory is not comparable to discretionary request outcomes in this analysis.
 
 ---
 
@@ -85,8 +85,8 @@ This document describes all datasets used in the CB5 safety infrastructure analy
 **Purpose**: Tracks requests for speed bumps and speed humps/cushions.
 
 **File**: `data_raw/srts_citywide.csv`
-**Records**: ~58,198 citywide
-**Time Range**: Ongoing
+**Records in current committed raw snapshot**: 59,169 citywide
+**Time Range in current committed raw snapshot**: 1990 - 2026
 
 ### Key Fields
 
@@ -99,7 +99,7 @@ This document describes all datasets used in the CB5 safety infrastructure analy
 | `denialreason` | Why request was denied | See denial reasons below |
 | `onstreet` | Street where bump requested | 87 AVENUE |
 | `fromstreet` / `tostreet` | Block boundaries | 144 STREET to 148 STREET |
-| `speedcushion` | Cushion (bus-friendly) vs hump | Yes, No |
+| `speedcushion` | Whether the segment uses a bus-friendly speed cushion rather than a standard hump | Yes, No |
 | `requestdate` | Date of original request | 2024-02-12 |
 | `closeddate` | Date request was resolved | 2024-06-20 |
 
@@ -114,16 +114,16 @@ Format: `[Borough Code][District Number]`
 
 **CB5 Queens = 405**
 
-### Denial Reasons (CB5 most common)
+### Denial Reasons (QCB5, 2020-2025)
 
 | Reason | Count | Notes |
 |--------|-------|-------|
-| Radar speeds BELOW criteria of 30.0 mph at 85% | 651 | Speed not high enough |
-| Multiple impeding driveways / curb cuts | 259 | Physical constraints |
-| Street too short | 113 | Not enough roadway |
-| Stop controls at end of roadway | 49 | Already has stops |
-| Bus route | 36 | Can't put humps on bus routes |
-| Multi-lane roadway | 23 | Only for single-lane streets |
+| Speed < 30 mph | 364 | Speed not high enough |
+| Other | 19 | Does not match a standard category |
+| Not Specified | 17 | No denial reason recorded |
+| Near Speed Camera | 16 | Near an automated enforcement location |
+| Street Too Short | 11 | Not enough roadway |
+| Driveways | 3 | Physical constraints from driveways / curb cuts |
 
 ---
 
@@ -132,11 +132,13 @@ Format: `[Borough Code][District Number]`
 **Purpose**: Shows INSTALLED APS devices (not requests - those are in Signal Studies).
 
 **File**: `data_raw/aps_installed_citywide.csv`
-**Records**: ~3,914 installed citywide
+**Records in current committed raw snapshot**: 4,404 installed citywide
 
 ### Context
 
-In 2017, Disability Rights Advocates filed a lawsuit against NYC requiring installation of at least 9,000 APS devices by 2031. APS devices provide audible and vibrotactile signals to assist blind/low-vision pedestrians at crosswalks.
+APS devices provide audible and vibrotactile signals to assist blind and low-vision pedestrians at crosswalks. Primary references: [remedial order PDF](https://dralegal.org/wp-content/uploads/2018/06/208_Remedial_Order_ACC.pdf), [NYC DOT APS program](https://www.nyc.gov/html/dot/html/infrastructure/accessiblepedsignals.shtml).
+
+This analysis uses the installed-location inventory (`de3m-c5p4`) as a separate map and count layer. APS is excluded from discretionary denial-rate calculations because installed inventory is not comparable to signal-study request outcomes.
 
 ### Key Fields
 
@@ -152,12 +154,12 @@ In 2017, Disability Rights Advocates filed a lawsuit against NYC requiring insta
 
 | Borough | Installed |
 |---------|-----------|
-| Brooklyn | 978 |
-| Queens | 917 |
-| Bronx | 796 |
-| Manhattan | 716 |
-| Staten Island | 507 |
-| **CB5 Queens** | **77** |
+| Brooklyn | 1,127 |
+| Queens | 1,050 |
+| Bronx | 855 |
+| Manhattan | 776 |
+| Staten Island | 596 |
+| **CB5 Queens (`borocd=405`)** | **102** |
 
 ---
 
@@ -183,16 +185,16 @@ In 2017, Disability Rights Advocates filed a lawsuit against NYC requiring insta
 
 ---
 
-## 5. 311 Service Requests (DOT)
+## 5. NYC 311 Service Requests (DOT)
 
 **Purpose**: Maintenance-focused complaints (broken lights, missing signs). Less reliable for formal infrastructure requests.
 
 **File**: `data_raw/311_cb5_dot_2020plus.csv`
-**Records**: ~31,205 (CB5, 2020+)
+**Records**: Optional live-fetch output for the CB5 DOT subset, 2020+. This file is gitignored and may be absent because it is not consumed by the current analysis pipeline.
 
 ### Why 311 is Less Reliable for This Analysis
 
-311 is primarily for **maintenance** issues:
+The 311 system is primarily for **maintenance** issues:
 - Broken traffic lights
 - Street lights out
 - Missing/damaged signs
@@ -209,25 +211,25 @@ For new infrastructure analysis, use the **Signal Studies** and **SRTS** dataset
 
 ## CB5 Key Statistics Summary
 
-**Note:** The all-time figures below cover each dataset's full history. The primary analysis uses **2020–2025 only** — see `output/METHODOLOGY.md` for those figures (e.g., 445 signal study requests excl. APS, 431 speed bump requests, ~90% signal denial rate).
+**Note:** Generated tables in `output/` are the authoritative statistics for the current snapshot. The primary committed outputs use **2020–2025**. For the current `output/table_01d_denied_vs_approved.csv`, the headline resolved counts are 390 denied / 42 approved signal studies excluding APS, and 430 denied / 6 approved speed bump requests.
 
-### Traffic Signals & Stop Signs — All-Time (from Signal Studies)
+### Traffic Signals & Stop Signs: All-Time (from Signal Studies)
 
 | Metric | CB5 | Citywide | Difference |
 |--------|-----|----------|------------|
-| Total Requests | ~939 | 74,485 | |
-| Denial Rate | 84.2% | 83.3% | +0.9 pts |
-| Batting Average | 15.8% | 16.7% | -0.9 pts |
+| Total Requests | Requires regeneration | 75,339 raw records | |
+| Denial Rate | Use generated tables | Use generated tables | |
+| Batting Average | Use generated tables | Use generated tables | |
 
-### Speed Bumps — All-Time (from SRTS)
+### Speed Bumps: All-Time (from SRTS)
 
 | Metric | CB5 | Queens | Citywide |
 |--------|-----|--------|----------|
-| Total Requests | 1,988 | 24,632 | 58,198 |
-| Denial Rate | **87.7%** | 87.4% | 84.7% |
-| Batting Average | **12.3%** | 12.6% | 15.3% |
+| Total Requests | 1,988 resolved in-polygon CB5 records | Use generated tables | 59,169 raw records |
+| Denial Rate | Use generated tables | Use generated tables | Use generated tables |
+| Batting Average | Use generated tables | Use generated tables | Use generated tables |
 
-CB5 has one of the highest speed bump denial rates in the city. For 2020–2025 specifically, the rate climbs to effectively 100%.
+For 2020–2025, current generated output reports 430 denied and 6 approved QCB5 speed bump requests.
 
 ---
 
@@ -253,7 +255,7 @@ After running `scripts_fetch_data.py`, data is saved to:
 - `data_raw/srts_citywide.csv`
 - `data_raw/aps_installed_citywide.csv`
 - `data_raw/crashes_queens_2020plus.csv`
-- `data_raw/311_cb5_dot_2020plus.csv`
+- `data_raw/311_cb5_dot_2020plus.csv` (gitignored; not consumed by chart/map generation)
 
 ---
 

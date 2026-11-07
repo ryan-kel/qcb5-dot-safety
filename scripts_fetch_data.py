@@ -10,7 +10,7 @@ Datasets:
 3. Accessible Pedestrian Signal Locations (de3m-c5p4) - INSTALLED APS
 4. Motor Vehicle Collisions (h9gi-nx95)
 5. 311 Service Requests - DOT subset (erm2-nwe9)
-6. Community Board Boundaries (5crt-au7u)
+6. CB5 boundary GeoJSON cache (data_raw/cb5_boundary.geojson)
 
 Author: CB5 Safety Analysis Project
 """
@@ -20,7 +20,7 @@ import requests
 import os
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 # === CONFIGURATION ===
 DATA_DIR = "data_raw"
@@ -29,6 +29,15 @@ os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 CB5_BOUNDARY_PATH = f"{DATA_DIR}/cb5_boundary.geojson"
+FETCH_PAGE_SIZE = 50000
+FETCH_MANIFEST_PATH = f"{DATA_DIR}/fetch_manifest.json"
+FETCH_ORDER_BY = {
+    "signal_studies": "id",
+    "srts": "projectcode",
+    "aps_installed": "borocd, location, date_insta",
+    "crashes": "collision_id",
+    "311": "unique_key",
+}
 
 # NYC Open Data Socrata API endpoints
 DATASETS = {
@@ -58,9 +67,9 @@ DATASETS = {
     },
     "cb_boundaries": {
         "name": "Community Board Boundaries",
-        "endpoint": "jp9i-3b7y",
-        "description": "Geographic boundaries for all community boards",
-        "doc_url": "https://data.cityofnewyork.us/City-Government/Community-Districts/yfnk-k7r4",
+        "endpoint": None,
+        "description": "Cached CB5 boundary GeoJSON used for polygon filtering",
+        "doc_url": "https://raw.githubusercontent.com/nycehs/NYC_geography/master/CD.geo.json",
     },
 }
 
@@ -69,19 +78,89 @@ DATASET_311 = {
     "name": "311 Service Requests (DOT)",
     "endpoint": "erm2-nwe9",
     "description": "311 complaints - maintenance focused, less reliable for new infrastructure",
-    "doc_url": "https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9",
+    "doc_url": "https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2020-to-Present/erm2-nwe9",
 }
 
 
+def new_fetch_manifest():
+    """Create an empty manifest for a data refresh run."""
+    return {
+        "schema_version": 1,
+        "generated_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "datasets": [],
+    }
 
-FETCH_PAGE_SIZE = 50000
-FETCH_ORDER_BY = {
-    "signal_studies": "id",
-    "srts": "projectcode",
-    "aps_installed": "borocd, location, date_insta",
-    "crashes": "collision_id",
-    "311": "unique_key",
-}
+
+def fetch_view_metadata(endpoint):
+    """Fetch compact metadata for a Socrata view."""
+    metadata_url = f"https://data.cityofnewyork.us/api/views/{endpoint}.json"
+    response = requests.get(metadata_url, timeout=30)
+    response.raise_for_status()
+    raw = response.json()
+    return {
+        "id": raw.get("id"),
+        "name": raw.get("name"),
+        "rowsUpdatedAt": raw.get("rowsUpdatedAt"),
+        "viewLastModified": raw.get("viewLastModified"),
+        "columns": [
+            {
+                "fieldName": col.get("fieldName"),
+                "name": col.get("name"),
+                "dataTypeName": col.get("dataTypeName"),
+            }
+            for col in raw.get("columns", [])
+            if col.get("fieldName")
+        ],
+    }
+
+
+def _append_fetch_manifest_entry(
+    manifest,
+    *,
+    dataset_key,
+    dataset_name,
+    endpoint,
+    doc_url,
+    where,
+    select,
+    order,
+    requested_limit,
+    page_size,
+    pages_fetched,
+    rows_returned,
+    output_path,
+    metadata,
+    error,
+):
+    if manifest is None:
+        return
+    manifest["datasets"].append({
+        "key": dataset_key,
+        "name": dataset_name,
+        "endpoint": endpoint,
+        "doc_url": doc_url,
+        "resource_url": f"https://data.cityofnewyork.us/resource/{endpoint}.json",
+        "fetched_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "where": where,
+        "select": select,
+        "order": order,
+        "requested_limit": requested_limit,
+        "page_size": page_size,
+        "pages_fetched": pages_fetched,
+        "rows_returned": rows_returned,
+        "truncated_at_requested_limit": bool(requested_limit and rows_returned >= requested_limit),
+        "output_path": output_path,
+        "metadata": metadata or {},
+        "success": error is None,
+        "error": error,
+    })
+
+
+def write_fetch_manifest(manifest, path=FETCH_MANIFEST_PATH):
+    """Write a fetch manifest to disk."""
+    with open(path, "w") as f:
+        json.dump(manifest, f, indent=2, sort_keys=True)
+        f.write("\n")
 
 
 def crash_fetch_where():
@@ -131,40 +210,99 @@ def fetch_query_plan():
     }
 
 
-def fetch_dataset(endpoint, limit=None, where=None, select=None):
-    """Fetch data from NYC Open Data Socrata API."""
+def fetch_dataset(
+    endpoint,
+    limit=None,
+    where=None,
+    select=None,
+    order=None,
+    *,
+    page_size=FETCH_PAGE_SIZE,
+    manifest=None,
+    dataset_key=None,
+    dataset_name=None,
+    doc_url=None,
+    output_path=None,
+):
+    """Fetch data from NYC Open Data Socrata API with pagination."""
     base_url = f"https://data.cityofnewyork.us/resource/{endpoint}.json"
-    params = {}
-
-    if limit:
-        params["$limit"] = limit
-    else:
-        params["$limit"] = 100000  # Large default
-
-    if where:
-        params["$where"] = where
-
-    if select:
-        params["$select"] = select
+    metadata = {}
+    error = None
+    records = []
+    pages_fetched = 0
 
     try:
-        response = requests.get(base_url, params=params, timeout=120)
-        response.raise_for_status()
-        return pd.DataFrame(response.json())
+        try:
+            metadata = fetch_view_metadata(endpoint)
+        except Exception as e:
+            print(f"  WARN metadata fetch failed for {endpoint}: {e}")
+
+        offset = 0
+        while True:
+            remaining = None if limit is None else limit - len(records)
+            if remaining is not None and remaining <= 0:
+                break
+            request_limit = page_size if remaining is None else min(page_size, remaining)
+            params = {"$limit": request_limit, "$offset": offset}
+            if where:
+                params["$where"] = where
+            if select:
+                params["$select"] = select
+            if order:
+                params["$order"] = order
+
+            response = requests.get(base_url, params=params, timeout=120)
+            response.raise_for_status()
+            page = response.json()
+            if not page:
+                break
+            records.extend(page)
+            pages_fetched += 1
+            if len(page) < request_limit:
+                break
+            offset += len(page)
     except requests.HTTPError as e:
         status = response.status_code
         request_id = response.headers.get("X-Socrata-RequestId", "n/a")
         if status == 503 and "Site Currently Unavailable" in response.text[:500]:
-            print(
+            error = (
                 f"  ERROR fetching {endpoint}: NYC Open Data/Socrata returned "
                 f"'Site Currently Unavailable' (HTTP 503, request id {request_id})"
             )
+            print(error)
         else:
-            print(f"  ERROR fetching {endpoint}: HTTP {status} ({e}, request id {request_id})")
+            error = f"  ERROR fetching {endpoint}: HTTP {status} ({e}, request id {request_id})"
+            print(error)
     except Exception as e:
-        print(f"  ERROR fetching {endpoint}: {e}")
-        return pd.DataFrame()
-    return pd.DataFrame()
+        error = f"  ERROR fetching {endpoint}: {e}"
+        print(error)
+
+    df = pd.DataFrame(records)
+    df.attrs["fetch_success"] = error is None
+    df.attrs["fetch_error"] = error
+    _append_fetch_manifest_entry(
+        manifest,
+        dataset_key=dataset_key or endpoint,
+        dataset_name=dataset_name or endpoint,
+        endpoint=endpoint,
+        doc_url=doc_url,
+        where=where,
+        select=select,
+        order=order,
+        requested_limit=limit,
+        page_size=page_size,
+        pages_fetched=pages_fetched,
+        rows_returned=len(df),
+        output_path=output_path,
+        metadata=metadata,
+        error=error,
+    )
+    return df
+
+
+def fetch_succeeded(df):
+    """Return True when a fetch produced usable, complete data."""
+    return not df.empty and df.attrs.get("fetch_success", True)
 
 
 def _iter_coordinate_pairs(coords):
@@ -244,6 +382,8 @@ def main():
     all_data = {}
     fetch_failures = []
     optional_fetch_failures = []
+    fetch_manifest = new_fetch_manifest()
+    fetch_queries = fetch_query_plan()
 
     def note_fetch_failure(label, required=True):
         if required:
@@ -262,9 +402,17 @@ def main():
     print(f"\nDocumentation: {DATASETS['signal_studies']['doc_url']}")
 
     print("\nFetching CITYWIDE data (all boroughs, all time)...")
-    df_studies = fetch_dataset(DATASETS['signal_studies']['endpoint'])
+    df_studies = fetch_dataset(
+        DATASETS['signal_studies']['endpoint'],
+        manifest=fetch_manifest,
+        dataset_key='signal_studies',
+        dataset_name=DATASETS['signal_studies']['name'],
+        doc_url=DATASETS['signal_studies']['doc_url'],
+        output_path=fetch_queries['signal_studies']['output_path'],
+        order=fetch_queries['signal_studies']['order'],
+    )
 
-    if not df_studies.empty:
+    if fetch_succeeded(df_studies):
         # Save raw data
         df_studies.to_csv(f"{DATA_DIR}/signal_studies_citywide.csv", index=False)
         print(f"  Saved to {DATA_DIR}/signal_studies_citywide.csv")
@@ -300,9 +448,17 @@ def main():
     print(f"\nDocumentation: {DATASETS['srts']['doc_url']}")
 
     print("\nFetching CITYWIDE SRTS data...")
-    df_srts = fetch_dataset(DATASETS['srts']['endpoint'])
+    df_srts = fetch_dataset(
+        DATASETS['srts']['endpoint'],
+        manifest=fetch_manifest,
+        dataset_key='srts',
+        dataset_name=DATASETS['srts']['name'],
+        doc_url=DATASETS['srts']['doc_url'],
+        output_path=fetch_queries['srts']['output_path'],
+        order=fetch_queries['srts']['order'],
+    )
 
-    if not df_srts.empty:
+    if fetch_succeeded(df_srts):
         df_srts.to_csv(f"{DATA_DIR}/srts_citywide.csv", index=False)
         print(f"  Saved to {DATA_DIR}/srts_citywide.csv")
 
@@ -331,9 +487,17 @@ def main():
     print(f"\nDocumentation: {DATASETS['aps_installed']['doc_url']}")
 
     print("\nFetching APS installed locations...")
-    df_aps = fetch_dataset(DATASETS['aps_installed']['endpoint'])
+    df_aps = fetch_dataset(
+        DATASETS['aps_installed']['endpoint'],
+        manifest=fetch_manifest,
+        dataset_key='aps_installed',
+        dataset_name=DATASETS['aps_installed']['name'],
+        doc_url=DATASETS['aps_installed']['doc_url'],
+        output_path=fetch_queries['aps_installed']['output_path'],
+        order=fetch_queries['aps_installed']['order'],
+    )
 
-    if not df_aps.empty:
+    if fetch_succeeded(df_aps):
         df_aps.to_csv(f"{DATA_DIR}/aps_installed_citywide.csv", index=False)
         print(f"  Saved to {DATA_DIR}/aps_installed_citywide.csv")
 
@@ -363,22 +527,21 @@ def main():
     # Fetch by CB5 bounding box, then downstream chart/map scripts apply the exact CB5
     # polygon filter. Do not pre-filter to borough='QUEENS': some in-polygon crash rows
     # have a blank borough field. Include fatal-only crashes as well as injury crashes.
-    min_lon, min_lat, max_lon, max_lat = cb5_boundary_bbox()
-    crash_where = (
-        "crash_date >= '2020-01-01' "
-        "AND latitude IS NOT NULL AND longitude IS NOT NULL "
-        "AND (number_of_persons_injured > 0 OR number_of_persons_killed > 0) "
-        f"AND latitude between {min_lat} and {max_lat} "
-        f"AND longitude between {min_lon} and {max_lon}"
-    )
+    crash_where = fetch_queries['crashes']['where']
     print("\nFetching CB5-area crash candidates (2020+, injury or fatal)...")
     df_crashes = fetch_dataset(
         DATASETS['crashes']['endpoint'],
         where=crash_where,
-        limit=50000
+        limit=fetch_queries['crashes']['limit'],
+        manifest=fetch_manifest,
+        dataset_key='crashes',
+        dataset_name=DATASETS['crashes']['name'],
+        doc_url=DATASETS['crashes']['doc_url'],
+        output_path=fetch_queries['crashes']['output_path'],
+        order=fetch_queries['crashes']['order'],
     )
 
-    if not df_crashes.empty:
+    if fetch_succeeded(df_crashes):
         df_crashes.to_csv(f"{DATA_DIR}/crashes_queens_2020plus.csv", index=False)
         print(f"  Saved to {DATA_DIR}/crashes_queens_2020plus.csv")
 
@@ -400,11 +563,17 @@ def main():
     print("\nFetching CB5 DOT 311 requests (2020+)...")
     df_311 = fetch_dataset(
         DATASET_311['endpoint'],
-        where="agency='DOT' AND community_board='05 QUEENS' AND created_date >= '2020-01-01'",
-        limit=50000
+        where=fetch_queries['311']['where'],
+        limit=fetch_queries['311']['limit'],
+        manifest=fetch_manifest,
+        dataset_key='311',
+        dataset_name=DATASET_311['name'],
+        doc_url=DATASET_311['doc_url'],
+        output_path=fetch_queries['311']['output_path'],
+        order=fetch_queries['311']['order'],
     )
 
-    if not df_311.empty:
+    if fetch_succeeded(df_311):
         df_311.to_csv(f"{DATA_DIR}/311_cb5_dot_2020plus.csv", index=False)
         print(f"  Saved to {DATA_DIR}/311_cb5_dot_2020plus.csv")
 
@@ -449,7 +618,12 @@ def main():
             for label in optional_fetch_failures:
                 print(f"  - {label}")
     if fetch_failures:
+        write_fetch_manifest(fetch_manifest)
+        print(f"\nFetch manifest saved to: {FETCH_MANIFEST_PATH}")
         sys.exit(1)
+
+    write_fetch_manifest(fetch_manifest)
+    print(f"\nFetch manifest saved to: {FETCH_MANIFEST_PATH}")
 
     return all_data
 

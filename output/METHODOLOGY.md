@@ -70,7 +70,7 @@ Only resolved records are included. SRTS outcomes are binary — DOT engineering
 
 ### 3.1 Accessible Pedestrian Signals (APS)
 
-APS requests are **excluded from all denial rate calculations**. APS installations are tracked in a separate installed-inventory dataset (`de3m-c5p4`) that reflects placements under the federal remedial order in *American Council of the Blind of New York, Inc. v. The City of New York* (March 2022). APS request and status records are not comparable to discretionary signal, stop-sign, LPI, left-turn, or speed-bump evaluations in this analysis. Including APS would mix a court-ordered accessibility program with discretionary safety-request outcomes.
+APS requests are **excluded from all denial rate calculations**. APS installations are tracked in a separate installed-inventory dataset (`de3m-c5p4`) under a March 2022 remedial order. APS request and status records are not comparable to discretionary signal, stop-sign, LPI, left-turn, or speed-bump evaluations in this analysis. Including APS would mix a programmatic accessibility inventory with discretionary safety-request outcomes.
 
 APS requests ARE included in volume/count charts (Charts 01, 01b) where they are visually distinguished with gray hatching and a legend note explaining the exclusion.
 
@@ -239,11 +239,11 @@ Denied and approved location crash distributions are compared using the **Mann-W
 
 ### Chart 09: Crash Proximity Analysis
 
-Chart 09 (`chart_09_crash_proximity_analysis.png`) presents the central statistical test of this analysis. It displays grouped bars comparing denied (red) and approved (green) locations on three metrics — median crashes, injuries, and pedestrian injuries within 150 meters — with the Mann-Whitney U test p-value annotated on each panel. The current generated signal-study panel covers 421 geocoded Signal Study locations (379 denied, 42 approved), and the SRTS panel covers 436 Speed Bump locations (430 denied, 6 approved).
+Chart 09 (`chart_09_crash_proximity_analysis.png`) presents the central statistical test of this analysis. It displays grouped bars comparing denied (red) and approved (green) locations on three metrics — median crashes, injuries, and pedestrian injuries within 150 meters — with the Mann-Whitney U test p-value annotated on each panel. The current generated signal-study panel covers 421 geocoded Signal Study locations (380 denied, 42 approved), and the SRTS panel covers 436 Speed Bump locations (430 denied, 6 approved).
 
-For signal studies, denied locations have significantly more crashes than approved locations (median 12 for denied locations, 7.5 for approved locations, p=0.000689), a result that is statistically significant at the 1% level. Denied locations also show higher injuries (15 for denied locations, 8.5 for approved locations) and equal median pedestrian injuries (2 for both groups). For SRTS, there is no statistically significant difference (median 9 for denied locations, 7 for approved locations, p=0.628881); this is consistent with the documented role of the radar-speed criterion in speed bump decisions.
+For signal studies, denied locations have significantly more crashes than approved locations (median 15 for denied locations, 11 for approved locations, p=0.000743), a result that is statistically significant at the 1% level. Denied locations also show higher injuries (21 for denied locations, 13.5 for approved locations) and higher median pedestrian injuries (3 for denied locations, 2 for approved locations). For SRTS, there is no statistically significant difference (median 11 for denied locations, 8 for approved locations, p=0.464641); this is consistent with the documented role of the radar-speed criterion in speed bump decisions.
 
-This is the central statistical finding of the analysis. Within the geocoded signal-study subset, denied signal and stop sign locations have higher nearby injury-crash counts than approved locations (Mann-Whitney p=0.000689). This supports further review of whether approval criteria are prioritizing documented crash exposure. It does not by itself prove causation or show DOT intent, and p-values are not the probability that a result is "due to chance." The non-significant SRTS result is consistent with the documented role of radar speed in speed bump decisions, but it does not prove that crash history is ignored in every decision.
+This is the central statistical finding of the analysis. Within the geocoded signal-study subset, denied signal and stop sign locations have higher nearby injury-crash counts than approved locations (Mann-Whitney p=0.000743). This supports further review of whether approval criteria are prioritizing documented crash exposure. It does not by itself prove causation or show DOT intent, and p-values are not the probability that a result is "due to chance." The non-significant SRTS result is consistent with the documented role of radar speed in speed bump decisions, but it does not prove that crash history is ignored in every decision.
 
 ### Chart 09b: Top 15 Denied Locations in QCB5 by Nearby Crash/Injury Count
 
@@ -255,9 +255,9 @@ The top denied location (Aubrey Ave & Metropolitan Ave) has 66 crashes and 101 i
 
 ### Chart 15: SRTS Approval Funnel
 
-Chart 15 (`chart_15_srts_funnel.png`) traces the full lifecycle of 239 QCB5 speed bump approvals from 1999–2025 in a two-panel layout. The left panel shows the total approved count, while the right panel breaks down their fate: Confirmed Installed at 105 (43.9%), Cancelled/Rejected at 124 (51.9%), Closed Without Install at 1 (0.4%), and Still Waiting at 9 (3.8%), with the median wait time annotated on the Still Waiting bar. Cancellation is determined from the `projectstatus` field containing "Cancel," "Reject," or "denied" — DOT's own status labels, not this analysis's classification. SRTS data is loaded via `_load_cb5_srts_full()` with the full CB5 filtering pipeline.
+Chart 15 (`chart_15_srts_funnel.png`) traces the full lifecycle of 255 QCB5 speed bump approvals from 1999–2025 in a two-panel layout. The left panel shows the total approved count, while the right panel breaks down their fate: Confirmed Installed at 110 (43.1%), Cancelled/Rejected at 134 (52.5%), Closed Without Install at 1 (0.4%), and Still Waiting at 10 (3.9%), with the median wait time annotated on the Still Waiting bar. Cancellation is determined from the `projectstatus` field containing "Cancel," "Reject," or "denied" — DOT's own status labels, not this analysis's classification. SRTS data is loaded via `_load_cb5_srts_full()` with the full CB5 filtering pipeline.
 
-This is the full lifecycle view of an SRTS approval. The current output shows that 43.9% of approvals result in confirmed installation, while 52.3% are later cancelled, rejected, or closed without installation, and 3.8% remain open. A "yes" from DOT therefore overstates actual infrastructure delivery.
+This is the full lifecycle view of an SRTS approval. The current output shows that 43.1% of approvals result in confirmed installation, while 52.9% are later cancelled, rejected, or closed without installation, and 3.9% remain open. A "yes" from DOT therefore overstates actual infrastructure delivery.
 
 ---
 
@@ -276,8 +276,8 @@ All layers share the same 2020–2025 analysis window. Layer names in the contro
 
 | # | Layer | Default | n= | Description |
 |---|-------|---------|-----|-------------|
-| 1 | Injury Crashes | ON | 3,213 | Dot density — one dot per crash, sized by severity (fatal=black r=3.5, injury=gray r=1.8, property=light gray r=1.2) |
-| 2 | Denied Signal Studies | ON | 379 | Red circle markers (r=6), signal/stop sign requests denied by DOT |
+| 1 | Injury Crashes | ON | 4,274 | Dot density — one dot per crash, sized by severity (fatal=black r=3.5, injury=gray r=1.8, property=light gray r=1.2) |
+| 2 | Denied Signal Studies | ON | 380 | Red circle markers (r=6), signal/stop sign requests denied by DOT |
 | 3 | Approved Signal Studies | ON | 42 | Green circle markers (r=6), signal/stop sign requests approved |
 | 4 | Denied Speed Bumps | ON | 430 | Red circle markers (r=4), SRTS requests denied |
 | 5 | Approved Speed Bumps | ON | 6 | Green circle markers (r=4), SRTS requests approved |
@@ -304,8 +304,8 @@ Each map layer exports a corresponding CSV spreadsheet to `output/`. These allow
 
 | File | Rows | Key Columns |
 |------|------|-------------|
-| `map_layer_crashes.csv` | 3,213 | date, time, streets, injury breakdown, contributing factor, vehicle type, collision ID, lat/lon |
-| `map_layer_denied_signals.csv` | 379 | ref#, type, dates, status, findings, school, Vision Zero, crash proximity metrics, lat/lon |
+| `map_layer_crashes.csv` | 4,274 | date, time, streets, injury breakdown, contributing factor, vehicle type, collision ID, lat/lon |
+| `map_layer_denied_signals.csv` | 380 | ref#, type, dates, status, findings, school, Vision Zero, crash proximity metrics, lat/lon |
 | `map_layer_approved_signals.csv` | 42 | same as above |
 | `map_layer_denied_speed_bumps.csv` | 430 | project code, streets, dates, denial reason, project status, crash proximity, lat/lon |
 | `map_layer_approved_speed_bumps.csv` | 6 | same as above + install date |
@@ -448,12 +448,12 @@ All documentation updated to prevent recurrence.
 
 2. **QCB5's speed bump denial rate has reached 99–100%** in recent years, with "Speed < 30 mph" recorded as the dominant denial reason.
 
-3. **Denied signal study locations have significantly more nearby crashes than approved locations** in the geocoded subset (median 12 for denied locations, 7.5 for approved locations, Mann-Whitney p=0.000689). This is evidence that approval criteria should be reviewed against documented crash exposure; it is not, by itself, proof of causation or intent.
+3. **Denied signal study locations have significantly more nearby crashes than approved locations** in the geocoded subset (median 15 for denied locations, 11 for approved locations, Mann-Whitney p=0.000743). This is evidence that approval criteria should be reviewed against documented crash exposure; it is not, by itself, proof of causation or intent.
 
 4. **Only 3.6% of signal study requests and 5.7% of speed bump requests result in confirmed installations.** Approval counts overstate confirmed infrastructure delivery by roughly 2x.
 
 5. **26 of 41 approved signal studies (after dedup) have no installation date.** The 15 confirmed installations had a maximum wait of 456 days; 24 of the 26 uninstalled approvals have been waiting longer. The oldest dates to November 2021 — 51 months and counting.
 
-6. **For SRTS, more approvals were cancelled after the fact (124) than were actually installed (105).** 9 locations remain in limbo.
+6. **For SRTS, more approvals were cancelled after the fact (134) than were actually installed (110).** 10 locations remain in limbo.
 
 7. **Where DOT does install, injuries decrease by 21.5%.** The infrastructure works — the bottleneck is deployment, not design.

@@ -229,6 +229,7 @@ class DocumentationAlignmentTest(unittest.TestCase):
         ]
         allowed_optional = {
             'data_raw/fetch_manifest.json',
+            '~/sites/electoralanalytics-site/docs/style/dataviz.md',
         }
         reference_pattern = re.compile(
             r'`([^`\s]+\.(?:csv|png|html|json|md|zip|geojson))`'

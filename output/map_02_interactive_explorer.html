@@ -538,7 +538,7 @@ function buildApsLayer(records) {
       + popupBlock('Installation',
         popupRow('Date', r.dt)
         + popupRow('Neighborhood', r.nta))
-      + '<div class="popup-note">Court-mandated APS inventory [de3m-c5p4]. Excluded from discretionary denial-rate analysis.</div>'
+      + '<div class="popup-note">Installed APS inventory. Source: APS Installed Locations [de3m-c5p4]. Excluded from discretionary denial-rate analysis.</div>'
     );
     L.circleMarker([r.lat,r.lon], requestMarkerStyle(COLORS.aps))
       .bindPopup(popup,{maxWidth:300})

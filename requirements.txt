@@ -5,3 +5,4 @@ folium>=0.14,<1
 shapely>=2.0,<3
 requests>=2.28,<3
 branca>=0.6,<1
+playwright>=1.40,<2
