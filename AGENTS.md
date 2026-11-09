@@ -18,4 +18,4 @@ Approval-rate analysis of NYC DOT safety requests in Queens CB5 (signals, speed 
 .venv/bin/python -m unittest discover -s tests
 ```
 
-Note: `scripts_validate_outputs.py` is currently saved in `git stash` (`stash@{0}`); pop or apply the stash if running the standalone output validator.
+Note: `scripts_validate_outputs.py` is currently saved in `git stash` (`stash@{0}`, untracked-files parent `stash@{0}^3`). Do not pop it expecting a green run: its pinned counts predate the current committed `data_raw/` snapshot (trial run 2026-11-08 failed on raw row counts). Re-baselining it is a data-owner task; see README "Reproduce Current Committed Outputs".
