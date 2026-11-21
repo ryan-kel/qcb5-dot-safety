@@ -3,24 +3,24 @@ Rank,reference_id,location_name,dataset,request_type,request_year,Source File,la
 2,CQ20-2348B,69 Place & Grand Avenue,Signal Study,Traffic Signal,2020,data_cb5_signal_studies.csv,40.72648,-73.89442,91,127,18,1.0
 3,CQ24-0154B,Borden Avenue & Grand Avenue,Signal Study,Left Turn Arrow/Signal,2024,data_cb5_signal_studies.csv,40.725635,-73.895856,88,133,16,1.0
 4,CQ21-2789B,Aubrey Avenue & Metropolitan Avenue,Signal Study,Traffic Signal,2021,data_cb5_signal_studies.csv,40.711994,-73.86073,70,105,5,0.0
-5,CQ24-1539B,Bleecker Street & Fresh Pond Road,Signal Study,Traffic Signal,2024,data_cb5_signal_studies.csv,40.711903,-73.90019,69,79,18,1.0
+5,CQ23-0751B,Bleecker Street & Fresh Pond Road,Signal Study,Left Turn Arrow/Signal,2023,data_cb5_signal_studies.csv,40.711903,-73.90019,69,79,18,1.0
 6,CQ23-0750B,61 Street & Metropolitan Avenue,Signal Study,Left Turn Arrow/Signal,2023,data_cb5_signal_studies.csv,40.712757,-73.90225,65,76,20,0.0
 7,CQ22-1495,Hamilton Place & Perry Avenue,Signal Study,All-Way Stop,2022,data_cb5_signal_studies.csv,40.724888,-73.89899,65,95,5,0.0
 8,CQ20-0698B,60 Street & Metropolitan Avenue,Signal Study,Traffic Signal,2020,data_cb5_signal_studies.csv,40.7129023175027,-73.906077007385,64,75,19,0.0
-9,CQ21-1280B,Cooper Avenue & Cypress Avenue,Signal Study,Traffic Signal,2021,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
+9,CQ22-0432B,Cooper Avenue & Cypress Avenue,Signal Study,Leading Pedestrian Interval,2022,data_cb5_signal_studies.csv,40.694107,-73.89737,61,76,12,0.0
 10,CQ24-2047,69 Avenue & Onderdonk Avenue,Signal Study,All-Way Stop,2024,data_cb5_signal_studies.csv,40.70123,-73.902565,60,69,15,1.0
-11,CQ25-3033B,Cypress Avenue & Vermont Place,Signal Study,Traffic Signal,2025,data_cb5_signal_studies.csv,40.691433,-73.89063,59,85,2,0.0
+11,CQ22-1132,Cypress Avenue & Vermont Place,Signal Study,Traffic Signal,2022,data_cb5_signal_studies.csv,40.691433,-73.89063,59,85,2,0.0
 12,CQ22-0218,81 Road & Myrtle Avenue,Signal Study,Traffic Signal,2022,data_cb5_signal_studies.csv,40.70337374346303,-73.85939346916709,54,79,4,0.0
 13,CQ25-0172,Cypress Avenue & Putnam Avenue,Signal Study,All-Way Stop,2025,data_cb5_signal_studies.csv,40.700367,-73.906624,52,56,13,0.0
 14,CQ24-0508B,81 Road & Woodhaven Boulevard,Signal Study,Left Turn Arrow/Signal,2024,data_cb5_signal_studies.csv,40.70456,-73.856735,50,78,0,0.0
-15,CQ22-0476B,80 Street & Cooper Avenue,Signal Study,Leading Pedestrian Interval,2022,data_cb5_signal_studies.csv,40.709415,-73.87022,48,55,9,0.0
+15,CQ24-1255B,80 Street & Cooper Avenue,Signal Study,Traffic Signal,2024,data_cb5_signal_studies.csv,40.709415,-73.87022,48,55,9,0.0
 16,CQ21-0387B,Forest Avenue & Myrtle Avenue,Signal Study,Traffic Signal Removal,2021,data_cb5_signal_studies.csv,40.700497,-73.90021,48,58,20,0.0
 17,CQ22-1673B,69 Street & Eliot Avenue,Signal Study,Left Turn Arrow/Signal,2022,data_cb5_signal_studies.csv,40.71946,-73.89117,47,60,12,1.0
-18,CQ20-1355B,Fresh Pond Road & Putnam Avenue,Signal Study,Traffic Signal,2020,data_cb5_signal_studies.csv,40.706497,-73.89695,44,59,18,0.0
-19,CQ25-2943B,53 Street & Flushing Avenue,Signal Study,Traffic Signal,2025,data_cb5_signal_studies.csv,40.714424,-73.914246,44,52,4,0.0
+18,CQ25-2943B,53 Street & Flushing Avenue,Signal Study,Traffic Signal,2025,data_cb5_signal_studies.csv,40.714424,-73.914246,44,52,4,0.0
+19,CQ20-1355B,Fresh Pond Road & Putnam Avenue,Signal Study,Traffic Signal,2020,data_cb5_signal_studies.csv,40.706497,-73.89695,44,59,18,0.0
 20,CQ22-1863B,Grand Avenue & Maspeth Avenue,Signal Study,Traffic Signal,2022,data_cb5_signal_studies.csv,40.7228,-73.90182,43,44,5,1.0
 21,CQ20-1068,Myrtle Avenue & Summerfield Street,Signal Study,All-Way Stop,2020,data_cb5_signal_studies.csv,40.70052,-73.897962,42,53,17,1.0
 22,CQ20-0551B,Eliot Avenue & Fresh Pond Road,Signal Study,Leading Pedestrian Interval,2020,data_cb5_signal_studies.csv,40.714622,-73.90117,42,50,9,2.0
-23,CQ22-3213B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,2022,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
-24,CQ23-1913B,69 Place & Queens Midtown Expressway,Signal Study,Traffic Signal,2023,data_cb5_signal_studies.csv,40.72618992958762,-73.89237629589852,39,59,1,0.0
-25,CQ24-0736B,Borden Avenue & Hamilton Place,Signal Study,Traffic Signal,2024,data_cb5_signal_studies.csv,40.72616,-73.90012,37,48,3,1.0
+23,CQ24-2501B,Myrtle Avenue & St Nicholas Avenue,Signal Study,Traffic Signal,2024,data_cb5_signal_studies.csv,40.69984,-73.90868,40,43,12,0.0
+24,CQ22-1228,69 Place & Queens Midtown Expressway,Signal Study,Traffic Signal,2022,data_cb5_signal_studies.csv,40.72618992958762,-73.89237629589852,39,59,1,0.0
+25,CQ22-1051B,64 Street & Myrtle Avenue,Signal Study,Leading Pedestrian Interval,2022,data_cb5_signal_studies.csv,40.700964,-73.89245299999999,37,44,11,0.0

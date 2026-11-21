@@ -13,10 +13,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-import folium
-from folium.plugins import HeatMap, MarkerCluster
 from shapely.geometry import shape, Point
 from shapely.prepared import prep
+import hashlib
 import json
 import warnings
 import os
@@ -84,12 +83,12 @@ def _strip_trailing_whitespace(path):
 
 # Color scheme — EA house palette (IBX choropleth + tokens.css)
 COLORS = {
-    'primary': '#2C5F8B',
-    'citywide': '#B8860B',
-    'denied': '#9e3a30',
-    'approved': '#6b8f5e',
-    'crash': '#54809f',
-    'crash_alt': '#9bb0c2',
+    'primary': '#1D4B73',
+    'citywide': '#B5882B',
+    'denied': '#A63A32',
+    'approved': '#3E7B57',
+    'crash': '#4E6B84',
+    'crash_alt': '#94ADC4',
 }
 
 # Muted heatmap gradient — warm parchment tones for print
@@ -430,25 +429,35 @@ def _add_search_box(m, search_entries):
     m.get_root().html.add_child(folium.Element(html))
 
 
-# Academic styling — matches generate_charts.py
+# Editorial styling — Option A Civic Broadsheet sans-serif (matches generate_charts.py)
 plt.rcParams.update({
-    'font.family': 'serif',
-    'font.serif': ['Times New Roman', 'DejaVu Serif', 'Liberation Serif'],
-    'font.size': 11,
-    'axes.titlesize': 13,
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['IBM Plex Sans', 'DejaVu Sans', 'Helvetica', 'Arial'],
+    'font.size': 10.5,
+    'text.color': '#132230',
+    'axes.labelcolor': '#4D5E6D',
+    'axes.edgecolor': '#BAC6D3',
+    'axes.linewidth': 0.8,
+    'axes.titlesize': 12.5,
     'axes.titleweight': 'bold',
-    'axes.labelsize': 11,
+    'axes.labelsize': 10.5,
     'axes.labelweight': 'bold',
     'axes.spines.top': False,
     'axes.spines.right': False,
-    'xtick.labelsize': 10,
-    'ytick.labelsize': 10,
-    'legend.fontsize': 10,
+    'xtick.labelsize': 9.5,
+    'ytick.labelsize': 9.5,
+    'xtick.color': '#4D5E6D',
+    'ytick.color': '#4D5E6D',
+    'legend.fontsize': 9.5,
+    'legend.frameon': True,
+    'legend.facecolor': '#FFFFFF',
+    'legend.edgecolor': '#DCE2E8',
     'figure.dpi': 150,
     'savefig.dpi': 300,
     'axes.grid': True,
-    'grid.alpha': 0.3,
-    'grid.linestyle': '--'
+    'grid.color': '#DCE2E8',
+    'grid.alpha': 0.7,
+    'grid.linestyle': '--',
 })
 
 
@@ -1616,1087 +1625,65 @@ def _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
 
 def map_interactive_explorer(signal_prox, srts_prox, cb5_crashes, data,
                              before_after_df, search_entries, top15, top10_crashes, cb5_aps):
-    """Generate a lightweight interactive Leaflet map with year filtering and stats panel.
+    """Generate the canonical lightweight interactive Leaflet explorer map.
 
-    NOT folium — vanilla Leaflet + MarkerCluster from CDN.
-    Data embedded inline as JSON. About 1-1.5MB compared with a 14MB Folium map.
+    Vanilla Leaflet + MarkerCluster with verified SHA-384 SRI hashes, Option A
+    light/dark theming, dynamic CARTO light_all/dark_all tiles, and external
+    versioned map_data.json loading (no inline JSON duplication).
     Output: output/map_02_interactive_explorer.html
     """
     print("  Generating interactive explorer map...")
 
-    # Load pre-exported JSON data
     json_path = f'{OUTPUT_DIR}/map_data.json'
-    with open(json_path) as f:
-        map_data_str = f.read()
+    with open(json_path, 'rb') as f:
+        data_version = hashlib.sha256(f.read()).hexdigest()[:12]
 
-    html = _build_interactive_html(map_data_str)
+    html = _build_interactive_html(data_version)
 
     out_path = f'{OUTPUT_DIR}/map_02_interactive_explorer.html'
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         f.write(html)
     _strip_trailing_whitespace(out_path)
 
     size_kb = os.path.getsize(out_path) / 1024
-    print(f"    Interactive explorer map saved ({size_kb:.0f} KB)")
+    print(f"    Interactive explorer map saved ({size_kb:.0f} KB, data v={data_version})")
 
 
-def _build_interactive_html(map_data_json_str):
-    """Build the complete HTML for the interactive explorer map.
+def _build_interactive_html(data_version):
+    """Build HTML for the interactive explorer map (EA Civic Map Shell v2).
 
-    Map-first layout with IBX-style collapsible controls rail (~232px).
-    Orientation lives on the site page; panel is filters, layers, legend, stats.
+    Loads templates/map_02_template.html and injects versioned map_data.json hash
+    and study year bounds (defaults to 2020-2025).
     """
-
-    # Year dropdown options span the study window; default selected = last complete year.
-    _year_options = ''.join(
+    _start_year_options = ''.join(
+        f'<option value="{y}"{" selected" if y == STUDY_START_YEAR else ""}>{y}</option>'
+        for y in range(STUDY_START_YEAR, LAST_COMPLETE_YEAR + 1)
+    )
+    _end_year_options = ''.join(
         f'<option value="{y}"{" selected" if y == LAST_COMPLETE_YEAR else ""}>{y}</option>'
         for y in range(STUDY_START_YEAR, LAST_COMPLETE_YEAR + 1)
     )
-
-    return f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QCB5 Safety Request Outcomes — Interactive Explorer</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
-<style>
-:root {{
-  --navy: #2C5F8B;
-  --navy-dark: #1B3F5E;
-  --gold: #B8860B;
-  --red: #9e3a30;
-  --green: #6b8f5e;
-  --crash: #54809f;
-  --aps: #2C5F8B;
-  --worsened: #c06e45;
-  --neutral: #9bb0c2;
-  --text: #2a2a2a;
-  --text-light: #555;
-  --bg: #fafafa;
-  --card-bg: #fff;
-  --card-border: #e0e0e0;
-  --panel-w: 232px;
-}}
-* {{ margin: 0; padding: 0; box-sizing: border-box; }}
-body {{ font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); }}
-#map {{
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;
-  transition: left 0.2s ease, bottom 0.2s ease;
-}}
-body.panel-open #map {{ left: var(--panel-w); }}
-
-#panel {{
-  position: absolute; top: 0; left: 0; bottom: 0; width: var(--panel-w);
-  background: var(--card-bg); border-right: 1px solid var(--card-border);
-  z-index: 1000; font-size: 11px; line-height: 1.45;
-  display: flex; flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}}
-body.panel-open #panel {{
-  transform: translateX(0);
-  box-shadow: 2px 0 12px rgba(27, 63, 94, 0.1);
-}}
-
-#rail-btn {{
-  position: absolute; top: 12px; left: 0; z-index: 1001;
-  writing-mode: vertical-rl; transform: rotate(180deg);
-  font-family: Helvetica, Arial, sans-serif; font-size: 10px;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 9px 5px; background: var(--navy-dark); color: #fff;
-  border: none; cursor: pointer; border-radius: 0 3px 3px 0;
-  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.12);
-}}
-#rail-btn:hover {{ background: var(--navy); }}
-body.panel-open #rail-btn {{ display: none; }}
-
-.panel-head {{
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 7px 8px; background: var(--navy-dark); color: #fff; flex-shrink: 0;
-}}
-.panel-title {{
-  font-family: Helvetica, Arial, sans-serif; font-size: 9px;
-  letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
-}}
-.panel-collapse {{
-  display: flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px; padding: 0; border: none; border-radius: 3px;
-  background: rgba(255, 255, 255, 0.14); color: #fff; cursor: pointer;
-  font-size: 11px; line-height: 1;
-}}
-.panel-collapse:hover {{ background: rgba(255, 255, 255, 0.26); }}
-
-.panel-scroll {{ flex: 1; overflow-y: auto; overflow-x: hidden; }}
-
-.panel-section {{ padding: 8px 9px 9px; border-bottom: 1px solid #ececec; }}
-.panel-section:last-child {{ border-bottom: none; }}
-.panel-section h2 {{
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 9px; text-transform: uppercase; letter-spacing: 0.09em;
-  color: var(--navy); font-weight: 700; margin-bottom: 5px;
-}}
-body.embedded #year-filter-section {{ display: none; }}
-
-.year-filter {{
-  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
-  padding: 5px 6px; background: #f5f5f5;
-  border: 1px solid var(--card-border); border-radius: 4px;
-}}
-.year-filter label {{
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: 600; color: var(--navy); font-size: 9px;
-}}
-.year-filter select {{
-  font-family: inherit; font-size: 10px;
-  padding: 2px 4px; border: 1px solid var(--card-border);
-  border-radius: 3px; background: #fff;
-}}
-.year-filter select:focus {{ outline: none; border-color: var(--navy); }}
-.year-filter .btn-apply {{
-  font-family: Helvetica, Arial, sans-serif; font-size: 9px;
-  padding: 3px 8px; border: 1px solid var(--navy);
-  background: var(--navy); color: #fff; border-radius: 3px;
-  cursor: pointer; font-weight: 600;
-}}
-.year-filter .btn-apply:hover {{ opacity: 0.9; }}
-.year-filter .btn-reset {{
-  font-family: Helvetica, Arial, sans-serif; font-size: 9px;
-  padding: 3px 8px; border: 1px solid var(--navy);
-  background: none; border-radius: 3px; cursor: pointer;
-  color: var(--navy); font-weight: 600;
-}}
-.year-filter .btn-reset:hover {{ background: var(--navy); color: #fff; }}
-
-.layer-toggle {{
-  display: flex; align-items: flex-start; gap: 5px;
-  margin: 2px 0; font-size: 10.5px; line-height: 1.35; cursor: pointer;
-}}
-.layer-toggle input {{ accent-color: var(--navy); margin-top: 2px; flex-shrink: 0; }}
-.layer-count {{ color: #999; font-size: 9px; font-variant-numeric: tabular-nums; }}
-.layer-grouplabel {{
-  font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--navy-dark); margin: 5px 0 2px; padding-top: 5px; border-top: 1px solid #ececec;
-}}
-.layer-grouplabel:first-child {{ border-top: none; padding-top: 0; margin-top: 0; }}
-.panel-section-compact {{ padding-bottom: 7px; }}
-.panel-section-compact h2 {{ margin-bottom: 4px; }}
-
-.legend-item {{ display: flex; align-items: center; gap: 6px; margin: 1px 0; font-size: 10px; }}
-.legend-dot {{
-  width: 10px; height: 10px; border: 1px solid #999; border-radius: 50%; flex-shrink: 0;
-}}
-.legend-spotlight {{
-  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; position: relative;
-}}
-.legend-spotlight .inner {{
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 5px; height: 5px; border-radius: 50%;
-}}
-
-.search-input-row {{ display: flex; gap: 3px; }}
-#ref-search {{
-  flex: 1; padding: 4px 6px; font-family: inherit;
-  font-size: 10px; border: 1px solid var(--card-border); border-radius: 3px;
-}}
-#ref-search:focus {{ outline: none; border-color: var(--navy); }}
-#ref-search-btn {{
-  padding: 4px 7px; font-family: Helvetica, Arial, sans-serif; font-size: 9px;
-  cursor: pointer; border: 1px solid var(--card-border); background: #fff;
-  border-radius: 3px; color: var(--navy); font-weight: 600;
-}}
-#ref-search-btn:hover {{ background: var(--navy); color: #fff; }}
-#ref-search-msg {{ font-size: 9px; margin-top: 3px; color: #888; }}
-#ref-search-dropdown {{
-  display: none; position: absolute; background: #fff; border: 1px solid var(--card-border);
-  max-height: 160px; overflow-y: auto; width: calc(100% - 18px);
-  font-size: 10px; z-index: 1002; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  border-radius: 3px;
-}}
-.dropdown-item {{ padding: 4px 8px; cursor: pointer; border-bottom: 1px solid #f0f0f0; }}
-.dropdown-item:hover {{ background: rgba(44,95,139,0.04); }}
-
-.sources-wrap {{ padding: 8px 9px 10px; border-top: 1px solid #ececec; }}
-body.embedded .sources-wrap {{ display: none; }}
-.source-cite {{ font-size: 10px; color: #999; line-height: 1.6; margin: 0 0 6px; }}
-.source-cite a {{ color: var(--navy); text-decoration: none; border-bottom: 1px dotted var(--gold); }}
-.source-cite a:hover {{ color: var(--navy-dark); }}
-
-.leaflet-popup-content-wrapper {{
-  font-family: Georgia, 'Times New Roman', serif !important; font-size: 12px !important;
-  border-radius: 4px !important; box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-}}
-.leaflet-popup-tip-container {{ display: none; }}
-.leaflet-popup-content {{ margin: 12px 14px !important; }}
-.ea-popup {{ font-size: 12px; line-height: 1.5; color: var(--text); }}
-.popup-title {{ color: var(--navy); font-weight: 600; font-size: 13px; margin-bottom: 2px; }}
-.popup-ref {{ font-size: 10px; color: #999; margin-bottom: 4px; }}
-.popup-detail {{ font-size: 11px; color: var(--text-light); line-height: 1.5; }}
-.popup-detail.spaced {{ margin-top: 4px; }}
-.popup-stats {{ margin-top: 6px; border-top: 1px solid #eee; padding-top: 6px; }}
-.popup-stats .stat-row {{ display: flex; justify-content: space-between; padding: 2px 0; font-size: 11px; border-bottom: 1px solid #f5f5f5; }}
-.popup-stats .stat-row:last-child {{ border-bottom: none; }}
-.popup-stats .label {{ color: var(--text-light); }}
-.popup-stats .value {{ font-weight: 600; font-variant-numeric: tabular-nums; color: var(--text); }}
-.popup-blocklabel {{
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--navy); margin-bottom: 3px;
-}}
-.popup-note {{ font-size: 9.5px; color: #999; font-style: italic; margin-top: 5px; line-height: 1.4; }}
-.outcome-badge {{
-  display: inline-block; font-family: Helvetica, Arial, sans-serif;
-  font-size: 9px; font-weight: 700; letter-spacing: 0.04em;
-  text-transform: uppercase; padding: 1px 6px; border-radius: 3px;
-}}
-.outcome-denied {{ background: rgba(158,58,48,0.12); color: var(--red); }}
-.outcome-approved {{ background: rgba(107,143,94,0.14); color: var(--green); }}
-.sev-fatal {{ color: var(--navy-dark); font-weight: 700; }}
-.sev-injury {{ color: var(--worsened); font-weight: 600; }}
-.legend-dot[data-color="#9e3a30"] {{ background: #9e3a30; }}
-.legend-dot[data-color="#6b8f5e"] {{ background: #6b8f5e; }}
-.legend-dot[data-color="#2C5F8B"] {{ background: #2C5F8B; }}
-.legend-dot[data-color="#9bb0c2"] {{ background: #9bb0c2; }}
-.legend-dot[data-color="#1B3F5E"] {{ background: #1B3F5E; }}
-.spot-rank {{
-  font-family: Helvetica, Arial, sans-serif; font-size: 9px; font-weight: 700;
-  color: #fff; background: var(--navy-dark); width: 16px; height: 16px;
-  border-radius: 50%; text-align: center; line-height: 16px;
-  border: 1.5px solid #fff; box-shadow: 0 0 0 1px var(--navy);
-  pointer-events: none;
-}}
-.ea-cluster {{
-  background: var(--navy-dark); color: #fff; font-family: Helvetica, Arial, sans-serif;
-  font-size: 11px; font-weight: 700; text-align: center; border-radius: 50%;
-  border: 2px solid var(--gold); box-shadow: 0 1px 4px rgba(27,63,94,0.22);
-}}
-.leaflet-tooltip {{
-  font-family: Georgia, serif !important; font-size: 10px !important;
-  border-radius: 3px !important; padding: 4px 7px !important;
-  border: 1px solid var(--card-border) !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
-}}
-.leaflet-overlay-pane path[stroke-dasharray] {{ pointer-events: none !important; }}
-
-@media (max-width: 768px) {{
-  body.panel-open #map {{ left: 0; bottom: 50%; }}
-  #panel {{
-    top: 50%; left: 0; width: 100%;
-    transform: translateY(100%);
-  }}
-  body.panel-open #panel {{ transform: translateY(0); }}
-}}
-</style>
-</head>
-<body class="panel-open">
-
-<div id="map"></div>
-<button type="button" id="rail-btn" aria-expanded="true" aria-controls="panel">Controls</button>
-<div id="panel" role="region" aria-label="Map controls">
-  <div class="panel-head">
-    <span class="panel-title">Map controls</span>
-    <button type="button" class="panel-collapse" id="panel-close" aria-label="Collapse controls"><span aria-hidden="true">&#9664;</span></button>
-  </div>
-  <div class="panel-scroll">
-    <div class="panel-section panel-section-compact" id="search-section" style="position:relative;">
-      <h2>Reference</h2>
-      <div class="search-input-row">
-        <input id="ref-search" type="text" placeholder="CQ21-0722" autocomplete="off">
-        <button id="ref-search-btn">Go</button>
-      </div>
-      <div id="ref-search-msg"></div>
-      <div id="ref-search-dropdown"></div>
-    </div>
-
-    <div class="panel-section" id="year-filter-section">
-      <h2>Year range</h2>
-      <div class="year-filter">
-        <label>From</label>
-        <select id="year-start">
-          {_year_options}
-        </select>
-        <label>To</label>
-        <select id="year-end">
-          {_year_options}
-        </select>
-        <button class="btn-apply" id="year-apply">Apply</button>
-        <button class="btn-reset" id="year-reset">Reset</button>
-      </div>
-    </div>
-
-    <div class="panel-section">
-      <h2>Layers</h2>
-      <div class="layer-grouplabel">Signal studies</div>
-      <label class="layer-toggle"><input type="checkbox" data-layer="deniedSignals" checked> Denied <span class="layer-count" id="count-deniedSignals"></span></label>
-      <label class="layer-toggle"><input type="checkbox" data-layer="approvedSignals" checked> Approved <span class="layer-count" id="count-approvedSignals"></span></label>
-      <div class="layer-grouplabel">Speed bumps</div>
-      <label class="layer-toggle"><input type="checkbox" data-layer="deniedSrts" checked> Denied <span class="layer-count" id="count-deniedSrts"></span></label>
-      <label class="layer-toggle"><input type="checkbox" data-layer="approvedSrts" checked> Approved <span class="layer-count" id="count-approvedSrts"></span></label>
-      <div class="layer-grouplabel">Other</div>
-      <label class="layer-toggle"><input type="checkbox" data-layer="aps"> APS installed <span class="layer-count" id="count-aps"></span></label>
-      <div class="layer-grouplabel">Crashes</div>
-      <label class="layer-toggle"><input type="checkbox" data-layer="crashDots" checked> Dots <span class="layer-count" id="count-crashDots"></span></label>
-      <label class="layer-toggle"><input type="checkbox" data-layer="crashClustered"> Clustered <span class="layer-count" id="count-crashClustered"></span></label>
-      <div class="layer-grouplabel">Analysis</div>
-      <label class="layer-toggle"><input type="checkbox" data-layer="top15"> Top 15 denied</label>
-      <label class="layer-toggle"><input type="checkbox" data-layer="top10crashes"> Top 10 crashes</label>
-      <label class="layer-toggle"><input type="checkbox" data-layer="effectiveness"> DOT effectiveness <span class="layer-count" id="count-effectiveness"></span></label>
-    </div>
-
-    <div class="panel-section" id="legend-section">
-      <h2>Legend</h2>
-      <span class="legend-item" data-layers="Denied Signal,Denied Speed"><span class="legend-dot" data-color="#9e3a30"></span>Denied</span>
-      <span class="legend-item" data-layers="Approved Signal,Approved Speed"><span class="legend-dot" data-color="#6b8f5e"></span>Approved</span>
-      <span class="legend-item" data-layers="APS Installed"><span class="legend-dot" data-color="#2C5F8B"></span>APS</span>
-      <span class="legend-item" data-layers="Injury and Fatal Crashes"><span class="legend-dot" data-color="#9bb0c2"></span>Injury</span>
-      <span class="legend-item" data-layers="Injury and Fatal Crashes"><span class="legend-dot" data-color="#1B3F5E"></span>Fatal</span>
-      <span class="legend-item" data-layers="Top 10 Crash"><span class="legend-spotlight" style="border:1.5px dashed #2C5F8B;"><span class="inner" style="background:#2C5F8B;"></span></span>Top 10 crashes</span>
-      <span class="legend-item" data-layers="Top 15 Denied"><span class="legend-spotlight" style="border:1.5px dashed #9e3a30;"><span class="inner" style="background:#9e3a30;"></span></span>Top 15 denied</span>
-      <span class="legend-item" data-layers="DOT Effectiveness"><span class="legend-spotlight" style="border:1.5px dashed #6b8f5e;"><span class="inner" style="background:#6b8f5e;"></span></span>Decreased</span>
-      <span class="legend-item" data-layers="DOT Effectiveness"><span class="legend-spotlight" style="border:1.5px dashed #c06e45;"><span class="inner" style="background:#c06e45;"></span></span>Increased</span>
-    </div>
-
-    <div class="sources-wrap">
-      <p class="source-cite">Sources:
-      <a href="https://data.cityofnewyork.us/Transportation/Traffic-Signal-and-All-Way-Stop-Study-Requests/w76s-c5u4" target="_blank" rel="noopener noreferrer">DOT Signal Studies</a> &middot;
-      <a href="https://data.cityofnewyork.us/Transportation/Speed-Reducer-Tracking-System-SRTS-/9n6h-pt9g" target="_blank" rel="noopener noreferrer">DOT SRTS</a> &middot;
-      <a href="https://data.cityofnewyork.us/Transportation/Accessible-Pedestrian-Signal-Locations/de3m-c5p4" target="_blank" rel="noopener noreferrer">APS Installed Locations</a> &middot;
-      <a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95" target="_blank" rel="noopener noreferrer">Motor Vehicle Crashes</a></p>
-    </div>
-  </div>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-<script>
-(function() {{
-"use strict";
-
-var DATA = {map_data_json_str};
-
-var COLORS = {{
-  denied:'#9e3a30', approved:'#6b8f5e', crash:'#54809f',
-  primary:'#2C5F8B', aps:'#2C5F8B', gold:'#B8860B',
-  crashInjury:'#9bb0c2', crashFatal:'#1B3F5E', crashProp:'#d3dce3',
-  improved:'#6b8f5e', worsened:'#c06e45', neutral:'#9bb0c2'
-}};
-
-function popupWrap(body) {{ return '<div class="ea-popup">'+body+'</div>'; }}
-function popupTitle(t) {{ return '<div class="popup-title">'+t+'</div>'; }}
-function popupRef(t) {{ return '<div class="popup-ref">'+t+'</div>'; }}
-function popupDetail(t, spaced) {{ return '<div class="popup-detail'+(spaced?' spaced':'')+'">'+t+'</div>'; }}
-function popupBlock(label, rows) {{ return '<div class="popup-stats"><div class="popup-blocklabel">'+label+'</div>'+rows+'</div>'; }}
-function popupRow(label, value) {{
-  return '<div class="stat-row"><span class="label">'+label+'</span><span class="value">'+value+'</span></div>';
-}}
-function outcomeBadge(outcome) {{
-  var cls = outcome==='denied' ? 'outcome-denied' : 'outcome-approved';
-  var text = outcome==='denied' ? 'Denied' : 'Approved';
-  return '<span class="outcome-badge '+cls+'">'+text+'</span>';
-}}
-function requestMarkerStyle(fillColor) {{
-  return {{radius:5, color:'#fff', weight:1.5, fillColor:fillColor, fillOpacity:0.9}};
-}}
-
-// Current year range
-var yearStart = {LAST_COMPLETE_YEAR}, yearEnd = {LAST_COMPLETE_YEAR};
-
-// Map
-var map = L.map('map', {{center:[40.714,-73.889], zoom:14, zoomControl:false}});
-L.control.zoom({{position:'bottomleft'}}).addTo(map);
-L.tileLayer('https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png?key=cb1_2949_1_9bd5bcde55f90cb1ce920410', {{
-  attribution:'&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
-  maxZoom:19
-}}).addTo(map);
-
-// CB5 boundary
-if (DATA.boundary && DATA.boundary.features) {{
-  L.geoJSON(DATA.boundary, {{
-    style: {{color:'#B8860B',weight:2,opacity:0.8,fillColor:'#2C5F8B',fillOpacity:0.04,dashArray:'5 4',interactive:false}}
-  }}).addTo(map);
-}}
-
-// === Index data by year ===
-var dataByYear = {{}};
-function indexByYear(key, arr) {{
-  dataByYear[key] = {{}};
-  arr.forEach(function(r) {{
-    var y = r.y || 0;
-    if (!dataByYear[key][y]) dataByYear[key][y] = [];
-    dataByYear[key][y].push(r);
-  }});
-}}
-indexByYear('crashes', DATA.crashes);
-indexByYear('deniedSignals', DATA.deniedSignals);
-indexByYear('approvedSignals', DATA.approvedSignals);
-indexByYear('deniedSrts', DATA.deniedSrts);
-indexByYear('approvedSrts', DATA.approvedSrts);
-indexByYear('aps', DATA.aps);
-
-function getRecordsInRange(key) {{
-  var out = [];
-  var idx = dataByYear[key] || {{}};
-  for (var y = yearStart; y <= yearEnd; y++) {{
-    if (idx[y]) out = out.concat(idx[y]);
-  }}
-  return out;
-}}
-
-// === Layer builders ===
-var layerGroups = {{}};
-
-function crashPopup(r) {{
-  var loc = (r.on && r.off) ? r.on+' & '+r.off : (r.on || r.off || 'Location on map');
-  var sev = r.k>0 ? '<span class="sev-fatal">Fatal</span>'
-           : r.inj>0 ? '<span class="sev-injury">Injury</span>' : 'Property damage';
-  return popupWrap(
-    popupTitle(loc)
-    + popupDetail(r.dt+' at '+r.tm+' &middot; '+sev)
-    + popupBlock('Casualties',
-      popupRow('Pedestrians', r.pinj+' injured, '+r.pk+' killed')
-      + popupRow('Cyclists', r.cinj+' injured, '+r.ck+' killed')
-      + popupRow('Motorists', r.minj+' injured, '+r.mk+' killed'))
-    + popupBlock('Report',
-      popupRow('Factor', r.fac||'N/A')
-      + popupRow('Vehicle', r.veh||'N/A'))
-    + '<div class="popup-note">Collision ID: '+r.cid+'</div>'
-  );
-}}
-
-function buildCrashDots(records) {{
-  var fg = L.featureGroup();
-  records.forEach(function(r) {{
-    var rad, fillColor, opacity, weight;
-    if (r.k>0) {{ rad=4; fillColor=COLORS.crashFatal; opacity=0.92; weight=1.2; }}
-    else if (r.inj>0) {{ rad=2.5; fillColor=COLORS.crashInjury; opacity=0.55; weight=1; }}
-    else {{ rad=1.5; fillColor=COLORS.crashProp; opacity=0.35; weight=0.5; }}
-    var sev = r.k>0?'Fatal':(r.inj>0?r.inj+' injured':'Crash');
-    var loc = (r.on&&r.off)?r.on+' & '+r.off:(r.on||r.off||'');
-    L.circleMarker([r.jlat, r.jlon], {{radius:rad,color:'#fff',fillColor:fillColor,
-      fillOpacity:opacity,weight:weight||1}})
-      .bindPopup(crashPopup(r),{{maxWidth:320}})
-      .bindTooltip(loc+' — '+sev+', '+r.dt)
-      .addTo(fg);
-  }});
-  return fg;
-}}
-
-function buildCrashClustered(records) {{
-  var cluster = L.markerClusterGroup({{
-    maxClusterRadius:25, spiderfyOnMaxZoom:true,
-    showCoverageOnHover:false, zoomToBoundsOnClick:true,
-    spiderfyDistanceMultiplier:1.5,
-    iconCreateFunction:function(cl) {{
-      var c=cl.getChildCount(), sz=c<10?26:c<50?32:38;
-      return L.divIcon({{
-        html:'<div class="ea-cluster" style="width:'+sz+'px;height:'+sz+'px;line-height:'+sz+'px;">'+c+'</div>',
-        className:'',iconSize:L.point(sz,sz)
-      }});
-    }}
-  }});
-  records.forEach(function(r) {{
-    var d = r.k>0?7:r.inj>0?6:5;
-    var fill = r.k>0?COLORS.crashFatal:(r.inj>0?COLORS.crashInjury:COLORS.crashProp);
-    var opacity = r.k>0?0.92:r.inj>0?0.6:0.35;
-    var icon = L.divIcon({{html:'<div style="width:'+d+'px;height:'+d+'px;background:'+fill
-      +';border:1.5px solid #fff;border-radius:50%;opacity:'+opacity
-      +';box-shadow:0 0 0 1px rgba(44,95,139,0.25);"></div>',className:'',iconSize:L.point(d,d),
-      iconAnchor:L.point(d/2,d/2)}});
-    var sev = r.k>0?'Fatal':(r.inj>0?r.inj+' injured':'Crash');
-    var loc = (r.on&&r.off)?r.on+' & '+r.off:(r.on||r.off||'');
-    L.marker([r.lat,r.lon],{{icon:icon}})
-      .bindPopup(crashPopup(r),{{maxWidth:320}})
-      .bindTooltip(loc+' — '+sev+', '+r.dt)
-      .addTo(cluster);
-  }});
-  return cluster;
-}}
-
-function signalPopup(r) {{
-  var loc = r.main+' & '+r.cross;
-  var extras = '';
-  if (r.school) extras += popupRow('School', r.school);
-  if (r.vz) extras += popupRow('Vision Zero priority', 'Yes');
-  if (r.findings) extras += popupRow('Findings', r.findings);
-  return popupWrap(
-    popupTitle(loc)
-    + popupRef(r.ref)
-    + popupDetail(r.type+' &middot; '+outcomeBadge(r.outcome))
-    + popupBlock('Request',
-      popupRow('Requested', r.reqDt)
-      + popupRow('Status date', r.statusDt)
-      + popupRow('Status', r.status)
-      + extras)
-    + popupBlock('Within 150m',
-      popupRow('Crashes', r.cr)
-      + popupRow('Injuries', r.inj)
-      + popupRow('Ped. injuries', r.pinj)
-      + popupRow('Fatalities', r.fat))
-  );
-}}
-
-function buildSignalLayer(records, outcome) {{
-  var fg = L.featureGroup();
-  var fillColor = outcome==='denied'?COLORS.denied:COLORS.approved;
-  records.forEach(function(r) {{
-    var loc = r.main+' & '+r.cross;
-    L.circleMarker([r.lat,r.lon], requestMarkerStyle(fillColor))
-      .bindPopup(signalPopup(r),{{maxWidth:340}})
-      .bindTooltip(loc+' — '+r.type+' ('+(outcome==='denied'?'Denied':'Approved')+')')
-      .addTo(fg);
-  }});
-  return fg;
-}}
-
-function srtsPopup(r) {{
-  var extras = '';
-  if (r.denial) extras += popupRow('Denial reason', r.denial);
-  if (r.installDt) extras += popupRow('Installed', r.installDt);
-  if (r.dir) extras += popupRow('Traffic', r.dir);
-  return popupWrap(
-    popupTitle(r.on)
-    + popupRef(r.code+' &middot; '+r.from+' to '+r.to)
-    + popupDetail(outcomeBadge(r.outcome))
-    + popupBlock('Request',
-      popupRow('Requested', r.reqDt)
-      + popupRow('Decision date', r.closedDt)
-      + popupRow('Project status', r.projStatus)
-      + extras)
-    + popupBlock('Within 150m',
-      popupRow('Crashes', r.cr)
-      + popupRow('Injuries', r.inj)
-      + popupRow('Ped. injuries', r.pinj)
-      + popupRow('Fatalities', r.fat))
-  );
-}}
-
-function buildSrtsLayer(records, outcome) {{
-  var fg = L.featureGroup();
-  var fillColor = outcome==='denied'?COLORS.denied:COLORS.approved;
-  records.forEach(function(r) {{
-    L.circleMarker([r.lat,r.lon], requestMarkerStyle(fillColor))
-      .bindPopup(srtsPopup(r),{{maxWidth:340}})
-      .bindTooltip(r.on+' ('+r.from+' to '+r.to+') — '+(outcome==='denied'?'Denied':'Approved'))
-      .addTo(fg);
-  }});
-  return fg;
-}}
-
-function buildApsLayer(records) {{
-  var fg = L.featureGroup();
-  records.forEach(function(r) {{
-    var popup = popupWrap(
-      popupTitle(r.loc)
-      + popupDetail('<span class="outcome-badge" style="background:rgba(44,95,139,0.12);color:#2C5F8B;">APS installed</span>')
-      + popupBlock('Installation',
-        popupRow('Date', r.dt)
-        + popupRow('Neighborhood', r.nta))
-      + '<div class="popup-note">Installed APS inventory. Source: APS Installed Locations [de3m-c5p4]. Excluded from discretionary denial-rate analysis.</div>'
-    );
-    L.circleMarker([r.lat,r.lon], requestMarkerStyle(COLORS.aps))
-      .bindPopup(popup,{{maxWidth:300}})
-      .bindTooltip(r.loc+' — APS installed '+r.dt)
-      .addTo(fg);
-  }});
-  return fg;
-}}
-
-// === Dynamic layers (recomputed on year filter change) ===
-
-function haversineDist(lat1, lon1, lat2, lon2) {{
-  var R = 6371000;
-  var dLat = (lat2-lat1)*Math.PI/180;
-  var dLon = (lon2-lon1)*Math.PI/180;
-  var a = Math.sin(dLat/2)*Math.sin(dLat/2)
-    + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)
-    * Math.sin(dLon/2)*Math.sin(dLon/2);
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}}
-
-function buildEffectivenessLayer() {{
-  var fg = L.featureGroup();
-  if (!DATA.effectiveness) return fg;
-  DATA.effectiveness.forEach(function(ba) {{
-    var instYear = ba.installDt ? parseInt(ba.installDt.split(', ').pop()) : 0;
-    if (instYear < yearStart || instYear > yearEnd) return;
-    var fillColor, outline, label;
-    if (ba.chg<0) {{ fillColor=COLORS.improved; outline='#4d6b45'; label=Math.abs(Math.round(ba.pct))+'% fewer crashes'; }}
-    else if (ba.chg===0) {{ fillColor=COLORS.neutral; outline='#6f8dab'; label='No change'; }}
-    else {{ fillColor=COLORS.worsened; outline='#8f4f2a'; label=Math.round(ba.pct)+'% more crashes'; }}
-    var injChg = ba.ai-ba.bi;
-    var injPct = ba.bi>0?Math.round(injChg/ba.bi*100):0;
-    var injLabel = injChg<0?Math.abs(injPct)+'% fewer':(injChg>0?injPct+'% more':'No change');
-    var mr = Math.max(7, Math.min(14, 5+ba.bc));
-    var popup = popupWrap(
-      popupTitle(ba.main+' & '+ba.cross)
-      + popupRef(ba.ref)
-      + popupDetail(ba.type+' &middot; Installed '+ba.installDt)
-      + popupBlock('Before-after ('+ba.wm+'-mo. windows, 150m)',
-        popupRow('Crashes', ba.bc+' &rarr; '+ba.ac+' ('+label+')')
-        + popupRow('Injuries', ba.bi+' &rarr; '+ba.ai+' ('+injLabel+')'))
-    );
-    L.circle([ba.lat,ba.lon],{{radius:150,color:fillColor,fillColor:fillColor,
-      fillOpacity:0.06,weight:1.5,dashArray:'4 4',interactive:false}}).addTo(fg);
-    L.circleMarker([ba.lat,ba.lon],{{radius:mr,color:'#fff',fillColor:fillColor,
-      fillOpacity:0.9,weight:2}})
-      .bindPopup(popup,{{maxWidth:320}})
-      .bindTooltip(ba.main+' & '+ba.cross+' — '+label)
-      .addTo(fg);
-  }});
-  return fg;
-}}
-
-function countEffectiveness() {{
-  var n = 0;
-  (DATA.effectiveness||[]).forEach(function(ba) {{
-    var instYear = ba.installDt ? parseInt(ba.installDt.split(', ').pop()) : 0;
-    if (instYear >= yearStart && instYear <= yearEnd) n++;
-  }});
-  return n;
-}}
-
-function buildTop15Layer(crashes, deniedSigs, deniedSrts) {{
-  var fg = L.featureGroup();
-  if (crashes.length === 0) return fg;
-  var locs = [];
-  deniedSigs.forEach(function(d) {{
-    if (!d.lat || !d.lon) return;
-    locs.push({{lat:d.lat,lon:d.lon,name:d.main+' & '+d.cross,dataset:'Signal Study',type:d.type}});
-  }});
-  deniedSrts.forEach(function(d) {{
-    if (!d.lat || !d.lon) return;
-    locs.push({{lat:d.lat,lon:d.lon,name:d.on+' ('+d.from+' to '+d.to+')',dataset:'Speed Bump',type:'Speed Reducer'}});
-  }});
-  if (locs.length === 0) return fg;
-  var dLat = 0.00135, dLon = 0.0018;
-  locs.forEach(function(loc) {{
-    var cr=0, inj=0, pinj=0, fat=0;
-    crashes.forEach(function(c) {{
-      if (Math.abs(c.lat-loc.lat)>dLat || Math.abs(c.lon-loc.lon)>dLon) return;
-      if (haversineDist(loc.lat,loc.lon,c.lat,c.lon) <= 150) {{
-        cr++; inj+=c.inj; pinj+=c.pinj; fat+=c.k;
-      }}
-    }});
-    loc.cr=cr; loc.inj=inj; loc.pinj=pinj; loc.fat=fat;
-  }});
-  locs.sort(function(a,b) {{ return b.cr-a.cr; }});
-  var selected = [];
-  locs.forEach(function(loc) {{
-    if (selected.length >= 15) return;
-    var tooClose = false;
-    for (var i=0; i<selected.length; i++) {{
-      if (haversineDist(loc.lat,loc.lon,selected[i].lat,selected[i].lon) < 150) {{ tooClose=true; break; }}
-    }}
-    if (!tooClose) selected.push(loc);
-  }});
-  selected.forEach(function(r, idx) {{
-    var rank = idx+1;
-    L.circle([r.lat,r.lon],{{radius:150,color:COLORS.denied,fillColor:COLORS.denied,
-      fillOpacity:0.06,weight:1.5,dashArray:'4 4',interactive:false}}).addTo(fg);
-    var popup = popupWrap(
-      popupTitle('#'+rank+': '+r.name)
-      + popupDetail(r.dataset+' &middot; '+r.type)
-      + popupBlock('Within 150m',
-        popupRow('Crashes', r.cr)
-        + popupRow('Injuries', r.inj)
-        + popupRow('Ped. injuries', r.pinj)
-        + popupRow('Fatalities', r.fat))
-    );
-    L.circleMarker([r.lat,r.lon],{{radius:8,color:'#fff',fillColor:COLORS.denied,
-      fillOpacity:0.92,weight:2}})
-      .bindPopup(popup,{{maxWidth:300}})
-      .bindTooltip('#'+rank+': '+r.name+' ('+r.cr+' crashes)')
-      .addTo(fg);
-    L.marker([r.lat,r.lon],{{icon:L.divIcon({{
-      html:'<div class="spot-rank">'+rank+'</div>',
-      className:'',iconSize:L.point(18,18),iconAnchor:L.point(9,9)}}),
-      interactive:false}}).addTo(fg);
-  }});
-  return fg;
-}}
-
-function buildTop10CrashLayer(crashes) {{
-  var fg = L.featureGroup();
-  if (crashes.length === 0) return fg;
-  var byInt = {{}};
-  crashes.forEach(function(c) {{
-    if (!c.on || !c.off) return;
-    var parts = [c.on, c.off].sort();
-    var key = parts[0]+' & '+parts[1];
-    if (!byInt[key]) byInt[key] = {{lat:c.lat,lon:c.lon,cr:0,inj:0,pinj:0,cinj:0,fat:0}};
-    byInt[key].cr++;
-    byInt[key].inj += c.inj;
-    byInt[key].pinj += c.pinj;
-    byInt[key].cinj += (c.cinj||0);
-    byInt[key].fat += c.k;
-  }});
-  var ints = Object.keys(byInt).sort(function(a,b) {{ return byInt[b].cr - byInt[a].cr; }}).slice(0,10);
-  ints.forEach(function(name, idx) {{
-    var cr = byInt[name];
-    var rank = idx+1;
-    L.circle([cr.lat,cr.lon],{{radius:150,color:COLORS.primary,fillColor:COLORS.primary,
-      fillOpacity:0.06,weight:1.5,dashArray:'4 4',interactive:false}}).addTo(fg);
-    var popup = popupWrap(
-      popupTitle('#'+rank+': '+name)
-      + popupBlock('Crashes in range',
-        popupRow('Total crashes', cr.cr)
-        + popupRow('Injuries', cr.inj)
-        + popupRow('Pedestrian', cr.pinj)
-        + popupRow('Cyclist', cr.cinj)
-        + popupRow('Fatalities', cr.fat))
-    );
-    L.circleMarker([cr.lat,cr.lon],{{radius:8,color:'#fff',fillColor:COLORS.primary,
-      fillOpacity:0.92,weight:2}})
-      .bindPopup(popup,{{maxWidth:300}})
-      .bindTooltip('#'+rank+': '+name+' ('+cr.cr+' crashes)')
-      .addTo(fg);
-    L.marker([cr.lat,cr.lon],{{icon:L.divIcon({{
-      html:'<div class="spot-rank">'+rank+'</div>',
-      className:'',iconSize:L.point(18,18),iconAnchor:L.point(9,9)}}),
-      interactive:false}}).addTo(fg);
-  }});
-  return fg;
-}}
-
-// === Build all layers ===
-var yearRange = yearStart===yearEnd ? String(yearStart) : yearStart+'\\u2013'+yearEnd;
-var crashRecs = getRecordsInRange('crashes');
-var denSigRecs = getRecordsInRange('deniedSignals');
-var appSigRecs = getRecordsInRange('approvedSignals');
-var denSrtsRecs = getRecordsInRange('deniedSrts');
-var appSrtsRecs = getRecordsInRange('approvedSrts');
-var apsRecs = getRecordsInRange('aps');
-
-layerGroups.crashDots = buildCrashDots(crashRecs);
-layerGroups.crashClustered = buildCrashClustered(crashRecs);
-layerGroups.deniedSignals = buildSignalLayer(denSigRecs, 'denied');
-layerGroups.approvedSignals = buildSignalLayer(appSigRecs, 'approved');
-layerGroups.deniedSrts = buildSrtsLayer(denSrtsRecs, 'denied');
-layerGroups.approvedSrts = buildSrtsLayer(appSrtsRecs, 'approved');
-layerGroups.aps = buildApsLayer(apsRecs);
-layerGroups.effectiveness = buildEffectivenessLayer();
-layerGroups.top15 = buildTop15Layer(crashRecs, denSigRecs, denSrtsRecs);
-layerGroups.top10crashes = buildTop10CrashLayer(crashRecs);
-
-// Layer display names (used for title logic)
-var layerNames = {{
-  crashDots: 'Injury and Fatal Crashes',
-  crashClustered: 'Injury and Fatal Crashes',
-  deniedSignals: 'Denied Signal Studies',
-  approvedSignals: 'Approved Signal Studies',
-  deniedSrts: 'Denied Speed Bumps',
-  approvedSrts: 'Approved Speed Bumps',
-  aps: 'APS Installed',
-  effectiveness: 'DOT Effectiveness',
-  top15: 'Top 15 Denied Spotlight',
-  top10crashes: 'Top 10 Crash Intersections',
-}};
-
-// Default-on layers
-var defaultOn = ['crashDots','deniedSignals','approvedSignals','deniedSrts','approvedSrts'];
-defaultOn.forEach(function(k) {{ layerGroups[k].addTo(map); }});
-
-// === Custom layer toggle (sidebar checkboxes) ===
-function updateLayerCounts() {{
-  var counts = {{
-    crashDots: crashRecs.length,
-    crashClustered: crashRecs.length,
-    deniedSignals: denSigRecs.length,
-    approvedSignals: appSigRecs.length,
-    deniedSrts: denSrtsRecs.length,
-    approvedSrts: appSrtsRecs.length,
-    aps: apsRecs.length,
-    effectiveness: countEffectiveness(),
-  }};
-  for (var k in counts) {{
-    var el = document.getElementById('count-'+k);
-    if (el) el.textContent = '('+counts[k].toLocaleString()+')';
-  }}
-}}
-updateLayerCounts();
-
-// Wire up checkboxes
-document.querySelectorAll('.layer-toggle input[data-layer]').forEach(function(cb) {{
-  cb.addEventListener('change', function() {{
-    var key = this.getAttribute('data-layer');
-    if (!layerGroups[key]) return;
-    if (this.checked) {{
-      layerGroups[key].addTo(map);
-    }} else {{
-      map.removeLayer(layerGroups[key]);
-    }}
-    updateLegend();
-  }});
-}});
-
-// === Year filter logic ===
-var selStart = document.getElementById('year-start');
-var selEnd = document.getElementById('year-end');
-
-function enforceYearRange() {{
-  var s = parseInt(selStart.value), e = parseInt(selEnd.value);
-  if (s > e) selEnd.value = selStart.value;
-}}
-
-function rebuildYearLayers() {{
-  yearStart = parseInt(selStart.value);
-  yearEnd = parseInt(selEnd.value);
-  yearRange = yearStart+'\\u2013'+yearEnd;
-
-  // Track which layers were on the map via checkboxes
-  var wasChecked = {{}};
-  document.querySelectorAll('.layer-toggle input[data-layer]').forEach(function(cb) {{
-    wasChecked[cb.getAttribute('data-layer')] = cb.checked;
-  }});
-
-  // Remove old layers from map
-  for (var k in layerGroups) {{
-    if (map.hasLayer(layerGroups[k])) map.removeLayer(layerGroups[k]);
-  }}
-
-  // Rebuild year-filterable layers
-  crashRecs = getRecordsInRange('crashes');
-  denSigRecs = getRecordsInRange('deniedSignals');
-  appSigRecs = getRecordsInRange('approvedSignals');
-  denSrtsRecs = getRecordsInRange('deniedSrts');
-  appSrtsRecs = getRecordsInRange('approvedSrts');
-  apsRecs = getRecordsInRange('aps');
-
-  layerGroups.crashDots = buildCrashDots(crashRecs);
-  layerGroups.crashClustered = buildCrashClustered(crashRecs);
-  layerGroups.deniedSignals = buildSignalLayer(denSigRecs, 'denied');
-  layerGroups.approvedSignals = buildSignalLayer(appSigRecs, 'approved');
-  layerGroups.deniedSrts = buildSrtsLayer(denSrtsRecs, 'denied');
-  layerGroups.approvedSrts = buildSrtsLayer(appSrtsRecs, 'approved');
-  layerGroups.aps = buildApsLayer(apsRecs);
-  layerGroups.effectiveness = buildEffectivenessLayer();
-  layerGroups.top15 = buildTop15Layer(crashRecs, denSigRecs, denSrtsRecs);
-  layerGroups.top10crashes = buildTop10CrashLayer(crashRecs);
-
-  // Re-add layers that were checked
-  for (var k in wasChecked) {{
-    if (wasChecked[k] && layerGroups[k]) layerGroups[k].addTo(map);
-  }}
-
-  updateLayerCounts();
-  updateLegend();
-  notifyParentYear();
-}}
-
-selStart.addEventListener('change', function() {{ enforceYearRange(); }});
-selEnd.addEventListener('change', function() {{ enforceYearRange(); }});
-document.getElementById('year-apply').addEventListener('click', function() {{
-  enforceYearRange(); rebuildYearLayers();
-}});
-document.getElementById('year-reset').addEventListener('click', function() {{
-  selStart.value = '{STUDY_START_YEAR}'; selEnd.value = '{LAST_COMPLETE_YEAR}'; rebuildYearLayers();
-}});
-
-// === Legend visibility ===
-function isLayerActive(prefix) {{
-  for (var k in layerNames) {{
-    if (layerNames[k].indexOf(prefix)===0 && map.hasLayer(layerGroups[k])) return true;
-  }}
-  return false;
-}}
-
-function updateLegend() {{
-  var anyVisible = false;
-  document.querySelectorAll('.legend-item').forEach(function(el) {{
-    var prefixes = el.getAttribute('data-layers').split(',');
-    var show = prefixes.some(function(p) {{ return isLayerActive(p.trim()); }});
-    el.style.display = show?'flex':'none';
-    if (show) anyVisible = true;
-  }});
-  document.getElementById('legend-section').style.display = anyVisible?'':'none';
-}}
-
-updateLegend();
-
-// === Search ===
-var SEARCH_INDEX = DATA.searchIndex || {{}};
-var allRefs = Object.keys(SEARCH_INDEX);
-var highlightLayer = null, highlightTimeout = null;
-
-function clearHighlight() {{
-  if (highlightLayer) {{ try{{ highlightLayer.remove(); }}catch(e){{}} highlightLayer=null; }}
-  if (highlightTimeout) {{ clearTimeout(highlightTimeout); highlightTimeout=null; }}
-}}
-
-function normalizeRef(s) {{ return s.replace(/[-\\s]/g,'').toUpperCase(); }}
-
-function fuzzyFind(ref) {{
-  if (SEARCH_INDEX[ref]) return ref;
-  var nq = normalizeRef(ref);
-  for (var i=0;i<allRefs.length;i++) {{ if (normalizeRef(allRefs[i])===nq) return allRefs[i]; }}
-  for (var i=0;i<allRefs.length;i++) {{ if (normalizeRef(allRefs[i]).indexOf(nq)>=0) return allRefs[i]; }}
-  return null;
-}}
-
-function doSearch(ref) {{
-  ref = ref.trim().toUpperCase();
-  var msg = document.getElementById('ref-search-msg');
-  var found = fuzzyFind(ref);
-  if (!found) {{ msg.style.color=COLORS.denied; msg.textContent='Not found: '+ref; return; }}
-  ref = found;
-  var entry = SEARCH_INDEX[ref];
-  document.getElementById('ref-search').value = ref;
-  msg.style.color=COLORS.approved;
-  msg.textContent = entry.label+' ('+entry.outcome+')';
-  clearHighlight();
-  map.setView([entry.lat, entry.lon], 17);
-  highlightLayer = L.layerGroup();
-  var ring = L.circleMarker([entry.lat, entry.lon], {{
-    radius:16, color:COLORS.gold, weight:2.5, fill:false, opacity:0.95
-  }});
-  ring.addTo(highlightLayer);
-  L.popup({{offset:[0,-8]}}).setLatLng([entry.lat, entry.lon])
-    .setContent(popupWrap(
-      popupTitle(entry.label)
-      + popupRef(ref)
-      + popupDetail((entry.type||'N/A')+' &middot; '+outcomeBadge(entry.outcome.toLowerCase()))
-    ))
-    .addTo(highlightLayer);
-  highlightLayer.addTo(map);
-  var grow=true;
-  var pulseInt = setInterval(function() {{
-    if (!highlightLayer){{ clearInterval(pulseInt); return; }}
-    ring.setRadius(grow?24:18); ring.setStyle({{opacity:grow?0.5:0.9}}); grow=!grow;
-  }}, 600);
-  highlightTimeout = setTimeout(function() {{ clearHighlight(); clearInterval(pulseInt); }}, 8000);
-  map.once('click', function() {{ clearHighlight(); clearInterval(pulseInt); }});
-}}
-
-function showDropdown(query) {{
-  var dd = document.getElementById('ref-search-dropdown');
-  if (!query || query.length<2) {{ dd.style.display='none'; return; }}
-  var uq = query.toUpperCase(), nq = normalizeRef(query);
-  var matches = allRefs.filter(function(r) {{
-    return r.indexOf(uq)>=0 || normalizeRef(r).indexOf(nq)>=0;
-  }}).slice(0,10);
-  if (matches.length===0) {{ dd.style.display='none'; return; }}
-  dd.innerHTML='';
-  matches.forEach(function(ref) {{
-    var entry = SEARCH_INDEX[ref];
-    var div = document.createElement('div');
-    div.className = 'dropdown-item';
-    div.textContent = ref+' \\u2014 '+(entry.label||'');
-    div.onclick = function(){{
-      document.getElementById('ref-search').value=ref;
-      dd.style.display='none'; doSearch(ref);
-    }};
-    dd.appendChild(div);
-  }});
-  dd.style.display='block';
-}}
-
-document.getElementById('ref-search-btn').onclick = function(){{ doSearch(document.getElementById('ref-search').value); }};
-document.getElementById('ref-search').onkeyup = function(e){{
-  if (e.key==='Enter'){{ doSearch(this.value); document.getElementById('ref-search-dropdown').style.display='none'; }}
-  else showDropdown(this.value);
-}};
-document.addEventListener('click', function(e){{
-  if (!document.getElementById('ref-search').contains(e.target) && !document.getElementById('ref-search-dropdown').contains(e.target))
-    document.getElementById('ref-search-dropdown').style.display='none';
-}});
-
-// === postMessage API (for embedding in website) ===
-window.addEventListener('message', function(ev) {{
-  if (!ev.data || ev.data.type !== 'setYearRange') return;
-  var s = parseInt(ev.data.start), e = parseInt(ev.data.end);
-  if (isNaN(s) || isNaN(e) || s < {STUDY_START_YEAR} || e > {LAST_COMPLETE_YEAR} || s > e) return;
-  selStart.value = String(s);
-  selEnd.value = String(e);
-  rebuildYearLayers();
-}});
-
-// Collapsed controls rail + embedded mode
-var isEmbedded = window.parent !== window;
-if (isEmbedded) document.body.classList.add('embedded');
-
-function setPanelOpen(open) {{
-  document.body.classList.toggle('panel-open', open);
-  document.getElementById('rail-btn').setAttribute('aria-expanded', open ? 'true' : 'false');
-  window.setTimeout(function() {{ map.invalidateSize(); }}, 220);
-}}
-document.getElementById('rail-btn').addEventListener('click', function() {{ setPanelOpen(true); }});
-document.getElementById('panel-close').addEventListener('click', function() {{ setPanelOpen(false); }});
-window.setTimeout(function() {{ map.invalidateSize(); }}, 280);
-
-window.setYearRange = function(s, e) {{
-  if (isNaN(s) || isNaN(e) || s < {STUDY_START_YEAR} || e > {LAST_COMPLETE_YEAR} || s > e) return;
-  selStart.value = String(s);
-  selEnd.value = String(e);
-  rebuildYearLayers();
-}};
-
-function notifyParentYear() {{
-  if (window.parent && window.parent !== window) {{
-    window.parent.postMessage({{
-      type: 'mapYearChanged',
-      start: yearStart,
-      end: yearEnd
-    }}, '*');
-  }}
-}}
-
-}})();
-</script>
-</body>
-</html>'''
-
-
-def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
-    """Consolidated map — print-ready editorial style.
-
-    Base: CartoDB Positron No Labels (clean, minimal, print-friendly).
-    Crash data: dot density (one dot per crash) instead of heatmap.
-    Layers: denied/approved markers, DOT effectiveness (before-after),
-    top-15 spotlight.
-    """
-    print("  Generating consolidated map (print style)...")
-    search_entries = []  # Populated during marker loops for search feature
-
-    # --- Base map: no-label tiles for print clarity ---
-    m = folium.Map(
-        location=CB5_CENTER, zoom_start=CB5_ZOOM,
-        tiles=None,
-        control_scale=True,
+    tpl_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates', 'map_02_template.html')
+    with open(tpl_path, encoding='utf-8') as f:
+        tpl = f.read()
+    return (
+        tpl.replace('__DATA_VERSION__', data_version)
+           .replace('__START_YEAR_OPTIONS__', _start_year_options)
+           .replace('__END_YEAR_OPTIONS__', _end_year_options)
+           .replace('__STUDY_START_YEAR__', str(STUDY_START_YEAR))
+           .replace('__LAST_COMPLETE_YEAR__', str(LAST_COMPLETE_YEAR))
     )
-    folium.TileLayer(
-        tiles='https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png?key=cb1_2949_1_9bd5bcde55f90cb1ce920410',
-        attr='&copy; OpenStreetMap contributors &copy; CARTO',
-        name='Base Map',
-        control=False,
-    ).add_to(m)
-    folium.TileLayer(
-        tiles='https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png?key=cb1_2949_1_9bd5bcde55f90cb1ce920410',
-        attr='&copy; OpenStreetMap contributors &copy; CARTO',
-        name='Street Labels',
-        overlay=True,
-        control=False,
-        opacity=0.55,
-    ).add_to(m)
 
-    _add_cb5_boundary(m)
 
-    _popup_style = "font-family:'Times New Roman',Georgia,serif;font-size:12px;line-height:1.5;"
-    _hr = "<hr style='border:0;border-top:1px solid #ccc;margin:4px 0;'>"
+def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
+    """Prepare map layer exports, search index, spotlights, and map_data.json.
 
-    def _fmt_date(val):
-        """Format a date value to 'Mon DD, YYYY' or return 'N/A'."""
-        if pd.isna(val):
-            return 'N/A'
-        try:
-            return pd.to_datetime(val).strftime('%b %d, %Y')
-        except Exception:
-            return str(val)[:10]
+    Replaces the retired legacy 17 MB Folium overlay map with pure data export
+    feeding the canonical interactive Leaflet explorer (map_02_interactive_explorer.html).
+    """
+    print("  Preparing map layers and map_data.json...")
+    search_entries = []
 
-    # --- Enrich signal_prox with dates from full CB5 studies data ---
-    # The geocode cache may lack daterequested/statusdate (older caches).
-    # Merge them from the full studies data so popups and exports have dates.
     if data is not None and 'cb5_no_aps' in data:
         _date_source = data['cb5_no_aps'][['referencenumber', 'daterequested', 'statusdate']].drop_duplicates('referencenumber')
         for col in ['daterequested', 'statusdate']:
@@ -2705,303 +1692,46 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
                 signal_prox = signal_prox.merge(
                     _date_source[['referencenumber', col]], on='referencenumber', how='left')
 
-    # --- Precompute layer subsets for names and CSV export ---
     _sig_denied = signal_prox[signal_prox['outcome'] == 'denied']
     _sig_approved = signal_prox[signal_prox['outcome'] == 'approved']
     _srts_denied = srts_prox[srts_prox['outcome'] == 'denied']
     _srts_approved = srts_prox[srts_prox['outcome'] == 'approved']
-    n_sig_denied = _sig_denied['latitude'].notna().sum()
-    n_sig_approved = _sig_approved['latitude'].notna().sum()
-    n_srts_denied = _srts_denied['latitude'].notna().sum()
-    n_srts_approved = _srts_approved['latitude'].notna().sum()
+    n_sig_denied = int(_sig_denied['latitude'].notna().sum())
+    n_sig_approved = int(_sig_approved['latitude'].notna().sum())
+    n_srts_denied = int(_srts_denied['latitude'].notna().sum())
+    n_srts_approved = int(_srts_approved['latitude'].notna().sum())
 
-    # --- Layer 1: Crash Dot Density (replaces heatmap) ---
     crash_with_coords = cb5_crashes[cb5_crashes['latitude'].notna()].copy()
-    crash_dots = folium.FeatureGroup(
-        name=f'Injury and Fatal Crashes (n={len(crash_with_coords):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=True)
-    # Jitter stacked dots so crashes at the same intersection spread apart
-    # ~5m offset (0.00005°) — enough to unstick dots, imperceptible geographically
-    rng = np.random.RandomState(42)
-    jitter_lat = rng.uniform(-0.00005, 0.00005, len(crash_with_coords))
-    jitter_lon = rng.uniform(-0.00005, 0.00005, len(crash_with_coords))
-    _crash_markers = []  # collect for reuse in clustered layer
-    for i, (_, crow) in enumerate(crash_with_coords.iterrows()):
-        injured = int(crow.get('number_of_persons_injured', 0))
-        killed = int(crow.get('number_of_persons_killed', 0))
-        # Size by severity: fatal=4, injury=2, other=1.5
-        if killed > 0:
-            r, color, opacity = 3.5, '#1a1a1a', 0.8
-        elif injured > 0:
-            r, color, opacity = 1.8, '#888888', 0.35
-        else:
-            r, color, opacity = 1.2, '#aaaaaa', 0.2
 
-        # --- Crash popup/tooltip ---
-        c_date = _fmt_date(crow.get('crash_date'))
-        c_time = str(crow.get('crash_time', '')).strip()
-        _on_raw = crow.get('on_street_name')
-        _off_raw = crow.get('off_street_name')
-        _cross_raw = crow.get('cross_street_name')
-        c_on = '' if pd.isna(_on_raw) else str(_on_raw).strip()
-        c_off = '' if pd.isna(_off_raw) else str(_off_raw).strip()
-        c_cross = '' if pd.isna(_cross_raw) else str(_cross_raw).strip()
-        if c_on and c_off:
-            c_loc = f"{c_on} & {c_off}"
-        elif c_on or c_off:
-            c_loc = c_on or c_off
-        elif c_cross:
-            c_loc = f"Near {c_cross}"
-        else:
-            c_loc = 'Location on map'
-        c_factor = str(crow.get('contributing_factor_vehicle_1', '') or '').strip()
-        c_veh1 = str(crow.get('vehicle_type_code1', '') or '').strip()
-        ped_inj = int(crow.get('number_of_pedestrians_injured', 0))
-        ped_k = int(crow.get('number_of_pedestrians_killed', 0))
-        cyc_inj = int(crow.get('number_of_cyclist_injured', 0))
-        cyc_k = int(crow.get('number_of_cyclist_killed', 0))
-        mot_inj = int(crow.get('number_of_motorist_injured', 0))
-        mot_k = int(crow.get('number_of_motorist_killed', 0))
+    for outcome_label, subset in [('denied', _sig_denied), ('approved', _sig_approved)]:
+        for _, row in subset.iterrows():
+            if pd.isna(row['latitude']):
+                continue
+            search_entries.append({
+                'ref': row.get('referencenumber', ''),
+                'lat': row['latitude'],
+                'lon': row['longitude'],
+                'label': f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')}",
+                'type': row.get('requesttype', ''),
+                'outcome': outcome_label,
+            })
 
-        severity_tag = ('<span style="color:#B44040;font-weight:bold;">FATAL</span>'
-                        if killed > 0 else
-                        '<span style="color:#cc8400;font-weight:bold;">INJURY</span>'
-                        if injured > 0 else 'Property damage')
+    for outcome_label, subset in [('denied', _srts_denied), ('approved', _srts_approved)]:
+        for _, row in subset.iterrows():
+            if pd.isna(row['latitude']):
+                continue
+            search_entries.append({
+                'ref': str(row.get('projectcode', '')),
+                'lat': row['latitude'],
+                'lon': row['longitude'],
+                'label': f"{row.get('onstreet', '')} ({row.get('fromstreet', '')} to {row.get('tostreet', '')})",
+                'type': 'Speed Bump',
+                'outcome': outcome_label,
+            })
 
-        crash_popup = (
-            f"<div style=\"{_popup_style}\">"
-            f"<b>{c_loc}</b><br>"
-            f"{c_date} at {c_time}<br>"
-            f"Severity: {severity_tag}"
-            f"{_hr}"
-            f"Pedestrians: {ped_inj} injured, {ped_k} killed<br>"
-            f"Cyclists: {cyc_inj} injured, {cyc_k} killed<br>"
-            f"Motorists: {mot_inj} injured, {mot_k} killed"
-            f"{_hr}"
-            f"Factor: {c_factor or 'N/A'}<br>"
-            f"Vehicle: {c_veh1 or 'N/A'}<br>"
-            f"<span style='color:#666;font-size:10px;'>Collision ID: {crow.get('collision_id', 'N/A')}</span>"
-            f"</div>"
-        )
-        _sev = 'Fatal' if killed > 0 else f'{injured} injured' if injured > 0 else 'Crash'
-        crash_tooltip = f"{c_loc} — {_sev}, {c_date}"
-
-        # Store popup/tooltip for reuse in clustered layer
-        _crash_markers.append((crow['latitude'], crow['longitude'],
-                               color, opacity, crash_popup, crash_tooltip))
-
-        folium.CircleMarker(
-            [crow['latitude'] + jitter_lat[i],
-             crow['longitude'] + jitter_lon[i]], radius=r,
-            color=color, fill=True, fill_color=color,
-            fill_opacity=opacity, weight=0.3,
-            popup=folium.Popup(crash_popup, max_width=320),
-            tooltip=crash_tooltip,
-        ).add_to(crash_dots)
-    crash_dots.add_to(m)
-
-    # --- Clustered crash layer (off by default, for analysis) ---
-    crash_clustered = folium.FeatureGroup(
-        name=f'Injury and Fatal Crashes \u2014 Clustered (n={len(crash_with_coords):,})', show=False)
-    _cluster_icon_fn = """
-    function(cluster) {
-        var count = cluster.getChildCount();
-        var size = count < 10 ? 26 : count < 50 ? 32 : 38;
-        return L.divIcon({
-            html: '<div style="background:rgba(136,136,136,0.8);color:white;' +
-                  'font-weight:bold;font-family:Times New Roman,serif;font-size:11px;' +
-                  'text-align:center;line-height:' + size + 'px;border-radius:50%;' +
-                  'border:1.5px solid #666;">' + count + '</div>',
-            className: '',
-            iconSize: L.point(size, size)
-        });
-    }
-    """
-    crash_cluster = MarkerCluster(
-        icon_create_function=_cluster_icon_fn,
-        options={
-            'maxClusterRadius': 25,
-            'spiderfyOnMaxZoom': True,
-            'showCoverageOnHover': False,
-            'zoomToBoundsOnClick': True,
-            'spiderfyDistanceMultiplier': 1.5,
-        },
-    )
-    for lat, lon, color, opacity, popup_html, tooltip_text in _crash_markers:
-        d = 6 if color == '#1a1a1a' else 5 if color == '#888888' else 4
-        icon_html = (f'<div style="width:{d}px;height:{d}px;background:{color};'
-                     f'border-radius:50%;opacity:{opacity};"></div>')
-        folium.Marker(
-            [lat, lon],
-            icon=folium.DivIcon(html=icon_html, icon_size=(d, d),
-                                icon_anchor=(d // 2, d // 2)),
-            popup=folium.Popup(popup_html, max_width=320),
-            tooltip=tooltip_text,
-        ).add_to(crash_cluster)
-    crash_cluster.add_to(crash_clustered)
-    crash_clustered.add_to(m)
-
-    # --- Helper: build signal study popup ---
-    def _signal_popup(row, outcome_label, outcome_color):
-        ref = row.get('referencenumber', 'N/A')
-        req_date = _fmt_date(row.get('daterequested'))
-        status_date = _fmt_date(row.get('statusdate'))
-        req_type = row.get('requesttype', 'N/A')
-        status_desc = str(row.get('statusdescription', '') or '').strip()
-        findings = str(row.get('findings', '') or '').strip()
-        fatalities = int(row.get('fatalities_150m', 0))
-        ped_inj = int(row.get('ped_injuries_150m', 0))
-        school = str(row.get('schoolname', '') or '').strip()
-        vz = 'Yes' if row.get('visionzero') == 'Yes' else ''
-        loc = f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')}"
-
-        extras = ''
-        if school:
-            extras += f"School: {school}<br>"
-        if vz:
-            extras += f"Vision Zero priority: Yes<br>"
-        if findings:
-            extras += f"Findings: {findings}<br>"
-
-        return (
-            f"<div style=\"{_popup_style}\">"
-            f"<b>{loc}</b><br>"
-            f"<span style='color:#666;font-size:10px;'>{ref}</span><br>"
-            f"Type: {req_type}<br>"
-            f"Outcome: <span style='color:{outcome_color};font-weight:bold;'>{outcome_label}</span>"
-            f"{_hr}"
-            f"Requested: {req_date}<br>"
-            f"Status date: {status_date}<br>"
-            f"Status: {status_desc}"
-            f"{_hr}"
-            f"{extras}"
-            f"<b>Within 150m ({STUDY_START_YEAR}–{LAST_COMPLETE_YEAR}):</b><br>"
-            f"Crashes: {int(row.get('crashes_150m', 0))}<br>"
-            f"Injuries: {int(row.get('injuries_150m', 0))}<br>"
-            f"Ped. injuries: {ped_inj}<br>"
-            f"Fatalities: {fatalities}"
-            f"</div>"
-        )
-
-    # --- Layer 2: Denied Signal Studies ---
-    denied_signals = folium.FeatureGroup(
-        name=f'Denied Signal Studies (n={n_sig_denied:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=True)
-    for _, row in signal_prox[signal_prox['outcome'] == 'denied'].iterrows():
-        if pd.isna(row['latitude']):
-            continue
-        popup_html = _signal_popup(row, 'DENIED', COLORS['denied'])
-        folium.CircleMarker(
-            [row['latitude'], row['longitude']], radius=6,
-            color='#333333', fill=True, fill_color=COLORS['denied'],
-            fill_opacity=0.75, weight=1.5,
-            popup=folium.Popup(popup_html, max_width=340),
-            tooltip=f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')} — {row.get('requesttype', '')} (DENIED)"
-        ).add_to(denied_signals)
-        search_entries.append({'ref': row.get('referencenumber', ''), 'lat': row['latitude'],
-            'lon': row['longitude'], 'label': f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')}",
-            'type': row.get('requesttype', ''), 'outcome': 'denied'})
-    denied_signals.add_to(m)
-
-    # --- Layer 3: Approved Signal Studies ---
-    approved_signals = folium.FeatureGroup(
-        name=f'Approved Signal Studies (n={n_sig_approved:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=True)
-    for _, row in signal_prox[signal_prox['outcome'] == 'approved'].iterrows():
-        if pd.isna(row['latitude']):
-            continue
-        popup_html = _signal_popup(row, 'APPROVED', COLORS['approved'])
-        folium.CircleMarker(
-            [row['latitude'], row['longitude']], radius=6,
-            color='#333333', fill=True, fill_color=COLORS['approved'],
-            fill_opacity=0.75, weight=1.5,
-            popup=folium.Popup(popup_html, max_width=340),
-            tooltip=f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')} — {row.get('requesttype', '')} (APPROVED)"
-        ).add_to(approved_signals)
-        search_entries.append({'ref': row.get('referencenumber', ''), 'lat': row['latitude'],
-            'lon': row['longitude'], 'label': f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')}",
-            'type': row.get('requesttype', ''), 'outcome': 'approved'})
-    approved_signals.add_to(m)
-
-    # --- Helper: build SRTS popup ---
-    def _srts_popup(row, outcome_label, outcome_color):
-        on_st = row.get('onstreet', '')
-        from_st = row.get('fromstreet', '')
-        to_st = row.get('tostreet', '')
-        req_date = _fmt_date(row.get('requestdate'))
-        closed_date = _fmt_date(row.get('closeddate'))
-        proj_status = str(row.get('projectstatus', '') or '').strip()
-        denial = str(row.get('denialreason', '') or '').strip()
-        install_date = _fmt_date(row.get('installationdate'))
-        proj_code = str(row.get('projectcode', '') or '').strip()
-        fatalities = int(row.get('fatalities_150m', 0))
-        ped_inj = int(row.get('ped_injuries_150m', 0))
-        direction = str(row.get('trafficdirectiondesc', '') or '').strip()
-
-        extras = ''
-        if denial:
-            extras += f"Denial reason: {denial}<br>"
-        if install_date != 'N/A':
-            extras += f"Installed: {install_date}<br>"
-        if direction:
-            extras += f"Traffic: {direction}<br>"
-
-        return (
-            f"<div style=\"{_popup_style}\">"
-            f"<b>{on_st}</b> ({from_st} to {to_st})<br>"
-            f"<span style='color:#666;font-size:10px;'>{proj_code}</span><br>"
-            f"Outcome: <span style='color:{outcome_color};font-weight:bold;'>{outcome_label}</span>"
-            f"{_hr}"
-            f"Requested: {req_date}<br>"
-            f"Decision date: {closed_date}<br>"
-            f"Project status: {proj_status}"
-            f"{_hr}"
-            f"{extras}"
-            f"<b>Within 150m ({STUDY_START_YEAR}–{LAST_COMPLETE_YEAR}):</b><br>"
-            f"Crashes: {int(row.get('crashes_150m', 0))}<br>"
-            f"Injuries: {int(row.get('injuries_150m', 0))}<br>"
-            f"Ped. injuries: {ped_inj}<br>"
-            f"Fatalities: {fatalities}"
-            f"</div>"
-        )
-
-    # --- Layer 4: Denied Speed Bumps ---
-    denied_srts = folium.FeatureGroup(
-        name=f'Denied Speed Bumps (n={n_srts_denied:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=True)
-    for _, row in srts_prox[srts_prox['outcome'] == 'denied'].iterrows():
-        if pd.isna(row['latitude']):
-            continue
-        popup_html = _srts_popup(row, 'DENIED', COLORS['denied'])
-        folium.CircleMarker(
-            [row['latitude'], row['longitude']], radius=4,
-            color='#333333', fill=True, fill_color=COLORS['denied'],
-            fill_opacity=0.6, weight=1,
-            popup=folium.Popup(popup_html, max_width=340),
-            tooltip=f"{row.get('onstreet', '')} ({row.get('fromstreet', '')} to {row.get('tostreet', '')}) — DENIED"
-        ).add_to(denied_srts)
-        search_entries.append({'ref': str(row.get('projectcode', '')), 'lat': row['latitude'],
-            'lon': row['longitude'], 'label': f"{row.get('onstreet', '')} ({row.get('fromstreet', '')} to {row.get('tostreet', '')})",
-            'type': 'Speed Bump', 'outcome': 'denied'})
-    denied_srts.add_to(m)
-
-    # --- Layer 5: Approved Speed Bumps ---
-    approved_srts = folium.FeatureGroup(
-        name=f'Approved Speed Bumps (n={n_srts_approved:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=True)
-    for _, row in srts_prox[srts_prox['outcome'] == 'approved'].iterrows():
-        if pd.isna(row['latitude']):
-            continue
-        popup_html = _srts_popup(row, 'APPROVED', COLORS['approved'])
-        folium.CircleMarker(
-            [row['latitude'], row['longitude']], radius=4,
-            color='#333333', fill=True, fill_color=COLORS['approved'],
-            fill_opacity=0.6, weight=1,
-            popup=folium.Popup(popup_html, max_width=340),
-            tooltip=f"{row.get('onstreet', '')} ({row.get('fromstreet', '')} to {row.get('tostreet', '')}) — APPROVED"
-        ).add_to(approved_srts)
-        search_entries.append({'ref': str(row.get('projectcode', '')), 'lat': row['latitude'],
-            'lon': row['longitude'], 'label': f"{row.get('onstreet', '')} ({row.get('fromstreet', '')} to {row.get('tostreet', '')})",
-            'type': 'Speed Bump', 'outcome': 'approved'})
-    approved_srts.add_to(m)
-
-    # --- Layer 6: APS Installed (de3m-c5p4; separate inventory layer) ---
     _aps_path = f'{DATA_DIR}/aps_installed_citywide.csv'
+    cb5_aps = None
+    n_aps = 0
     if os.path.exists(_aps_path):
         aps_installed = pd.read_csv(_aps_path)
         aps_installed['point_x'] = pd.to_numeric(aps_installed['point_x'], errors='coerce')
@@ -3009,128 +1739,29 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
         aps_installed['date_insta'] = pd.to_datetime(aps_installed['date_insta'], errors='coerce')
         aps_installed['year'] = aps_installed['date_insta'].dt.year
 
-        # Filter: borocd=405 + polygon + study window
         cb5_aps = aps_installed[aps_installed['borocd'].astype(str).str.strip() == '405'].copy()
         cb5_aps = cb5_aps[cb5_aps['year'].between(STUDY_START_YEAR, LAST_COMPLETE_YEAR)]
-        has_coords = cb5_aps['point_x'].notna() & cb5_aps['point_y'].notna()
-        cb5_aps = cb5_aps[has_coords]
+        cb5_aps = cb5_aps[cb5_aps['point_x'].notna() & cb5_aps['point_y'].notna()]
         _aps_poly = prep(_load_cb5_polygon())
-        inside = cb5_aps.apply(
-            lambda r: _aps_poly.contains(Point(r['point_x'], r['point_y'])), axis=1)
+        inside = cb5_aps.apply(lambda r: _aps_poly.contains(Point(r['point_x'], r['point_y'])), axis=1)
         cb5_aps = cb5_aps[inside]
-
         n_aps = len(cb5_aps)
-        aps_fg = folium.FeatureGroup(
-            name=f'APS Installed (n={n_aps:,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=False)
-
-        APS_COLOR = '#7B68AE'  # muted purple — distinct from denied/approved/crash
         for _, row in cb5_aps.iterrows():
-            inst_date = _fmt_date(row.get('date_insta'))
             location = str(row.get('location', '') or '').strip()
-            nta = str(row.get('ntaname', '') or '').strip()
-            popup_html = (
-                f"<div style=\"{_popup_style}\">"
-                f"<b>{location}</b><br>"
-                f"<span style='color:{APS_COLOR};font-weight:bold;'>APS INSTALLED</span>"
-                f"{_hr}"
-                f"Installed: {inst_date}<br>"
-                f"Neighborhood: {nta}"
-                f"{_hr}"
-                f"<span style='color:#666;font-size:10px;'>"
-                f"Source: APS Installed Locations [de3m-c5p4]<br>"
-                f"Installed APS inventory.<br>"
-                f"Excluded from discretionary denial-rate analysis.</span>"
-                f"</div>"
-            )
-            folium.CircleMarker(
-                [row['point_y'], row['point_x']], radius=5,
-                color='#333333', fill=True, fill_color=APS_COLOR,
-                fill_opacity=0.75, weight=1,
-                popup=folium.Popup(popup_html, max_width=300),
-                tooltip=f"{location} — APS Installed {inst_date}"
-            ).add_to(aps_fg)
             search_entries.append({
-                'ref': '', 'lat': row['point_y'], 'lon': row['point_x'],
-                'label': location, 'type': 'APS', 'outcome': 'installed'})
-        aps_fg.add_to(m)
+                'ref': '',
+                'lat': row['point_y'],
+                'lon': row['point_x'],
+                'label': location,
+                'type': 'APS',
+                'outcome': 'installed',
+            })
         print(f"    APS Installed layer: {n_aps} locations")
     else:
         print("    WARNING: APS installed data not found — run scripts_fetch_data.py")
-        n_aps = 0
 
-    # --- Layer 7: DOT Effectiveness — before-after for installed locations ---
-    # (was Layer 6 before APS layer was added)
-    before_after_df = None
-    if data is not None:
-        before_after_df = _compute_before_after(data)
-        effectiveness_fg = folium.FeatureGroup(
-            name=f'DOT Effectiveness (n={len(before_after_df)}, Installed, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=False)
+    before_after_df = _compute_before_after(data) if data is not None else None
 
-        for _, ba in before_after_df.iterrows():
-            change = ba['crash_change']
-            pct = ba['pct_change']
-
-            # Color by outcome: green = decreased, gray = no change, amber = increased
-            if change < 0:
-                fill_color = '#2d7d46'  # strong green — crashes went down
-                outline = '#1a5c2e'
-                label = f"{abs(int(pct))}% fewer crashes"
-            elif change == 0:
-                fill_color = '#777777'  # neutral gray
-                outline = '#555555'
-                label = "No change"
-            else:
-                fill_color = '#cc8400'  # amber — crashes went up
-                outline = '#996300'
-                label = f"{int(pct)}% more crashes"
-
-            install_str = ba['install_date'].strftime('%b %d, %Y')
-            ref = ba.get('referencenumber', 'N/A')
-            req_date = _fmt_date(ba.get('daterequested'))
-            inj_change = ba['after_injuries'] - ba['before_injuries']
-            inj_pct = (inj_change / ba['before_injuries'] * 100) if ba['before_injuries'] > 0 else 0
-            inj_label = (f"{abs(int(inj_pct))}% fewer" if inj_change < 0
-                         else f"{int(inj_pct)}% more" if inj_change > 0
-                         else "No change")
-            popup_html = (
-                f"<div style=\"{_popup_style}\">"
-                f"<b>{ba['mainstreet']} & {ba['crossstreet1']}</b><br>"
-                f"<span style='color:#666;font-size:10px;'>{ref}</span><br>"
-                f"Type: {ba['requesttype']}<br>"
-                f"Requested: {req_date}<br>"
-                f"Installed: {install_str}"
-                f"{_hr}"
-                f"<b>Before-After Analysis</b> ({ba['window_months']:.0f}-mo. windows, 150m):<br>"
-                f"Crashes: {ba['before_crashes']} &rarr; {ba['after_crashes']} "
-                f"(<b style='color:{fill_color};'>{label}</b>)<br>"
-                f"Injuries: {ba['before_injuries']} &rarr; {ba['after_injuries']} ({inj_label})"
-                f"</div>"
-            )
-
-            # Marker size scaled by absolute crash volume (bigger = more data = more reliable)
-            marker_r = max(7, min(14, 5 + ba['before_crashes']))
-
-            # 150m radius circle (dashed outline, non-interactive)
-            folium.Circle(
-                [ba['latitude'], ba['longitude']],
-                radius=PROXIMITY_RADIUS_M,
-                color=fill_color, fill=True, fill_color=fill_color,
-                fill_opacity=0.08, weight=1.5, dash_array='5 3',
-                interactive=False,
-            ).add_to(effectiveness_fg)
-            folium.CircleMarker(
-                [ba['latitude'], ba['longitude']], radius=marker_r,
-                color=outline, fill=True, fill_color=fill_color,
-                fill_opacity=0.8, weight=2,
-                popup=folium.Popup(popup_html, max_width=320),
-                tooltip=f"{ba['mainstreet']} & {ba['crossstreet1']} — {label}"
-            ).add_to(effectiveness_fg)
-
-        effectiveness_fg.add_to(m)
-
-    # --- Layer 7: Top 15 Denied Signal Study Spotlight (default OFF) ---
-    # Signal studies only — intersection-level precision. SRTS excluded due to
-    # segment-based coordinates creating methodological issues with 150m overlap.
     sig_denied = signal_prox[
         (signal_prox['outcome'] == 'denied') & signal_prox['latitude'].notna()
     ].copy()
@@ -3138,63 +1769,14 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
         lambda r: _normalize_intersection(r['mainstreet'], r['crossstreet1']), axis=1)
     sig_denied['dataset'] = 'Signal Study'
     sig_denied['request_info'] = sig_denied['requesttype']
-
     common_cols = ['location_name', 'dataset', 'request_info', 'latitude', 'longitude',
                    'crashes_150m', 'injuries_150m', 'ped_injuries_150m', 'fatalities_150m']
     spotlight_data = sig_denied[common_cols].copy()
-    # De-duplicate: name-based then spatial
     spotlight_data = spotlight_data.sort_values('crashes_150m', ascending=False).drop_duplicates(
         subset=['location_name'], keep='first')
     spotlight_data = _spatial_dedup(spotlight_data, radius_m=150)
     top15 = spotlight_data.nlargest(15, 'crashes_150m')
 
-    spotlight_fg = folium.FeatureGroup(name=f'Top 15 Denied Spotlight ({STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', show=False)
-    for rank, (_, row) in enumerate(top15.iterrows(), 1):
-        # 150m radius circle
-        folium.Circle(
-            [row['latitude'], row['longitude']],
-            radius=PROXIMITY_RADIUS_M,
-            color=COLORS['denied'], fill=True, fill_color=COLORS['denied'],
-            fill_opacity=0.08, weight=1.5, dash_array='5 3',
-            interactive=False,
-        ).add_to(spotlight_fg)
-
-        popup_html = (
-            f"<div style=\"{_popup_style}\">"
-            f"<b>#{rank}: {row['location_name']}</b><br>"
-            f"Dataset: {row['dataset']}<br>"
-            f"Request: {row['request_info']}"
-            f"{_hr}"
-            f"<b>Within 150m:</b><br>"
-            f"Crashes: {int(row['crashes_150m'])}<br>"
-            f"Injuries: {int(row['injuries_150m'])}<br>"
-            f"Ped. injuries: {int(row['ped_injuries_150m'])}<br>"
-            f"Fatalities: {int(row['fatalities_150m'])}"
-            f"</div>"
-        )
-        folium.CircleMarker(
-            [row['latitude'], row['longitude']], radius=9,
-            color='#333333', fill=True, fill_color=COLORS['denied'],
-            fill_opacity=0.85, weight=2,
-            popup=folium.Popup(popup_html, max_width=300),
-            tooltip=f"#{rank}: {row['location_name']} ({int(row['crashes_150m'])} crashes)"
-        ).add_to(spotlight_fg)
-
-        # Rank label (non-interactive so it doesn't block clicks on markers below)
-        folium.Marker(
-            [row['latitude'], row['longitude']],
-            icon=folium.DivIcon(
-                html=(f"<div style=\"font-family:'Times New Roman',Georgia,serif;"
-                      f"font-size:10px;font-weight:bold;color:white;"
-                      f"text-align:center;margin-top:-5px;"
-                      f"pointer-events:none;\">{rank}</div>"),
-                icon_size=(20, 20), icon_anchor=(10, 10)),
-            interactive=False,
-        ).add_to(spotlight_fg)
-
-    spotlight_fg.add_to(m)
-
-    # --- Layer 8: Top 10 Crash Intersections (default OFF) ---
     crash_with_streets = crash_with_coords.dropna(subset=['on_street_name', 'off_street_name']).copy()
     crash_with_streets['intersection'] = crash_with_streets.apply(
         lambda r: _normalize_intersection(r['on_street_name'], r['off_street_name']), axis=1)
@@ -3209,84 +1791,7 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
     ).reset_index().sort_values('crashes', ascending=False)
     top10_crashes = crash_agg.head(10)
 
-    crash_top_fg = folium.FeatureGroup(
-        name=f'Top 10 Crash Intersections ({STUDY_START_YEAR}\u2013{LAST_COMPLETE_YEAR})', show=False)
-    for rank, (_, cr) in enumerate(top10_crashes.iterrows(), 1):
-        popup_html = (
-            f"<div style=\"{_popup_style}\">"
-            f"<b>#{rank}: {cr['intersection']}</b>"
-            f"{_hr}"
-            f"<b>Crashes:</b> {int(cr['crashes'])}<br>"
-            f"<b>Total injuries:</b> {int(cr['injuries'])}<br>"
-            f"Pedestrian: {int(cr['ped_injuries'])}<br>"
-            f"Cyclist: {int(cr['cyc_injuries'])}<br>"
-            f"<b>Fatalities:</b> {int(cr['fatalities'])}"
-            f"</div>"
-        )
-        # 150m radius circle (dashed outline, non-interactive)
-        folium.Circle(
-            [cr['lat'], cr['lon']],
-            radius=PROXIMITY_RADIUS_M,
-            color=COLORS['primary'], fill=True, fill_color=COLORS['primary'],
-            fill_opacity=0.08, weight=1.5, dash_array='5 3',
-            interactive=False,
-        ).add_to(crash_top_fg)
-        # Center dot
-        folium.CircleMarker(
-            [cr['lat'], cr['lon']], radius=9,
-            color='#333333', fill=True, fill_color=COLORS['primary'],
-            fill_opacity=0.85, weight=2,
-            popup=folium.Popup(popup_html, max_width=300),
-            tooltip=f"#{rank}: {cr['intersection']} ({int(cr['crashes'])} crashes)"
-        ).add_to(crash_top_fg)
-        # Rank label (non-interactive)
-        folium.Marker(
-            [cr['lat'], cr['lon']],
-            icon=folium.DivIcon(
-                html=(f"<div style=\"font-family:'Times New Roman',Georgia,serif;"
-                      f"font-size:10px;font-weight:bold;color:white;"
-                      f"text-align:center;margin-top:-5px;"
-                      f"pointer-events:none;\">{rank}</div>"),
-                icon_size=(20, 20), icon_anchor=(10, 10)),
-            interactive=False,
-        ).add_to(crash_top_fg)
-    crash_top_fg.add_to(m)
-
-    # --- Legend (print-ready, no heatmap entry) ---
-    legend_items = [
-        (COLORS['denied'], 'Denied request', 'Denied Signal,Denied Speed'),
-        (COLORS['approved'], 'Approved request', 'Approved Signal,Approved Speed'),
-        ('#7B68AE', 'APS installed', 'APS Installed'),
-        ('#888888', 'Injury or fatal crash (dot = 1 crash)', 'Injury and Fatal Crashes'),
-        ('#1a1a1a', 'Fatal crash', 'Injury and Fatal Crashes'),
-        (COLORS['primary'], 'Top 10 crash intersection', 'Top 10 Crash', 'spotlight'),
-        (COLORS['denied'], 'Top 15 denied spotlight', 'Top 15 Denied', 'spotlight'),
-    ]
-    if before_after_df is not None:
-        legend_items.extend([
-            ('#2d7d46', 'Installed \u2014 crashes decreased', 'DOT Effectiveness', 'spotlight'),
-            ('#cc8400', 'Installed \u2014 crashes increased', 'DOT Effectiveness', 'spotlight'),
-        ])
-    legend_html = _make_legend_html(legend_items)
-    m.get_root().html.add_child(folium.Element(legend_html))
-
-    # --- CSS + dynamic title + search ---
-    _inject_map_css(m)
-    _add_dynamic_title(m)
-    _add_search_box(m, search_entries)
-
-    # --- Layer control ---
-    folium.LayerControl(collapsed=False).add_to(m)
-
-    map_path = f'{OUTPUT_DIR}/map_01_crash_denial_overlay.html'
-    m.save(map_path)
-    _strip_trailing_whitespace(map_path)
-    print("    Consolidated map saved to map_01_crash_denial_overlay.html")
-
-    # --- Export layer data as CSV spreadsheets ---
     print("    Exporting map layer spreadsheets...")
-
-    # Layer 1: Crashes
     crash_cols = ['crash_date', 'crash_time', 'on_street_name', 'off_street_name',
                   'number_of_persons_injured', 'number_of_persons_killed',
                   'number_of_pedestrians_injured', 'number_of_pedestrians_killed',
@@ -3298,8 +1803,6 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
     _crash_export['Source Dataset'] = 'Motor Vehicle Collisions [h9gi-nx95]'
     _crash_export.to_csv(f'{OUTPUT_DIR}/map_layer_crashes.csv', index=False)
 
-    # Layer 2-3: Signal Studies (denied + approved)
-    # Enrich with fields from original data not carried through geocode cache
     _sig_full = data['cb5_no_aps'] if data is not None else pd.DataFrame()
     _sig_enrich_cols = ['referencenumber', 'daterequested', 'statusdate', 'findings',
                         'schoolname', 'visionzero']
@@ -3317,7 +1820,6 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
         _exp['Source File'] = 'data_cb5_signal_studies.csv'
         _exp.to_csv(f'{OUTPUT_DIR}/map_layer_{outcome_label}_signals.csv', index=False)
 
-    # Layer 4-5: Speed Bumps (denied + approved)
     srts_cols = ['projectcode', 'onstreet', 'fromstreet', 'tostreet',
                  'outcome', 'requestdate', 'closeddate', 'projectstatus', 'denialreason',
                  'installationdate', 'trafficdirectiondesc',
@@ -3329,7 +1831,6 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
         _exp['Source File'] = 'srts_citywide.csv'
         _exp.to_csv(f'{OUTPUT_DIR}/map_layer_{outcome_label}_speed_bumps.csv', index=False)
 
-    # Layer 6: APS Installed
     if n_aps > 0:
         aps_cols = ['location', 'date_insta', 'ntaname', 'point_x', 'point_y']
         _aps_export = cb5_aps[[c for c in aps_cols if c in cb5_aps.columns]].copy()
@@ -3337,7 +1838,6 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
         _aps_export['Source Dataset'] = 'APS Installed Locations [de3m-c5p4]'
         _aps_export.to_csv(f'{OUTPUT_DIR}/map_layer_aps_installed.csv', index=False)
 
-    # Top 15 Spotlight
     _top15_export = top15.copy()
     _top15_export['Source File'] = 'data_cb5_signal_studies.csv'
     _top15_export.to_csv(f'{OUTPUT_DIR}/map_layer_top15_denied.csv', index=False)
@@ -3351,7 +1851,6 @@ def map_consolidated(signal_prox, srts_prox, cb5_crashes, data=None):
         print(f"      map_layer_aps_installed.csv ({n_aps:,} rows)")
     print(f"      map_layer_top15_denied.csv (15 rows)")
 
-    # --- Export JSON for interactive map ---
     _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
                      search_entries, top15, top10_crashes,
                      cb5_aps=cb5_aps if n_aps > 0 else None)
@@ -3642,8 +2141,8 @@ def chart_15_srts_funnel():
     fig, axes = plt.subplots(1, 2, figsize=(14, 7), gridspec_kw={'width_ratios': [1, 2]})
 
     # Left panel: total approved as a single reference bar
-    axes[0].bar(['Approved\nby DOT'], [n_total], color=COLORS['approved'],
-                edgecolor='black', zorder=3, width=0.5)
+    axes[0].bar(['Approved\nby DOT'], [n_total], color=COLORS['primary'],
+                edgecolor='#132230', linewidth=0.7, zorder=3, width=0.5)
     axes[0].text(0, n_total + 5, str(n_total), ha='center', va='bottom',
                  fontweight='bold', fontsize=14)
     axes[0].set_ylabel('Number of Requests', fontweight='bold')
@@ -3654,16 +2153,16 @@ def chart_15_srts_funnel():
     # Right panel: what happened to them (only include Closed if any exist)
     categories = ['Confirmed\nInstalled', 'Cancelled /\nRejected']
     values = [n_installed, n_cancelled]
-    bar_colors = ['#2d7d46', '#cc8400']
+    bar_colors = [COLORS['approved'], COLORS['citywide']]
     if n_closed > 0:
         categories.append('Closed\n(No Install)')
         values.append(n_closed)
-        bar_colors.append('#b0b0b0')
+        bar_colors.append('#94A3B8')
     categories.append('Still\nWaiting')
     values.append(n_waiting)
-    bar_colors.append('#888888')
+    bar_colors.append('#64748B')
 
-    bars = axes[1].bar(categories, values, color=bar_colors, edgecolor='black', zorder=3, width=0.6)
+    bars = axes[1].bar(categories, values, color=bar_colors, edgecolor='#132230', linewidth=0.7, zorder=3, width=0.58)
 
     for bar, val in zip(bars, values):
         pct = val / n_total * 100
@@ -3677,16 +2176,16 @@ def chart_15_srts_funnel():
     axes[1].set_ylim(0, max(values) * 1.25)
     axes[1].xaxis.grid(False)
 
-    # Median wait annotation — position on the "Still Waiting" bar (last bar)
+    # Median wait annotation — positioned cleanly in upper-right empty space above Still Waiting
     still_open_dt = pd.to_datetime(still_open['requestdate'], errors='coerce')
-    waiting_bar_idx = len(categories) - 1
     if len(still_open_dt.dropna()) > 0:
         median_years = (pd.Timestamp.now() - still_open_dt).dt.days.median() / 365.25
-        axes[1].annotate(f'Median wait: {median_years:.1f} years',
-                         xy=(waiting_bar_idx, n_waiting * 0.5), ha='center', fontsize=9,
-                         style='italic', fontweight='bold',
-                         bbox=dict(boxstyle='round', facecolor='lightyellow',
-                                   edgecolor='gray', alpha=0.9))
+        axes[1].annotate(f'Still waiting median age: {median_years:.1f} years',
+                         xy=(0.98, 0.92), xycoords='axes fraction',
+                         ha='right', va='top', fontsize=9,
+                         style='italic', color='#132230',
+                         bbox=dict(boxstyle='round,pad=0.35', facecolor='#F8F7F4',
+                                   edgecolor='#DCE2E8', alpha=0.95))
 
     fig.suptitle(f'QCB5 DOT-Approved Speed Bumps: Post-Approval Outcomes\n(n={n_total:,}, {min_yr}–{max_yr})',
                  fontweight='bold', fontsize=14, y=1.02)
@@ -3834,7 +2333,24 @@ def generate_data_bundle():
     bundle_path = os.path.join(OUTPUT_DIR, f'data_bundle_v{version}.zip')
     root_bundle_path = f'data_bundle_v{version}.zip'
     write_manifest()
-    patterns = ['chart_*.png', 'table_*.csv', 'map_01_*.html',
+    curated = {
+        'snapshot_window': f'{STUDY_START_YEAR}-{LAST_COMPLETE_YEAR}',
+        'canonical_map': 'map_02_interactive_explorer.html',
+        'map_data': 'map_data.json',
+        'summary_charts': [
+            {'file': 'chart_01d_denied_vs_approved.png', 'title': 'QCB5 Signal Study Outcomes: Denied and Approved'},
+            {'file': 'chart_03b_signal_denial_rates.png', 'title': 'QCB5 and Citywide Signal Study Denial Rates by Year'},
+            {'file': 'chart_03d_srts_denial_rates.png', 'title': 'QCB5 and Citywide Speed Bump Denial Rates by Year'},
+            {'file': 'chart_05b_denial_reasons.png', 'title': 'QCB5 Speed Bump Denial Reasons'},
+            {'file': 'chart_09_crash_proximity_analysis.png', 'title': 'Crash Proximity: Denied and Approved Signal Study Locations'},
+            {'file': 'chart_15_srts_funnel.png', 'title': 'QCB5 DOT-Approved Speed Bumps: Post-Approval Outcomes'},
+        ],
+    }
+    with open(os.path.join(OUTPUT_DIR, 'curated_charts.json'), 'w', encoding='utf-8') as cf:
+        json.dump(curated, cf, indent=2)
+
+    patterns = ['chart_*.png', 'table_*.csv', 'map_02_interactive_explorer.html',
+                'map_data.json', 'curated_charts.json',
                 'map_layer_*.csv', 'data_*.csv', 'geocode_cache_*.csv',
                 'METHODOLOGY.md', 'source_manifest.json']
     with zipfile.ZipFile(bundle_path, 'w', zipfile.ZIP_DEFLATED) as zf:
@@ -3880,9 +2396,9 @@ def main():
         U, p = _mann_whitney_u(denied['crashes_150m'].dropna(), approved['crashes_150m'].dropna())
         print(f"    Mann-Whitney U: p={p:.6f}" + (" *" if p < 0.05 else ""))
 
-    # Step 3: Consolidated map (replaces former Maps 01-03)
-    print("\nStep 3: Generating consolidated map...")
-    before_after_df, search_entries, top15, top10_crashes, cb5_aps = map_consolidated(
+    # Step 3: Prepare map layers and map_data.json (legacy Folium map_01 retired)
+    print("\nStep 3: Preparing map layers and map_data.json...")
+    before_after_df, search_entries, top15, top10_crashes, cb5_aps = prepare_map_layers(
         signal_prox, srts_prox, data['cb5_crashes'], data=data)
 
     # Save before-after analysis table

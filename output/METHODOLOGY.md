@@ -2,22 +2,22 @@
 
 ## Queens Community Board 5 — DOT Safety Infrastructure Request Analysis
 
-**Analysis period: 2020–2025** | **Current committed raw snapshot: 2026-05-26** | **Geography: QCB5 (Queens CD5)**
+**Analysis period: 2020–2025** | **Current committed raw snapshot: 2026-10-09** | **Geography: QCB5 (Queens CD5)**
 
-> **Publication readiness note:** Generated CSV tables and map layer exports in `output/` are the source of truth for current counts. This narrative has been aligned to the current committed outputs covered by local validation, but publication still requires human review of the curated Signal Studies subset, the `CQ25-0457B` raw-snapshot mismatch, the duplicate `CQ21-0749` rows, and the 11 unmatched signal-study geocodes.
+> **Publication readiness note:** Generated CSV tables and map layer exports in `output/` are the source of truth for current counts. This narrative has been aligned to the current committed outputs covered by local validation, but publication still requires human review of the curated Signal Studies subset, the `CQ25-0457B` raw-snapshot mismatch, the duplicate `CQ21-0749` rows, and the 10 unmatched signal-study geocodes.
 
 ---
 
 ## 1. Data Sources
 
-The current committed raw CSV snapshot was produced in May 2026 using `scripts_fetch_data.py`. Re-fetching live NYC Open Data sources can change counts because source records continue to be updated.
+The current committed raw CSV snapshot was produced in October 2026 (with crashes updated September 2026) using `scripts_fetch_data.py`. Re-fetching live NYC Open Data sources can change counts because source records continue to be updated.
 
 | Dataset | Endpoint ID | File | Records | Date Range |
 |---------|-------------|------|---------|------------|
-| Signal Studies | `[w76s-c5u4]` | `data_raw/signal_studies_citywide.csv` | 75,339 | 1996–2026 |
-| Speed Reducer Tracking System | `[9n6h-pt9g]` | `data_raw/srts_citywide.csv` | 59,169 | 1990–2026 |
-| Motor Vehicle Collisions | `[h9gi-nx95]` | `data_raw/crashes_queens_2020plus.csv` | 43,394 | 2020–2026 |
-| APS Installed Locations | `[de3m-c5p4]` | `data_raw/aps_installed_citywide.csv` | 4,166 | current installed inventory |
+| Signal Studies | `[w76s-c5u4]` | `data_raw/signal_studies_citywide.csv` | 76,748 | 1996–2026 |
+| Speed Reducer Tracking System | `[9n6h-pt9g]` | `data_raw/srts_citywide.csv` | 60,937 | 1990–2026 |
+| Motor Vehicle Collisions | `[h9gi-nx95]` | `data_raw/crashes_queens_2020plus.csv` | 9,967 | 2020–2026 (CB5 bounding-box injury/fatal candidates; 4,274 inside CB5 polygon for 2020–2025) |
+| APS Installed Locations | `[de3m-c5p4]` | `data_raw/aps_installed_citywide.csv` | 4,404 | current installed inventory |
 | CB5 Signal Studies | Derived | `output/data_cb5_signal_studies.csv` | 499 | 2020–2025 |
 
 `output/data_cb5_signal_studies.csv` is a curated input rather than a file regenerated from raw source data. The current row-level provenance scaffold (`output/data_cb5_signal_studies_provenance.csv`) checks each curated row against the committed citywide Signal Studies snapshot by `id` and `referencenumber`: 495 rows match once, 3 curated rows for `CQ21-0749` match duplicate raw rows, and 1 curated row (`CQ25-0457B`) is not present in the committed raw snapshot. All 499 rows remain marked as needing human review; the scaffold does not by itself validate CB5 inclusion.
@@ -102,13 +102,13 @@ Signal Studies lack source coordinates and a community-board field, so the pipel
 
 CB5 is identified by `cb = '405'` (borough code 4 for Queens + district 05) **plus** a mandatory polygon boundary filter:
 
-1. **Polygon boundary filter**: All records with coordinates are tested against the official CB5 community district polygon (`data_raw/cb5_boundary.geojson`). The polygon is the **sole geographic authority** — no street-name heuristics. Impact: 27 resolved records excluded that pass `cb=405` but fall outside the actual CB5 polygon.
+1. **Polygon boundary filter**: All records with coordinates are tested against the official CB5 community district polygon (`data_raw/cb5_boundary.geojson`). The polygon is the **sole geographic authority** — no street-name heuristics. Impact: 28 resolved records excluded that pass `cb=405` but fall outside the actual CB5 polygon.
 
-**CRITICAL:** Both layers (cb=405 + polygon filter) must be applied together. The `cb=405` field alone includes 27 resolved records outside the actual CB5 polygon. In `generate_maps.py`, the shared `_load_cb5_srts_full()` helper centralizes this pipeline so all SRTS charts use identical filtering. In `generate_charts.py`, the `prepare_data()` function applies the same two-layer pipeline.
+**CRITICAL:** Both layers (cb=405 + polygon filter) must be applied together. The `cb=405` field alone includes 28 resolved records outside the actual CB5 polygon. In `generate_maps.py`, the shared `_load_cb5_srts_full()` helper centralizes this pipeline so all SRTS charts use identical filtering. In `generate_charts.py`, the `prepare_data()` function applies the same two-layer pipeline.
 
 *Note: A cross-street exclusion filter was previously applied but was removed in Feb 2026 after audit revealed it wrongly excluded 67 valid records inside the CB5 polygon (Maspeth area: 52 Ave, 53 Ave, Calamus Ave, Maurice Ave). Boundary streets are partly inside the polygon and must not be excluded by name.*
 
-**Current count (all years):** 2,015 resolved `cb=405` SRTS records -> 1,988 retained after polygon filtering, with 27 excluded. **After 2020–2025 filter (map pipeline):** 436 records.
+**Current count (all years):** 2,170 resolved `cb=405` SRTS records -> 2,142 retained after polygon filtering, with 28 excluded. **After 2020–2025 filter (map pipeline):** 436 records.
 
 ### 4.3 Motor Vehicle Crashes
 
@@ -126,7 +126,7 @@ Point-in-polygon testing uses Shapely with prepared geometry for performance. Al
 
 ---
 
-## 5. Part 1 Charts: Batting Average Analysis
+## 5. Part 1 Charts: Request Outcomes and Volume Analysis
 
 Part 1 (`generate_charts.py`) answers the question: **What are CB5's chances when it asks DOT for safety infrastructure?**
 
@@ -172,9 +172,9 @@ The 100% denial rate for certain request types means there are no approvals for 
 
 ### Chart 05: Speed Bump (SRTS) Analysis
 
-Charts 05a-05c (`chart_05a_queens_cb_denial_rates.png`, `chart_05b_denial_reasons.png`, and `chart_05c_denial_reasons_by_year.png`) provide the QCB5 speed bump outcome deep dive for 2020-2025. Chart 05a compares CB5's denial rate against other Queens community boards, where CB5 ranks near the top. Chart 05b breaks down CB5 denial reasons, showing that "Speed < 30 mph" accounts for 84% of all denials. Chart 05c tracks this dominant reason over time as a stacked bar: the "Speed < 30 mph" share grew from 70% in 2020 to 94% in 2025, increasingly crowding out all other denial reasons.
+Charts 05a-05c (`chart_05a_queens_cb_denial_rates.png`, `chart_05b_denial_reasons.png`, and `chart_05c_denial_reasons_by_year.png`) provide the QCB5 speed bump outcome deep dive for 2020-2025. Chart 05a compares CB5's denial rate against other Queens community boards, where CB5 ranks near the top. Chart 05b breaks down CB5 denial reasons, showing that "Speed < 30 mph" accounts for 84.7% (364 of 430) of all denials. Chart 05c tracks this dominant reason over time as a stacked bar: the "Speed < 30 mph" share grew across the period, increasingly crowding out all other denial reasons.
 
-This chart shows that one recorded denial reason, "Speed < 30 mph," accounts for most QCB5 speed-bump denials in 2020–2025. That reason appears to reflect an 85th-percentile speed threshold, while community safety concerns may also involve crashes, pedestrian conflicts, and street design. A z-series companion (Chart 05z) provides the full SRTS history from 1999–2025 with minimum-n thresholds.
+This chart shows that one recorded denial reason, "Speed < 30 mph," accounts for most QCB5 speed-bump denials in 2020–2025. That DOT engineering criterion reflects **measured 85th-percentile radar travel speed below 30 mph** (not NYC's 25 mph default posted speed limit), while community safety concerns may also involve crashes, pedestrian conflicts, and street design. A z-series companion (Chart 05z) provides the full SRTS history from 1999–2025 with minimum-n thresholds.
 
 ### Chart 06: Most Denied Intersections
 
@@ -190,9 +190,9 @@ These are streets where multiple blocks were requested and denied. Because speed
 
 ### Chart 08: QCB5 Crash Hotspots
 
-Charts 08a and 08b (`chart_08a_crash_count.png` and `chart_08b_crash_injuries.png`) examine QCB5 crash hotspots across n=3,213 injury crashes from 2020-2025. Chart 08a, "Top 10 Streets by Crash Count," ranks streets by number of crash incidents as horizontal bars, where each bar represents a unique collision event. Chart 08b, "Top 10 Streets by Persons Injured," uses stacked horizontal bars to rank streets by total persons injured, broken into three segments: Pedestrians (red, `#B44040`) as the most policy-relevant category, Cyclists (goldenrod, `#B8860B`), and Motorists (tan, `#CC9966`).
+Charts 08a and 08b (`chart_08a_crash_count.png` and `chart_08b_crash_injuries.png`) examine QCB5 crash hotspots across n=4,274 injury and fatal crashes from 2020-2025. Chart 08a, "Top 10 Streets by Crash Count," ranks streets by number of crash incidents as horizontal bars, where each bar represents a unique collision event. Chart 08b, "Top 10 Streets by Persons Injured," uses stacked horizontal bars to rank streets by total persons injured, broken into three segments: Pedestrians, Cyclists, and Motorists.
 
-The two panels differ because a single crash can injure multiple people. Metropolitan Avenue, for example, has 165 crashes but 216 persons injured (approximately 1.3 per crash). The stacked breakdown reveals that pedestrians bear a disproportionate share of injuries on the most dangerous corridors. NYC crash data contains inconsistent naming ("METROPOLITAN AVENUE" and "METROPOLITAN AVE" with trailing spaces), so a normalization function standardizes street names before grouping.
+The two panels differ because a single crash can injure multiple people. Metropolitan Avenue, for example, has 197 crashes and 254 persons injured (approximately 1.3 per crash). The stacked breakdown shows which road users bear injuries on each corridor. NYC crash data contains inconsistent naming ("METROPOLITAN AVENUE" and "METROPOLITAN AVE" with trailing spaces), so a normalization function standardizes street names before grouping.
 
 This chart establishes the **crash baseline**: where injury crashes are recorded and which road users are injured. The pedestrian injury breakdown is relevant to the safety infrastructure analyzed here, but the chart is descriptive; overlaps between crash hotspots and denial hotspots identify locations for closer review rather than proving why individual decisions were made.
 
@@ -218,8 +218,8 @@ Signal study records have street names but no coordinates. A three-tier local ge
 | 2 | **SRTS data matching** — Match to SRTS `(onstreet, fromstreet/tostreet)` endpoint coordinates, using the matching segment endpoint | 28% (119) |
 | 3 | **Street-line intersection** — Linear regression through known points for each street, then geometric intersection | 9% (39) |
 | Manual | **Reviewed local override** | <1% (1) |
-| — | **Unmatched** | 3% (11) |
-| **Total** | | **97% geocoded (421/432 current resolved non-APS rows)** |
+| — | **Unmatched** | 2% (10) |
+| **Total** | | **98% geocoded (422/432 current resolved non-APS rows)** |
 
 Street name normalization (uppercase, abbreviation expansion, whitespace collapse) is applied before all matching. Both orderings of street pairs are tried. Tier 3 results are validated against CB5 polygon bounds.
 
@@ -239,19 +239,19 @@ Denied and approved location crash distributions are compared using the **Mann-W
 
 ### Chart 09: Crash Proximity Analysis
 
-Chart 09 (`chart_09_crash_proximity_analysis.png`) presents the central statistical test of this analysis. It displays grouped bars comparing denied (red) and approved (green) locations on three metrics — median crashes, injuries, and pedestrian injuries within 150 meters — with the Mann-Whitney U test p-value annotated on each panel. The current generated signal-study panel covers 421 geocoded Signal Study locations (380 denied, 42 approved), and the SRTS panel covers 436 Speed Bump locations (430 denied, 6 approved).
+Chart 09 (`chart_09_crash_proximity_analysis.png`) presents the central statistical test of this analysis. It displays grouped bars comparing denied and approved locations on three metrics — median crashes, injuries, and pedestrian injuries within 150 meters — with the Mann-Whitney U test p-value annotated on each panel. The current generated signal-study panel covers 422 geocoded Signal Study locations (380 denied, 42 approved), and the SRTS panel (`chart_09a_srts_crash_proximity.png`) covers 436 Speed Bump locations (430 denied, 6 approved).
 
-For signal studies, denied locations have significantly more crashes than approved locations (median 15 for denied locations, 11 for approved locations, p=0.000743), a result that is statistically significant at the 1% level. Denied locations also show higher injuries (21 for denied locations, 13.5 for approved locations) and higher median pedestrian injuries (3 for denied locations, 2 for approved locations). For SRTS, there is no statistically significant difference (median 11 for denied locations, 8 for approved locations, p=0.464641); this is consistent with the documented role of the radar-speed criterion in speed bump decisions.
+For signal studies, denied locations have significantly more crashes than approved locations (median 15.0 for denied locations, 10.0 for approved locations, p=0.000743), a result that is statistically significant at the 1% level. Denied locations also show higher median injuries (21.0 for denied locations, 11.0 for approved locations) and higher median pedestrian injuries (3.0 for denied locations, 2.0 for approved locations). For SRTS, there is no statistically significant difference (median 12.0 for denied locations, 8.0 for approved locations, p=0.464641); this is consistent with the documented role of the radar-speed criterion in speed bump decisions.
 
 This is the central statistical finding of the analysis. Within the geocoded signal-study subset, denied signal and stop sign locations have higher nearby injury-crash counts than approved locations (Mann-Whitney p=0.000743). This supports further review of whether approval criteria are prioritizing documented crash exposure. It does not by itself prove causation or show DOT intent, and p-values are not the probability that a result is "due to chance." The non-significant SRTS result is consistent with the documented role of radar speed in speed bump decisions, but it does not prove that crash history is ignored in every decision.
 
 ### Chart 09b: Top 15 Denied Locations in QCB5 by Nearby Crash/Injury Count
 
-Chart 09b (`chart_09b_denied_locations_crash_ranking.png`) identifies the denied signal study locations surrounded by the most crashes in a dual-panel horizontal bar chart for QCB5, 2020–2025. **SRTS locations are excluded** because their segment-based coordinates create methodological issues with 150m overlap analysis, and speed bumps lack cross-street data needed for intersection-level precision. The left panel ranks the top 15 denied locations by crash count within 150 meters, while the right panel independently ranks the top 15 by injury count — producing a different set of locations. Street names are abbreviated for readability (Avenue→Ave, Street→St, Road→Rd, Boulevard→Blvd, Turnpike→Tpke, Place→Pl).
+Chart 09b (`chart_09b_denied_locations_crash_ranking.png`) identifies the denied signal study locations surrounded by the most crashes in a horizontal bar chart for QCB5, 2020–2025, paired with Chart 09c (`chart_09c_denied_locations_injury_ranking.png`) for injuries. **SRTS locations are excluded** because their segment-based coordinates create methodological issues with 150m overlap analysis, and speed bumps lack cross-street data needed for intersection-level precision. Street names are abbreviated for readability (Avenue→Ave, Street→St, Road→Rd, Boulevard→Blvd, Turnpike→Tpke, Place→Pl).
 
 Three layers of de-duplication are applied before ranking. First, `_normalize_intersection()` sorts street names alphabetically so that "Cooper Ave & Cypress Ave" and "Cypress Ave & Cooper Ave" are treated as the same location. Second, a name-based groupby aggregates records sharing the same normalized intersection name, keeping the row with the highest crash count. Third, `_spatial_dedup(df, radius_m=150)` applies a greedy algorithm: locations are sorted by crashes descending, and any location within 150 meters (haversine distance) of an already-selected location is skipped. The 150-meter spatial dedup radius matches the analysis radius because two denied locations 100 meters apart would share most of the same crash pool, creating the appearance of distinct hotspots when the crash exposure is largely the same.
 
-The top denied location (Aubrey Ave & Metropolitan Ave) has 66 crashes and 101 injuries within 150 meters — more than many locations where DOT has approved infrastructure. These are specific, nameable locations with denied requests and documented nearby crash exposure.
+In the current committed snapshot (`table_09c_top_denied_by_crashes.csv`), the top denied intersection is Borden Avenue & Maurice Avenue (`CQ21-1110B`), with 120 crashes, 188 injuries, and 4 fatalities within 150 meters; Aubrey Avenue & Metropolitan Avenue (`CQ21-2789B`) ranks fourth with 70 crashes and 105 injuries. These are specific, nameable locations with denied requests and documented nearby crash exposure.
 
 ### Chart 15: SRTS Approval Funnel
 
@@ -263,12 +263,11 @@ This is the full lifecycle view of an SRTS approval. The current output shows th
 
 ## 7. Interactive Map
 
-### Map 01: Consolidated Safety Infrastructure Map
+### Map 02: Interactive Safety Infrastructure Explorer (Canonical)
 
-- **File:** `map_01_crash_denial_overlay.html`
-- **Base tiles:** CartoDB Positron No Labels — clean, minimal, print-friendly
-- **Typography:** Times New Roman via injected CSS
-- **Dynamic title:** Updates via JavaScript MutationObserver based on active layer checkboxes
+- **Files:** `map_02_interactive_explorer.html` (approx. 50 KB shell) + external versioned `map_data.json` (1.6 MB). Legacy 17 MB Folium overlay output has been retired.
+- **Base tiles:** CARTO Positron (`light_all`) and Dark Matter (`dark_all`), switching automatically with Electoral Analytics light/dark color scheme.
+- **Typography & controls:** IBM Plex Sans / Spectral / IBM Plex Mono; collapsible controls rail with 2020–2025 default year filter, reference-number search, layer toggles, and verified SHA-384 CDN integrity hashes.
 
 ### 7.1 Map Layers
 
@@ -427,10 +426,10 @@ A comprehensive data integrity audit was conducted across all charts and data pi
 | 6 | **Chart 09b right panel not independently sorted** | Right panel (injuries) used left panel's crash-count sort order instead of sorting independently by injury count. | Each panel now independently selects and sorts its own top 15. |
 
 **Data verified as correct:**
-- Crash uniqueness: 3,213 rows with 3,213 unique `collision_id` values — no source-level duplication.
+- Crash uniqueness: 4,274 injury and fatal crash rows in the current 2020–2025 CB5 polygon snapshot with unique `collision_id` values — no source-level duplication.
 - CB5 polygon bounds verified: lat 40.6823–40.7351, lon -73.9245 to -73.8553.
-- Proximity methodology sound: 66 crashes near top location (Aubrey Ave & Metropolitan Ave) are 66 genuinely different collision events at multiple unique coordinate points within 150m.
-- 68.7% of crashes share exact coordinates with at least one other crash — expected behavior (multiple crashes at the same intersection over time).
+- Proximity methodology sound: nearby crash counts (such as 120 crashes within 150m of Borden Ave & Maurice Ave, and 70 near Aubrey Ave & Metropolitan Ave) represent distinct collision events within 150m.
+- Multiple crashes share exact intersection coordinates over time — expected behavior for repeated collisions at the same intersection.
 
 **Documentation errors that contributed to bugs:**
 - `AGENTS.md` / README CB5 identification notes once listed only `cb='405'` for SRTS without mentioning mandatory polygon filter — this omission led to charts being built without proper filtering.
@@ -448,12 +447,12 @@ All documentation updated to prevent recurrence.
 
 2. **QCB5's speed bump denial rate has reached 99–100%** in recent years, with "Speed < 30 mph" recorded as the dominant denial reason.
 
-3. **Denied signal study locations have significantly more nearby crashes than approved locations** in the geocoded subset (median 15 for denied locations, 11 for approved locations, Mann-Whitney p=0.000743). This is evidence that approval criteria should be reviewed against documented crash exposure; it is not, by itself, proof of causation or intent.
+3. **Denied signal study locations have significantly more nearby crashes than approved locations** in the geocoded subset (median 15.0 for denied locations, 10.0 for approved locations, Mann-Whitney p=0.000743). This is evidence that approval criteria should be reviewed against documented crash exposure; it is not, by itself, proof of causation or intent.
 
 4. **Only 3.6% of signal study requests and 5.7% of speed bump requests result in confirmed installations.** Approval counts overstate confirmed infrastructure delivery by roughly 2x.
 
-5. **26 of 41 approved signal studies (after dedup) have no installation date.** The 15 confirmed installations had a maximum wait of 456 days; 24 of the 26 uninstalled approvals have been waiting longer. The oldest dates to November 2021 — 51 months and counting.
+5. **26 of 41 approved signal studies (after dedup) have no installation date.** The 15 confirmed installations had a maximum wait of 456 days; 24 of the 26 uninstalled approvals have been waiting longer.
 
-6. **For SRTS, more approvals were cancelled after the fact (134) than were actually installed (110).** 10 locations remain in limbo.
+6. **For SRTS, more approvals were cancelled after the fact (134) than were actually installed (110).** 10 locations remain open without installation.
 
-7. **Where DOT does install, injuries decrease by 21.5%.** The infrastructure works — the bottleneck is deployment, not design.
+7. **Across the 15 installed signal-study intersections with matched before-and-after windows (`table_before_after_installed.csv`), nearby crashes fell from 80 to 64 (-20.0%) and injuries fell from 99 to 69 (-30.3%).** Because this is a small uncontrolled before-and-after series (n=15) without a matched comparison group, it is descriptive and does not isolate regression to the mean or citywide crash trends.

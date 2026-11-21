@@ -33,46 +33,56 @@ LAST_COMPLETE_YEAR = datetime.date.today().year - 1   # complete calendar years 
 CB5_BOUNDARY_PATH = f"{DATA_DIR}/cb5_boundary.geojson"
 CB5_BOUNDARY_URL = "https://raw.githubusercontent.com/nycehs/NYC_geography/master/CD.geo.json"
 
-# Academic styling - Times New Roman, formal appearance
+# Editorial styling — Option A Civic Broadsheet sans-serif
 plt.rcParams.update({
-    'font.family': 'serif',
-    'font.serif': ['Times New Roman', 'DejaVu Serif', 'Liberation Serif'],
-    'font.size': 11,
-    'axes.titlesize': 13,
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['IBM Plex Sans', 'DejaVu Sans', 'Helvetica', 'Arial'],
+    'font.size': 10.5,
+    'text.color': '#132230',
+    'axes.labelcolor': '#4D5E6D',
+    'axes.edgecolor': '#BAC6D3',
+    'axes.linewidth': 0.8,
+    'axes.titlesize': 12.5,
     'axes.titleweight': 'bold',
-    'axes.labelsize': 11,
+    'axes.labelsize': 10.5,
     'axes.labelweight': 'bold',
     'axes.spines.top': False,
     'axes.spines.right': False,
-    'xtick.labelsize': 10,
-    'ytick.labelsize': 10,
-    'legend.fontsize': 10,
+    'xtick.labelsize': 9.5,
+    'ytick.labelsize': 9.5,
+    'xtick.color': '#4D5E6D',
+    'ytick.color': '#4D5E6D',
+    'legend.fontsize': 9.5,
+    'legend.frameon': True,
+    'legend.facecolor': '#FFFFFF',
+    'legend.edgecolor': '#DCE2E8',
     'figure.dpi': 150,
     'savefig.dpi': 300,
     'axes.grid': True,
-    'grid.alpha': 0.3,
-    'grid.linestyle': '--'
+    'grid.color': '#DCE2E8',
+    'grid.alpha': 0.7,
+    'grid.linestyle': '--',
 })
 
-# Color scheme — unified palette
+# Color scheme — Option A Civic Broadsheet unified palette
 COLORS = {
-    'primary': '#2C5F8B',      # Navy blue — CB5 / main data
-    'secondary': '#666666',     # Gray — citywide lines in trend charts
-    'citywide': '#B8860B',     # Dark goldenrod — citywide comparison bars
-    'cb5_highlight': '#1a1a1a', # Black — CB5 bar in ranked comparisons
-    'denied': '#B44040',       # Muted red — denial-themed bars (unified w/ maps)
-    'approved': '#4A7C59',     # Muted green — approval-themed bars (unified w/ maps)
-    'avg_line': '#B8860B',     # Dark goldenrod dashed — citywide average reference lines
-    'crash': '#996633',        # Warm brown — crash data (unified w/ maps)
-    'crash_alt': '#CC9966',    # Lighter warm brown — injury data (unified w/ maps)
-    'aps': '#7B68AE',         # Purple — APS-specific charts
+    'primary': '#1D4B73',      # Civic navy — CB5 / main data
+    'secondary': '#64748B',    # Slate — citywide lines in trend charts
+    'citywide': '#B5882B',     # Editorial gold — citywide comparison bars/lines
+    'cb5_highlight': '#132230', # Deep ink — CB5 bar in ranked comparisons
+    'denied': '#A63A32',       # Muted crimson — denial-themed bars (unified w/ maps)
+    'approved': '#3E7B57',     # Civic green — approval-themed bars (unified w/ maps)
+    'avg_line': '#B5882B',     # Editorial gold dashed — citywide average reference lines
+    'crash': '#4E6B84',        # Slate-navy — crash data (unified w/ maps)
+    'crash_alt': '#94ADC4',    # Light slate-blue — injury data (unified w/ maps)
+    'aps': '#6B5B95',          # Muted violet — APS-specific charts
 }
 
 # Denial-reason gradient (darkest to lightest, for ranked horizontal bars)
-DENIAL_SHADES = ['#8B2020', '#B44040', '#C46060', '#D48080', '#DDA0A0', '#E6B8B8', '#EED0D0']
+DENIAL_SHADES = ['#7F2822', '#A63A32', '#BD5850', '#CF7A73', '#DDA09A', '#E8C0BC', '#F2DCDA']
 
-# Categorical palette (for pie charts, multi-line series, etc.)
-CATEGORY_PALETTE = ['#2C5F8B', '#B8860B', '#8B0000', '#006400', '#7B5EA7', '#4A7C6F', '#666666']
+# Categorical palette (for multi-line series, stacked bars, etc.)
+CATEGORY_PALETTE = ['#1D4B73', '#B5882B', '#A63A32', '#3E7B57', '#6B5B95', '#4E6B84', '#64748B']
 
 
 def _load_cb5_boundary():
@@ -839,11 +849,10 @@ def chart_03b_signal_denial_rates(data):
             color=COLORS['citywide'], linestyle='--', label='Citywide', zorder=3)
 
     sig_avg_rate = cb5_sig['denied'].sum() / cb5_sig['resolved'].sum() * 100
-    ax.axhline(y=sig_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.2, alpha=0.7, zorder=2)
-    ax.text(cb5_sig.index.min() - 0.1, sig_avg_rate + 1.2,
-            f'QCB5 Avg {sig_avg_rate:.0f}%', fontsize=8, color=COLORS['denied'], ha='left')
+    ax.axhline(y=sig_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.4,
+               alpha=0.85, zorder=2, label=f'QCB5 6-yr avg ({sig_avg_rate:.1f}%)')
 
-    ax.set_title(f'QCB5 and Citywide Signal Study Denial Rates by Year\n(Excl. APS, n={int(cb5_sig["total"].sum()):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
+    ax.set_title(f'QCB5 and Citywide Signal Study Denial Rates by Year\n(Excl. APS, n={int(cb5_sig["resolved"].sum()):,} resolved, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
     ax.set_xlabel('Year')
     ax.set_ylabel('Denial Rate (%)')
     ax.legend(loc='lower right')
@@ -915,9 +924,8 @@ def chart_03d_srts_denial_rates(data):
             color=COLORS['citywide'], linestyle='--', label='Citywide', zorder=3)
 
     srts_avg_rate = cb5_srts['denied'].sum() / cb5_srts['total'].sum() * 100
-    ax.axhline(y=srts_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.2, alpha=0.7, zorder=2)
-    ax.text(cb5_srts.index.min() - 0.1, srts_avg_rate + 1.2,
-            f'QCB5 Avg {srts_avg_rate:.0f}%', fontsize=8, color=COLORS['denied'], ha='left')
+    ax.axhline(y=srts_avg_rate, color=COLORS['denied'], linestyle=':', linewidth=1.4,
+               alpha=0.85, zorder=2, label=f'QCB5 6-yr avg ({srts_avg_rate:.1f}%)')
 
     ax.set_title(f'QCB5 and Citywide Speed Bump Denial Rates by Year\n(n={int(cb5_srts["total"].sum()):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
     ax.set_xlabel('Year')
@@ -1187,8 +1195,9 @@ def chart_05a_queens_cb_denial_rates(data):
                 f'{rate:.0f}%', va='center', ha='left', fontsize=9)
 
     ax.axvline(x=queens_denial_rate, color=COLORS['denied'], linestyle='--', linewidth=1.5, zorder=4)
-    ax.text(queens_denial_rate - 1, -0.8, f'Queens Avg {queens_denial_rate:.1f}%',
-            ha='right', fontsize=8, color=COLORS['denied'])
+    ax.set_ylim(-1.15, len(cb_labels) - 0.25)
+    ax.text(queens_denial_rate - 1.5, -0.82, f'Queens Avg {queens_denial_rate:.1f}%',
+            ha='right', va='center', fontsize=8.5, fontweight='bold', color=COLORS['denied'])
 
     ax.set_xlabel('Denial Rate (%)', fontweight='bold')
     ax.set_title(f'Speed Bump Denial Rates by Queens Community Board\n(n={len(queens_srts):,}, {STUDY_START_YEAR}–{LAST_COMPLETE_YEAR})', fontweight='bold', fontsize=12)
@@ -1250,8 +1259,10 @@ def chart_05b_denial_reasons(data):
     ax.set_xlim(0, reason_counts.max() * 1.15)
     ax.yaxis.grid(False)
 
-    fig.text(0.01, -0.02, 'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]',
-             ha='left', fontsize=9, style='italic', color='#333333')
+    fig.text(0.01, -0.05,
+             'Source: NYC Open Data — Speed Reducer Tracking System [9n6h-pt9g]\n'
+             'Note: "Speed < 30 mph" reflects DOT measured 85th-percentile radar travel speed below 30 mph, not NYC\'s 25 mph posted speed limit.',
+             ha='left', fontsize=8.5, style='italic', color='#4D5E6D')
 
     plt.tight_layout()
     plt.savefig(f'{OUTPUT_DIR}/chart_05b_denial_reasons.png', dpi=300,

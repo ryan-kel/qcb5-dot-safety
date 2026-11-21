@@ -23,7 +23,7 @@ python -m unittest discover -s tests
 
 This path uses the committed `data_raw/` snapshot. Do not run `scripts_fetch_data.py` first unless you are intentionally refreshing source data.
 
-> Validator status (2026-11-08): `scripts_validate_outputs.py` exists only in `git stash@{0}` (2026-06-25 WIP, untracked-files parent) and its pinned snapshot constants predate the current committed `data_raw/` (trial run on 2026-11-08 failed on raw row counts). Restoring it requires re-baselining its pins against the current snapshot — a data-owner task, not a mechanical update. Until then the reproduce path above is generate + unittest only.
+> Validator status (2026-11-08): `scripts_validate_outputs.py` exists only in `git stash@{0}` (2026-06-25 WIP, untracked-files parent) and its pinned snapshot constants predate the current committed `data_raw/` (trial run on 2026-11-08 failed on raw row counts). Restoring it requires re-baselining its pins against the current snapshot, which is a data-owner task rather than a mechanical update. Until then the reproduce path above is generate + unittest only.
 
 ## Live Data Refresh
 

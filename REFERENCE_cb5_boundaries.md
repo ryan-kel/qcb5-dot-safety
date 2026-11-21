@@ -70,11 +70,11 @@ SRTS records pass through two filtering layers:
 
 | Step | Metric | Count |
 |------|--------|-------|
-| 1 | Resolved raw records (`cb=405`) | 2,015 |
-| 2 | After polygon boundary filter | 1,988 |
-| — | Excluded by polygon filter | 27 |
+| 1 | Resolved raw records (`cb=405`) | 2,170 |
+| 2 | After polygon boundary filter | 2,142 |
+| — | Excluded by polygon filter | 28 |
 
-The 27 excluded records have coordinates that fall outside the official CB5 boundary geometry. **The polygon is the sole authority** (see `_load_cb5_srts_full()` in `generate_maps.py` and the SRTS preparation path in `generate_charts.py`).
+The 28 excluded records have coordinates that fall outside the official CB5 boundary geometry. **The polygon is the sole authority** (see `_load_cb5_srts_full()` in `generate_maps.py` and the SRTS preparation path in `generate_charts.py`).
 
 ## Sources
 

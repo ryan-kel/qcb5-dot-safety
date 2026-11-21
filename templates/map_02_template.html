@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCB5 Safety Request Outcomes: Signal Studies and Speed Bumps with Injury and Fatal Crashes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Spectral:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" integrity="sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+" crossorigin=""/>
+<script>
+(function () {
+  var key = 'ea-color-scheme';
+  var media = window.matchMedia('(prefers-color-scheme: dark)');
+  var pref = 'light';
+  try { pref = localStorage.getItem(key) || 'light'; } catch (_) {}
+  function valid(v) { return v === 'light' || v === 'dark' || v === 'system'; }
+  function apply(v, persist) {
+    pref = valid(v) ? v : 'light';
+    var resolved = pref === 'system' ? (media.matches ? 'dark' : 'light') : pref;
+    document.documentElement.dataset.colorScheme = resolved;
+    document.documentElement.style.colorScheme = resolved;
+    if (persist) { try { localStorage.setItem(key, pref); } catch (_) {} }
+    var btn = document.getElementById('ea-theme-toggle');
+    if (btn) {
+      btn.textContent = resolved === 'dark' ? 'Light mode' : 'Dark mode';
+      btn.setAttribute('aria-pressed', resolved === 'dark' ? 'true' : 'false');
+    }
+    if (typeof window.__eaOnThemeChange === 'function') window.__eaOnThemeChange(resolved);
+  }
+  window.eaColorScheme = {
+    get: function () { return document.documentElement.dataset.colorScheme || 'light'; },
+    set: function (v) { apply(v, true); },
+    toggle: function () { apply(window.eaColorScheme.get() === 'dark' ? 'light' : 'dark', true); }
+  };
+  apply(pref, false);
+  media.addEventListener('change', function () { if (pref === 'system') apply(pref, false); });
+  window.addEventListener('storage', function (e) { if (e.key === key) apply(e.newValue || 'light', false); });
+})();
+</script>
+<style>
+:root {
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --paper: #F8F7F4;
+  --card: #FFFFFF;
+  --soft: #F1EFEA;
+  --ink: #132230;
+  --dim: #465766;
+  --muted: #556575;
+  --navy: #1D4B73;
+  --navy-dark: #132230;
+  --gold: #B5882B;
+  --gold-text: #7C5B12;
+  --rule: #D6DDE5;
+  --rule-soft: #E6EBF0;
+  --map-bg: #EAECEF;
+  --focus-ring: #1D4B73;
+  /* CVD-safe request & crash tokens (zero Red/Green collision) */
+  --denied: #C43E2F;
+  --approved: #1D6F8A;
+  --aps: #5B4B9E;
+  --crash-inj: #3D5B78;
+  --crash-fatal: #132230;
+  --worsened: #C45A28;
+  --bar-h: 44px;
+  --rail-w: 356px;
+}
+html[data-color-scheme="dark"] {
+  --paper: #0E1722;
+  --card: #162332;
+  --soft: #1E2F42;
+  --ink: #E9EEF4;
+  --dim: #B2C2D2;
+  --muted: #96A9BC;
+  --navy: #7CB4E2;
+  --navy-dark: #0A121C;
+  --gold: #D4AC54;
+  --gold-text: #E2BE68;
+  --rule: #2A3D52;
+  --rule-soft: #213245;
+  --map-bg: #101B27;
+  --focus-ring: #8EC5F0;
+  --denied: #F0786B;
+  --approved: #5CC4E0;
+  --aps: #A99BE8;
+  --crash-inj: #8EB4D6;
+  --crash-fatal: #FFFFFF;
+  --worsened: #F29A63;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body { font-family: var(--font-sans); font-size: 13px; line-height: 1.45; background: var(--paper); color: var(--ink); }
+body.embedded { --bar-h: 0px; }
+
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.ea-standalone-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h); z-index: 1200;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 0 14px; background: var(--navy-dark); color: #F8F7F4;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14); font-size: 13px;
+}
+body.embedded .ea-standalone-bar { display: none; }
+.ea-bar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ea-back-link {
+  color: #F8F7F4; text-decoration: none; font-weight: 600; white-space: nowrap;
+  min-height: 36px; display: inline-flex; align-items: center; padding: 0 4px;
+}
+.ea-back-link:hover { text-decoration: underline; }
+.ea-bar-sep { color: rgba(248, 247, 244, 0.45); }
+.ea-bar-title {
+  font-family: var(--font-serif); font-size: 14px; font-weight: 600;
+  color: #F8F7F4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ea-theme-toggle {
+  font-family: var(--font-sans); font-size: 12px; font-weight: 600;
+  min-height: 32px; padding: 4px 10px; border-radius: 4px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.14); color: #F8F7F4;
+  border: 1px solid rgba(255, 255, 255, 0.28); white-space: nowrap;
+}
+.ea-theme-toggle:hover { background: rgba(255, 255, 255, 0.24); }
+
+.ea-shell {
+  position: fixed; top: var(--bar-h); left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: row; overflow: hidden; background: var(--paper);
+}
+.ea-rail {
+  width: var(--rail-w); flex-shrink: 0; height: 100%;
+  background: var(--card); border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; z-index: 1010;
+}
+body.rail-collapsed .ea-rail { display: none; }
+
+.ea-rail-head {
+  display: flex; align-items: stretch; justify-content: space-between;
+  background: var(--navy-dark); color: #F8F7F4; flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ea-sheet-title { display: none; align-items: center; padding: 0 14px; font-size: 13.5px; font-weight: 700; color: #F8F7F4; }
+.ea-rail-tabs { display: flex; flex: 1; min-width: 0; }
+.ea-rail-tab {
+  flex: 1; min-height: 44px; padding: 8px 6px;
+  background: transparent; border: none; border-bottom: 3px solid transparent;
+  color: #CBD5E1; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  white-space: nowrap;
+}
+.ea-rail-tab:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.08); }
+.ea-rail-tab[aria-selected="true"] { color: #FFFFFF; border-bottom-color: var(--gold); background: rgba(255, 255, 255, 0.06); }
+.ea-tab-badge {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  padding: 1px 5px; border-radius: 10px; background: rgba(255, 255, 255, 0.16); color: #F8F7F4;
+}
+.ea-pin-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); display: none; flex-shrink: 0; }
+.ea-pin-dot.active { display: inline-block; }
+.ea-rail-close {
+  width: 44px; min-height: 44px; border: none; background: transparent;
+  color: #E2E8F0; font-size: 18px; line-height: 1; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+.ea-rail-close:hover { background: rgba(255, 255, 255, 0.14); color: #FFFFFF; }
+
+.ea-rail-body { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+.ea-tabpanel[hidden] { display: none; }
+.ea-section { padding: 10px 14px; border-bottom: 1px solid var(--rule-soft); }
+.ea-section:last-child { border-bottom: none; }
+.ea-section-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--navy); margin-bottom: 7px;
+}
+
+/* Search combobox */
+.ea-combo { position: relative; }
+.ea-combo-label { display: block; font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+.ea-combo-row { display: flex; gap: 6px; }
+.ea-combo-input {
+  flex: 1; min-height: 38px; padding: 6px 10px; font-family: var(--font-sans); font-size: 13px;
+  color: var(--ink); background: var(--soft); border: 1px solid var(--rule); border-radius: 5px;
+}
+.ea-combo-clear {
+  min-width: 38px; min-height: 38px; padding: 0 10px; border-radius: 5px;
+  border: 1px solid var(--rule); background: var(--card); color: var(--dim);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.ea-combo-clear[hidden] { display: none; }
+.ea-combo-list {
+  position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 1060;
+  list-style: none; max-height: 230px; overflow-y: auto;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(19, 34, 48, 0.22);
+}
+.ea-combo-list[hidden] { display: none; }
+.ea-combo-opt {
+  padding: 8px 10px; min-height: 38px; cursor: pointer;
+  border-bottom: 1px solid var(--rule-soft); display: flex;
+  justify-content: space-between; align-items: baseline; gap: 8px; font-size: 12.5px;
+}
+.ea-combo-opt:last-child { border-bottom: none; }
+.ea-combo-opt:hover, .ea-combo-opt[aria-selected="true"] { background: var(--soft); color: var(--navy); }
+.ea-combo-sub { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+
+/* Year filter */
+.year-filter { display: flex; align-items: flex-end; gap: 6px; flex-wrap: wrap; }
+.year-field { flex: 1; min-width: 82px; }
+.year-field label { display: block; font-size: 12px; font-weight: 600; color: var(--dim); margin-bottom: 3px; }
+.ea-select {
+  width: 100%; min-height: 36px; padding: 5px 8px; font-family: var(--font-sans); font-size: 13px;
+  color: var(--ink); background: var(--soft); border: 1px solid var(--rule); border-radius: 5px;
+}
+.btn-apply, .btn-reset {
+  min-height: 36px; padding: 6px 11px; border-radius: 5px;
+  font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.btn-apply { background: var(--navy); color: #FFFFFF; border: 1px solid var(--navy); }
+html[data-color-scheme="dark"] .btn-apply { color: #0A121C; }
+.btn-reset { background: var(--soft); color: var(--ink); border: 1px solid var(--rule); }
+.btn-reset:hover { border-color: var(--navy); color: var(--navy); }
+
+/* Layer checkboxes (>= 32px desktop, >= 44px mobile) */
+.layer-group-head { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 7px 0 3px; }
+.layer-group-head:first-child { margin-top: 0; }
+.ea-choice {
+  display: flex; align-items: center; gap: 10px; min-height: 32px;
+  padding: 4px 6px; border-radius: 5px; cursor: pointer; font-size: 13px; color: var(--ink);
+}
+.ea-choice:hover { background: var(--soft); }
+.ea-choice input { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--navy); cursor: pointer; }
+.layer-count { font-family: var(--font-mono); color: var(--muted); font-size: 12px; margin-left: auto; font-variant-numeric: tabular-nums; }
+
+.ea-details summary {
+  cursor: pointer; list-style: none; min-height: 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--navy); user-select: none;
+}
+.ea-details summary::-webkit-details-marker { display: none; }
+.ea-details summary::after { content: "+"; font-family: var(--font-mono); font-size: 15px; }
+.ea-details[open] summary::after { content: "\2212"; }
+.ea-details-body { margin-top: 6px; }
+
+/* Inspect panel */
+.ea-empty-state { padding: 18px 14px; color: var(--dim); font-size: 13px; line-height: 1.55; }
+.ea-empty-state strong { display: block; color: var(--ink); margin-bottom: 6px; font-family: var(--font-serif); font-size: 15px; }
+.ea-inspect-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+  margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+}
+.ea-inspect-title { font-family: var(--font-serif); font-size: 16.5px; font-weight: 700; color: var(--navy); line-height: 1.25; }
+.ea-inspect-ref { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 2px; }
+.ea-btn-secondary {
+  min-height: 36px; padding: 6px 10px; border-radius: 5px;
+  background: var(--soft); color: var(--ink); border: 1px solid var(--rule);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.ea-btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+.outcome-badge {
+  display: inline-block; font-family: var(--font-sans); font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+.outcome-denied { background: rgba(196, 62, 47, 0.14); color: var(--denied); }
+.outcome-approved { background: rgba(29, 111, 138, 0.16); color: var(--approved); }
+.outcome-aps { background: rgba(91, 75, 158, 0.15); color: var(--aps); }
+.outcome-crash { background: var(--soft); color: var(--ink); border: 1px solid var(--rule); }
+
+.ea-subhead { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--navy); margin: 11px 0 4px; }
+.stat-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+  padding: 4px 0; border-bottom: 1px solid var(--rule-soft); font-size: 12.5px;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row .label { color: var(--dim); }
+.stat-row .value { font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; }
+.ea-method-note { font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 9px; }
+
+/* List tab */
+.ea-list-controls {
+  display: flex; flex-direction: column; gap: 8px; padding: 11px 14px;
+  border-bottom: 1px solid var(--rule); background: var(--card); position: sticky; top: 0; z-index: 5;
+}
+.ea-list-controls label { font-size: 12px; font-weight: 600; color: var(--dim); display: block; margin-bottom: 3px; }
+.ea-list-rows { list-style: none; }
+.ea-list-btn {
+  width: 100%; text-align: left; background: transparent; border: none;
+  border-bottom: 1px solid var(--rule-soft); padding: 10px 14px; min-height: 48px;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  color: var(--ink); font-family: var(--font-sans);
+}
+.ea-list-btn:hover { background: var(--soft); }
+.ea-list-btn.is-selected { background: var(--soft); border-left: 3px solid var(--navy); padding-left: 11px; }
+.ea-list-name { font-size: 13px; font-weight: 600; color: var(--ink); display: block; }
+.ea-list-meta { font-size: 12px; color: var(--muted); display: block; }
+.ea-list-val { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+
+.sources-wrap { padding: 11px 14px; border-top: 1px solid var(--rule-soft); font-size: 12px; color: var(--muted); line-height: 1.55; }
+.sources-wrap a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+body.embedded .sources-wrap { display: none; }
+
+/* Map stage */
+.ea-stage { position: relative; flex: 1; min-width: 0; height: 100%; background: var(--map-bg); }
+#map { position: absolute; inset: 0; z-index: 1; background: var(--map-bg); }
+.leaflet-container { background: var(--map-bg); font: 12.5px/1.45 var(--font-sans); }
+.leaflet-control-attribution {
+  background: rgba(248, 247, 244, 0.9) !important; color: var(--dim) !important;
+  font-size: 12px !important; line-height: 24px !important; padding: 0 6px !important;
+}
+html[data-color-scheme="dark"] .leaflet-control-attribution { background: rgba(14, 23, 34, 0.9) !important; color: var(--dim) !important; }
+.leaflet-control-attribution a { color: var(--navy) !important; display: inline-block; min-height: 24px; padding: 0 2px; }
+.leaflet-overlay-pane path[stroke-dasharray] { pointer-events: none !important; }
+
+.ea-rail-open {
+  display: none; position: absolute; top: 12px; left: 12px; z-index: 1005;
+  min-height: 44px; padding: 0 14px; border-radius: 6px;
+  background: var(--navy-dark); color: #F8F7F4; border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(19, 34, 48, 0.24); align-items: center; gap: 6px;
+}
+body.rail-collapsed .ea-rail-open { display: inline-flex; }
+.ea-rail-open:hover { background: var(--navy); color: #FFFFFF; }
+
+.ea-map-actions { position: absolute; top: 12px; right: 12px; z-index: 1005; display: flex; flex-direction: column; gap: 4px; }
+.ea-map-btn {
+  width: 44px; height: 44px; border-radius: 6px;
+  background: var(--card); color: var(--ink); border: 1px solid var(--rule);
+  font-family: var(--font-sans); font-size: 19px; font-weight: 600; line-height: 1;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(19, 34, 48, 0.16);
+}
+.ea-map-btn:hover { background: var(--soft); border-color: var(--navy); color: var(--navy); }
+
+/* Neutral slate crash clusters + shape-coded markers */
+.ea-cluster {
+  background: #2D4356; color: #F8F7F4; font-family: var(--font-mono);
+  font-size: 11.5px; font-weight: 700; text-align: center; border-radius: 50%;
+  border: 2px solid #FFFFFF; box-shadow: 0 2px 6px rgba(19, 34, 48, 0.32);
+}
+html[data-color-scheme="dark"] .ea-cluster {
+  background: #46617A; color: #FFFFFF; border-color: #0E1722;
+}
+.ea-marker-icon { background: none !important; border: none !important; }
+.spot-rank {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  color: #FFFFFF; background: #132230; width: 18px; height: 18px;
+  border-radius: 50%; text-align: center; line-height: 16px;
+  border: 1.5px solid #FFFFFF; box-shadow: 0 0 0 1px var(--navy); pointer-events: none;
+}
+
+/* Always-visible Legend Pill */
+.ea-legend-pill {
+  position: absolute; bottom: 14px; left: 12px; z-index: 1004;
+  max-width: 274px; background: var(--card); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: 7px;
+  box-shadow: 0 3px 12px rgba(19, 34, 48, 0.18);
+  padding: 9px 11px; font-size: 12px; line-height: 1.35;
+}
+.ea-legend-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.ea-legend-title { font-weight: 700; font-size: 12px; color: var(--ink); }
+.ea-legend-mini { display: none; align-items: center; gap: 5px; }
+.ea-legend-pill.is-collapsed .ea-legend-mini { display: inline-flex; }
+.ea-legend-toggle {
+  display: none; min-width: 44px; min-height: 32px; border: 1px solid var(--rule);
+  border-radius: 4px; background: var(--soft); color: var(--ink); font-size: 12px;
+  font-weight: 700; cursor: pointer; padding: 0 8px;
+}
+.ea-legend-items { display: flex; flex-direction: column; gap: 4px; }
+.ea-legend-pill.is-collapsed .ea-legend-items { display: none; }
+.ea-legend-pill.is-collapsed .ea-legend-head { margin-bottom: 0; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink); }
+.sym-circle { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid var(--card); box-shadow: 0 0 0 1px rgba(19, 34, 48, 0.3); }
+.sym-diamond { width: 10px; height: 10px; transform: rotate(45deg); flex-shrink: 0; border: 1.5px solid var(--card); box-shadow: 0 0 0 1px rgba(19, 34, 48, 0.3); }
+.sym-square { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; border: 1.5px solid var(--card); box-shadow: 0 0 0 1px rgba(19, 34, 48, 0.3); }
+.sym-cluster { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; background: #2D4356; border: 1.5px solid var(--card); }
+html[data-color-scheme="dark"] .sym-cluster { background: #46617A; }
+.sym-fatal { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; background: var(--crash-fatal); border: 2px solid var(--denied); box-shadow: inset 0 0 0 1.5px var(--card); }
+
+.ea-hover-pill {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 1004;
+  background: var(--card); color: var(--ink); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 5px 11px; font-size: 12.5px; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(19, 34, 48, 0.16); pointer-events: none;
+  white-space: nowrap; max-width: calc(100% - 140px); overflow: hidden; text-overflow: ellipsis;
+}
+.ea-hover-pill[hidden] { display: none; }
+.ea-hover-pill span { font-family: var(--font-mono); color: var(--navy); margin-left: 6px; font-weight: 600; }
+
+.ea-scroll-hint {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1008;
+  background: rgba(19, 34, 48, 0.9); color: #F8F7F4; padding: 9px 14px; border-radius: 6px;
+  font-size: 13px; font-weight: 600; pointer-events: none; opacity: 0; transition: opacity 0.18s ease;
+}
+.ea-scroll-hint.visible { opacity: 1; }
+#map-loading {
+  display: none; position: absolute; top: 12px; left: 12px; z-index: 1008;
+  max-width: 260px; padding: 7px 11px; border-radius: 6px; background: var(--card);
+  border: 1px solid var(--rule); color: var(--ink); font-size: 12.5px; font-weight: 600;
+}
+#map-loading.is-loading { display: block; }
+#map-loading.is-error { display: block; color: var(--denied); }
+
+.ea-mobile-bar { display: none; }
+.ea-sheet-backdrop { display: none; }
+
+@media (max-width: 959px) {
+  .ea-bar-title { display: none; }
+  .ea-shell { flex-direction: column; }
+  .ea-rail-open { display: none !important; }
+  .ea-stage { flex: 1; min-height: 0; width: 100%; }
+
+  .ea-mobile-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr); height: 52px; flex-shrink: 0;
+    background: var(--card); border-top: 1px solid var(--rule); z-index: 1060;
+  }
+  .ea-mob-btn {
+    min-height: 52px; min-width: 44px; border: none; background: transparent;
+    color: var(--ink); font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    border-right: 1px solid var(--rule-soft);
+  }
+  .ea-mob-btn:last-child { border-right: none; }
+  .ea-mob-btn[aria-expanded="true"] { background: var(--navy-dark); color: #F8F7F4; }
+
+  .ea-rail {
+    display: none; position: fixed; left: 0; right: 0; bottom: 52px; width: 100%; height: auto;
+    max-height: 60vh; border-right: none; border-top: 1px solid var(--rule);
+    border-radius: 12px 12px 0 0; overflow: hidden;
+    box-shadow: 0 -6px 24px rgba(19, 34, 48, 0.28); z-index: 1055;
+  }
+  .ea-rail-tabs { display: none; }
+  .ea-sheet-title { display: flex; flex: 1; }
+  body.sheet-open .ea-rail { display: flex; }
+
+  .ea-sheet-backdrop { position: fixed; inset: 0 0 52px 0; background: rgba(10, 18, 28, 0.42); z-index: 1050; }
+  body.sheet-open .ea-sheet-backdrop { display: block; }
+
+  .ea-choice { min-height: 44px; padding: 8px 10px; font-size: 13.5px; }
+  .ea-choice input { width: 20px; height: 20px; }
+  .ea-combo-input, .ea-combo-clear, .ea-select, .btn-apply, .btn-reset, .ea-btn-secondary { min-height: 44px; }
+  .ea-legend-pill { bottom: 34px; left: 8px; max-width: calc(100% - 70px); padding: 7px 9px; }
+  .ea-legend-toggle { display: inline-flex; align-items: center; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+<header class="ea-standalone-bar" aria-label="Electoral Analytics navigation">
+  <div class="ea-bar-left">
+    <a class="ea-back-link" href="/projects/qcb5-dot-safety/">&larr; Back to Electoral Analytics</a>
+    <span class="ea-bar-sep" aria-hidden="true">|</span>
+    <span class="ea-bar-title">QCB5 Safety Requests &amp; Crashes (2020&ndash;2025)</span>
+  </div>
+  <button type="button" class="ea-theme-toggle" id="ea-theme-toggle" aria-pressed="false">Dark mode</button>
+</header>
+
+<div class="ea-shell">
+  <aside id="panel" class="ea-rail" role="region" aria-label="Traffic safety filters and location inspector">
+    <div class="ea-rail-head">
+      <div class="ea-rail-tabs" role="tablist" aria-label="Map panel views">
+        <button type="button" class="ea-rail-tab" role="tab" id="rtab-explore" data-tab="explore" aria-controls="rpanel-explore" aria-selected="true" tabindex="0">Explore</button>
+        <button type="button" class="ea-rail-tab" role="tab" id="rtab-inspect" data-tab="inspect" aria-controls="rpanel-inspect" aria-selected="false" tabindex="-1">Inspect <span class="ea-pin-dot" id="inspect-dot" aria-hidden="true"></span></button>
+        <button type="button" class="ea-rail-tab" role="tab" id="rtab-list" data-tab="list" aria-controls="rpanel-list" aria-selected="false" tabindex="-1">List <span class="ea-tab-badge" id="list-count">...</span></button>
+      </div>
+      <span class="ea-sheet-title" id="sheet-title">Filters &amp; layers</span>
+      <button type="button" class="ea-rail-close" id="panel-close" aria-label="Collapse controls panel">&times;</button>
+    </div>
+
+    <div class="ea-rail-body">
+      <section id="rpanel-explore" class="ea-tabpanel" role="tabpanel" aria-labelledby="rtab-explore">
+        <div class="ea-section">
+          <div class="ea-combo">
+            <label class="ea-combo-label" for="ref-search">Search street, intersection, or DOT ref</label>
+            <div class="ea-combo-row">
+              <input id="ref-search" class="ea-combo-input" type="text" role="combobox" autocomplete="off"
+                placeholder="e.g. Metropolitan, Borden, CQ21-0722"
+                aria-autocomplete="list" aria-expanded="false" aria-controls="ref-search-list" aria-activedescendant="">
+              <button type="button" id="ref-search-clear" class="ea-combo-clear" aria-label="Clear search" hidden>&times;</button>
+            </div>
+            <ul id="ref-search-list" class="ea-combo-list" role="listbox" aria-label="Matching locations and requests" hidden></ul>
+          </div>
+        </div>
+
+        <div class="ea-section" id="year-filter-section">
+          <h2 class="ea-section-title">Year range</h2>
+          <div class="year-filter">
+            <div class="year-field">
+              <label for="year-start">From</label>
+              <select id="year-start" class="ea-select">__START_YEAR_OPTIONS__</select>
+            </div>
+            <div class="year-field">
+              <label for="year-end">To</label>
+              <select id="year-end" class="ea-select">__END_YEAR_OPTIONS__</select>
+            </div>
+            <button type="button" class="btn-apply" id="year-apply">Apply</button>
+            <button type="button" class="btn-reset" id="year-reset">Reset</button>
+          </div>
+        </div>
+
+        <div class="ea-section">
+          <h2 class="ea-section-title">Safety requests &amp; crashes</h2>
+          <div class="layer-group-head">Signal studies (circles)</div>
+          <label class="ea-choice"><input type="checkbox" data-layer="deniedSignals" checked><span>Denied signals</span><span class="layer-count" id="count-deniedSignals"></span></label>
+          <label class="ea-choice"><input type="checkbox" data-layer="approvedSignals" checked><span>Approved signals</span><span class="layer-count" id="count-approvedSignals"></span></label>
+
+          <div class="layer-group-head">Speed bumps (diamonds)</div>
+          <label class="ea-choice"><input type="checkbox" data-layer="deniedSrts" checked><span>Denied speed bumps</span><span class="layer-count" id="count-deniedSrts"></span></label>
+          <label class="ea-choice"><input type="checkbox" data-layer="approvedSrts" checked><span>Approved speed bumps</span><span class="layer-count" id="count-approvedSrts"></span></label>
+
+          <div class="layer-group-head">Injury &amp; fatal crashes</div>
+          <label class="ea-choice"><input type="checkbox" data-layer="crashClustered" checked><span>Clustered crashes</span><span class="layer-count" id="count-crashClustered"></span></label>
+          <label class="ea-choice"><input type="checkbox" data-layer="crashDots"><span>Individual crash dots</span><span class="layer-count" id="count-crashDots"></span></label>
+        </div>
+
+        <div class="ea-section">
+          <details class="ea-details" id="analysis-details">
+            <summary>Analysis &amp; APS overlays</summary>
+            <div class="ea-details-body">
+              <label class="ea-choice"><input type="checkbox" data-layer="aps"><span>APS installed (squares)</span><span class="layer-count" id="count-aps"></span></label>
+              <label class="ea-choice"><input type="checkbox" data-layer="top15"><span>Top 15 denied by nearby crashes</span></label>
+              <label class="ea-choice"><input type="checkbox" data-layer="top10crashes"><span>Top 10 crash intersections</span></label>
+              <label class="ea-choice"><input type="checkbox" data-layer="effectiveness"><span>DOT before-after sites</span><span class="layer-count" id="count-effectiveness"></span></label>
+            </div>
+          </details>
+        </div>
+
+        <div class="sources-wrap">
+          <p>Sources:
+            <a href="https://data.cityofnewyork.us/Transportation/Traffic-Signal-and-All-Way-Stop-Study-Requests/w76s-c5u4" target="_blank" rel="noopener noreferrer">DOT Signal Studies</a> &middot;
+            <a href="https://data.cityofnewyork.us/Transportation/Speed-Reducer-Tracking-System-SRTS-/9n6h-pt9g" target="_blank" rel="noopener noreferrer">DOT SRTS</a> &middot;
+            <a href="https://data.cityofnewyork.us/Transportation/Accessible-Pedestrian-Signal-Locations/de3m-c5p4" target="_blank" rel="noopener noreferrer">APS Installed Locations</a> &middot;
+            <a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95" target="_blank" rel="noopener noreferrer">NYPD Crashes</a>
+          </p>
+        </div>
+      </section>
+
+      <section id="rpanel-inspect" class="ea-tabpanel" role="tabpanel" aria-labelledby="rtab-inspect" hidden>
+        <div id="inspect-body" class="ea-empty-state">
+          <strong>No location selected</strong>
+          Click any signal study circle, speed bump diamond, crash marker, or search a street/ref code in Explore to inspect DOT outcomes and 150-meter crash proximity.
+        </div>
+      </section>
+
+      <section id="rpanel-list" class="ea-tabpanel" role="tabpanel" aria-labelledby="rtab-list" hidden>
+        <div class="ea-list-controls">
+          <div>
+            <label for="list-category">Location category</label>
+            <select id="list-category" class="ea-select">
+              <option value="topDenied">Top denied requests (by 150m crashes)</option>
+              <option value="topCrashes">Top 10 crash intersections</option>
+              <option value="deniedSignals">All denied signal studies</option>
+              <option value="approvedSignals">Approved signal studies</option>
+              <option value="deniedSrts">All denied speed bumps</option>
+              <option value="approvedSrts">Approved speed bumps</option>
+              <option value="effectiveness">DOT before-after installations</option>
+            </select>
+          </div>
+          <div>
+            <label for="list-filter">Filter street or ref</label>
+            <input id="list-filter" class="ea-combo-input" style="width:100%;" type="text" placeholder="Filter by street name or code...">
+          </div>
+        </div>
+        <ul id="safety-list-rows" class="ea-list-rows" aria-label="QCB5 safety requests and hotspots"></ul>
+      </section>
+    </div>
+  </aside>
+
+  <main class="ea-stage">
+    <button type="button" id="rail-open-btn" class="ea-rail-open" aria-expanded="true" aria-controls="panel">
+      <span aria-hidden="true">&#9776;</span> Controls
+    </button>
+
+    <div id="map" role="region" aria-label="Interactive Queens CB5 traffic safety requests and crash map" tabindex="-1"></div>
+    <div id="hover-pill" class="ea-hover-pill" aria-hidden="true" hidden></div>
+
+    <div class="ea-map-actions" role="group" aria-label="Map view controls">
+      <button type="button" id="btn-zoom-in" class="ea-map-btn" aria-label="Zoom in" title="Zoom in">+</button>
+      <button type="button" id="btn-zoom-out" class="ea-map-btn" aria-label="Zoom out" title="Zoom out">&minus;</button>
+      <button type="button" id="btn-reset-view" class="ea-map-btn" aria-label="Reset view to Queens CB5" title="Reset view">&#8962;</button>
+      <button type="button" id="btn-fullscreen" class="ea-map-btn" aria-label="Toggle full screen" title="Full screen">&#8599;</button>
+    </div>
+
+    <div id="map-legend" class="ea-legend-pill" role="region" aria-label="Map legend">
+      <div class="ea-legend-head">
+        <span class="ea-legend-title">Shapes &amp; outcomes</span>
+        <span class="ea-legend-mini" aria-hidden="true">
+          <span class="sym-circle" style="background:var(--denied)"></span>
+          <span class="sym-circle" style="background:var(--approved)"></span>
+          <span class="sym-diamond" style="background:var(--denied)"></span>
+          <span class="sym-cluster"></span>
+        </span>
+        <button type="button" class="ea-legend-toggle" id="legend-toggle" aria-expanded="true" aria-controls="legend-items">Hide</button>
+      </div>
+      <div class="ea-legend-items" id="legend-items">
+        <div class="legend-item"><span class="sym-circle" style="background:var(--denied)"></span><span>Denied signal study</span></div>
+        <div class="legend-item"><span class="sym-circle" style="background:var(--approved)"></span><span>Approved signal study</span></div>
+        <div class="legend-item"><span class="sym-diamond" style="background:var(--denied)"></span><span>Denied speed bump</span></div>
+        <div class="legend-item"><span class="sym-diamond" style="background:var(--approved)"></span><span>Approved speed bump</span></div>
+        <div class="legend-item"><span class="sym-cluster"></span><span>Crash cluster (neutral slate)</span></div>
+        <div class="legend-item"><span class="sym-fatal"></span><span>Fatal crash</span></div>
+        <div class="legend-item" id="leg-inj" hidden><span class="sym-circle" style="background:var(--crash-inj)"></span><span>Injury crash dot</span></div>
+        <div class="legend-item" id="leg-aps" hidden><span class="sym-square" style="background:var(--aps)"></span><span>APS installed</span></div>
+        <div class="legend-item" id="leg-eff" hidden><span class="sym-circle" style="background:var(--worsened)"></span><span>Before-after (increased / teal = fewer)</span></div>
+      </div>
+    </div>
+
+    <div id="scroll-hint" class="ea-scroll-hint" aria-hidden="true">Hold Ctrl + scroll to zoom map</div>
+    <div id="map-loading" class="is-loading" role="status" aria-live="polite">Loading map data...</div>
+    <div id="map-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  </main>
+
+  <nav class="ea-mobile-bar" aria-label="Map controls bar">
+    <button type="button" class="ea-mob-btn" data-mob-tab="explore" aria-expanded="false">Filters</button>
+    <button type="button" class="ea-mob-btn" data-mob-tab="inspect" aria-expanded="false">Inspect <span class="ea-pin-dot" id="mob-inspect-dot" aria-hidden="true"></span></button>
+    <button type="button" class="ea-mob-btn" data-mob-tab="list" aria-expanded="false">List</button>
+  </nav>
+  <div class="ea-sheet-backdrop" id="sheet-backdrop" hidden></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin=""></script>
+<script>
+(function () {
+  'use strict';
+
+  var DATA_VERSION = '__DATA_VERSION__';
+  function cacheBust(url) {
+    return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'v=' + encodeURIComponent(DATA_VERSION);
+  }
+  var qs = new URLSearchParams(window.location.search);
+  var isEmbedded = window.parent !== window || qs.get('embed') === '1' || qs.get('embedded') === '1';
+  if (isEmbedded) document.body.classList.add('embedded');
+  var reducedMotion = function () { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var isMobile = function () { return window.matchMedia('(max-width: 959px)').matches; };
+  var getScheme = function () { return (window.eaColorScheme && window.eaColorScheme.get() === 'dark') ? 'dark' : 'light'; };
+
+  function escHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+  function announce(msg) {
+    var el = document.getElementById('map-status');
+    if (!el) return;
+    el.textContent = '';
+    window.setTimeout(function () { el.textContent = msg; }, 20);
+  }
+  function stripNode(el) {
+    if (!el || !el.setAttribute) return;
+    el.removeAttribute('role');
+    el.setAttribute('tabindex', '-1');
+    el.setAttribute('aria-hidden', 'true');
+  }
+  function stripFocus(layer) {
+    if (layer && layer._path) stripNode(layer._path);
+    if (layer && layer._icon) stripNode(layer._icon);
+  }
+  if (L.Marker && L.Marker.prototype && L.Marker.prototype.options) {
+    L.Marker.prototype.options.keyboard = false;
+  }
+  if (L.MarkerCluster && L.MarkerCluster.prototype && L.MarkerCluster.prototype.options) {
+    L.MarkerCluster.prototype.options.keyboard = false;
+  }
+
+  var themeBtn = document.getElementById('ea-theme-toggle');
+  if (themeBtn && window.eaColorScheme) {
+    var cur = getScheme();
+    themeBtn.textContent = cur === 'dark' ? 'Light mode' : 'Dark mode';
+    themeBtn.setAttribute('aria-pressed', cur === 'dark' ? 'true' : 'false');
+    themeBtn.addEventListener('click', function () { window.eaColorScheme.toggle(); });
+  }
+
+  function themeColors() {
+    var dark = getScheme() === 'dark';
+    return {
+      denied: dark ? '#F0786B' : '#C43E2F',
+      approved: dark ? '#5CC4E0' : '#1D6F8A',
+      aps: dark ? '#A99BE8' : '#5B4B9E',
+      crashInj: dark ? '#8EB4D6' : '#3D5B78',
+      crashFatal: dark ? '#FFFFFF' : '#132230',
+      halo: dark ? '#0E1722' : '#FFFFFF',
+      primary: dark ? '#7CB4E2' : '#1D4B73',
+      gold: dark ? '#D4AC54' : '#9E6E10',
+      worsened: dark ? '#F29A63' : '#C45A28',
+      neutral: dark ? '#94A3B8' : '#64748B',
+      highlight: dark ? '#F8F7F4' : '#132230',
+    };
+  }
+
+  var map = L.map('map', {
+    zoomControl: false,
+    zoomSnap: 0.25,
+    zoomDelta: 0.5,
+    scrollWheelZoom: !isEmbedded,
+    zoomAnimation: !reducedMotion(),
+    fadeAnimation: !reducedMotion(),
+    markerZoomAnimation: !reducedMotion(),
+    keyboard: false,
+  });
+
+  if (isEmbedded) {
+    var hintTimer = 0;
+    var hint = document.getElementById('scroll-hint');
+    document.getElementById('map').addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        map.setZoom(map.getZoom() + (e.deltaY < 0 ? 0.5 : -0.5));
+      } else if (hint) {
+        hint.classList.add('visible');
+        clearTimeout(hintTimer);
+        hintTimer = window.setTimeout(function () { hint.classList.remove('visible'); }, 1600);
+      }
+    }, { passive: false });
+  }
+
+  var TILE_OPTS = {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    maxZoom: 19,
+    updateWhenZooming: false,
+    updateWhenIdle: true,
+    keepBuffer: 4,
+  };
+  var tileLayers = {
+    light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2949_1_9bd5bcde55f90cb1ce920410', TILE_OPTS),
+    dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_2949_1_9bd5bcde55f90cb1ce920410', TILE_OPTS),
+  };
+  var activeBaseLayer = tileLayers[getScheme()].addTo(map);
+  var canvasRenderer = L.canvas({ padding: 0.5 });
+
+  function sweepMapPaneFocus() {
+    var root = document.getElementById('map');
+    if (!root) return;
+    root.querySelectorAll('.leaflet-marker-icon, .leaflet-interactive').forEach(stripNode);
+  }
+  if (window.MutationObserver) {
+    var mp = map.getPane('markerPane');
+    var op = map.getPane('overlayPane');
+    var obs = new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        m.addedNodes.forEach(function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.classList && (n.classList.contains('leaflet-marker-icon') || n.classList.contains('leaflet-interactive'))) {
+            stripNode(n);
+          }
+          if (n.querySelectorAll) {
+            n.querySelectorAll('.leaflet-marker-icon, .leaflet-interactive').forEach(stripNode);
+          }
+        });
+      });
+    });
+    if (mp) obs.observe(mp, { childList: true, subtree: true });
+    if (op) obs.observe(op, { childList: true, subtree: true });
+  }
+  map.on('zoomend moveend layeradd', sweepMapPaneFocus);
+
+  var DATA = null;
+  var cb5Bounds = null;
+  var yearStart = 2020, yearEnd = 2025;
+  var pendingYearRange = null;
+  var dataByYear = {};
+  var layerGroups = {};
+  var boundaryLayer = null;
+  var selectionRing = null;
+  var selectedItemId = null;
+  var searchEntries = [];
+  var lastTriggerEl = null;
+
+  var crashRecs = [], denSigRecs = [], appSigRecs = [], denSrtsRecs = [], appSrtsRecs = [], apsRecs = [];
+  var top15List = [], top10CrashList = [];
+
+  function statRow(label, value) {
+    return '<div class="stat-row"><span class="label">' + escHtml(label) + '</span><span class="value">' + escHtml(value) + '</span></div>';
+  }
+
+  function makeDiamondIcon(fill, halo) {
+    return L.divIcon({
+      className: 'ea-marker-icon',
+      html: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><polygon points="7,1 13,7 7,13 1,7" fill="' + fill + '" stroke="' + halo + '" stroke-width="1.6"/></svg>',
+      iconSize: [14, 14], iconAnchor: [7, 7],
+    });
+  }
+  function makeSquareIcon(fill, halo) {
+    return L.divIcon({
+      className: 'ea-marker-icon',
+      html: '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" rx="1.5" fill="' + fill + '" stroke="' + halo + '" stroke-width="1.5"/></svg>',
+      iconSize: [12, 12], iconAnchor: [6, 6],
+    });
+  }
+  function makeFatalIcon(c) {
+    return L.divIcon({
+      className: 'ea-marker-icon',
+      html: '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="' + c.crashFatal + '" stroke="' + c.denied + '" stroke-width="2.2"/><circle cx="8" cy="8" r="4.2" fill="none" stroke="' + c.halo + '" stroke-width="1.3"/></svg>',
+      iconSize: [16, 16], iconAnchor: [8, 8],
+    });
+  }
+
+  function setSelectionDot(has) {
+    var d1 = document.getElementById('inspect-dot');
+    var d2 = document.getElementById('mob-inspect-dot');
+    if (d1) d1.classList.toggle('active', has);
+    if (d2) d2.classList.toggle('active', has);
+  }
+
+  function clearSelection() {
+    selectedItemId = null;
+    if (selectionRing) { map.removeLayer(selectionRing); selectionRing = null; }
+    setSelectionDot(false);
+    var body = document.getElementById('inspect-body');
+    body.className = 'ea-empty-state';
+    body.innerHTML = '<strong>No location selected</strong>Click any signal study circle, speed bump diamond, crash marker, or search a street/ref code in Explore to inspect DOT outcomes and 150-meter crash proximity.';
+    renderList();
+    announce('Selection cleared.');
+  }
+
+  function pinInspect(item, opts) {
+    var o = opts || {};
+    selectedItemId = item.id;
+    if (selectionRing) map.removeLayer(selectionRing);
+    if (item.lat && item.lon) {
+      selectionRing = L.circleMarker([item.lat, item.lon], {
+        radius: 14, color: themeColors().highlight, weight: 3, fill: false, interactive: false,
+      }).addTo(map);
+      stripFocus(selectionRing);
+      if (o.zoom !== false) {
+        map.setView([item.lat, item.lon], Math.max(map.getZoom(), 15.75), { animate: !reducedMotion() });
+      }
+    }
+    setSelectionDot(true);
+    var body = document.getElementById('inspect-body');
+    body.className = 'ea-section';
+    body.innerHTML =
+      '<div class="ea-inspect-head">' +
+        '<div><h2 class="ea-inspect-title">' + escHtml(item.title) + '</h2>' +
+        (item.ref ? '<div class="ea-inspect-ref">' + escHtml(item.ref) + '</div>' : '') + '</div>' +
+        '<button type="button" class="ea-btn-secondary" id="clear-selection-btn">Clear</button>' +
+      '</div>' + item.html;
+    var clr = document.getElementById('clear-selection-btn');
+    if (clr) clr.addEventListener('click', clearSelection);
+    setActiveTab('inspect', { openPanel: true });
+    renderList();
+    announce('Selected ' + item.title + (item.summary ? '. ' + item.summary : '.'));
+  }
+
+  function buildSignalInspect(r) {
+    var loc = r.main + ' & ' + r.cross;
+    var badge = r.outcome === 'denied'
+      ? '<span class="outcome-badge outcome-denied">Denied signal study</span>'
+      : '<span class="outcome-badge outcome-approved">Approved signal study</span>';
+    var extras = '';
+    if (r.school) extras += statRow('School', r.school);
+    if (r.vz) extras += statRow('Vision Zero priority', 'Yes');
+    if (r.findings) extras += statRow('DOT findings', r.findings);
+    return {
+      id: 'sig:' + r.ref, lat: r.lat, lon: r.lon, title: loc, ref: r.ref + ' · ' + r.type,
+      summary: (r.outcome === 'denied' ? 'Denied' : 'Approved') + ', ' + r.cr + ' crashes within 150m',
+      html: badge +
+        '<h3 class="ea-subhead">Request details</h3>' +
+        statRow('Requested', r.reqDt) + statRow('Status date', r.statusDt) + statRow('DOT status', r.status) + extras +
+        '<h3 class="ea-subhead">Crashes within 150 meters</h3>' +
+        statRow('Total crashes', r.cr) + statRow('Total injuries', r.inj) +
+        statRow('Pedestrian injuries', r.pinj) + statRow('Fatalities', r.fat),
+    };
+  }
+
+  function buildSrtsInspect(r) {
+    var loc = r.on + (r.from && r.to ? ' (' + r.from + ' to ' + r.to + ')' : '');
+    var badge = r.outcome === 'denied'
+      ? '<span class="outcome-badge outcome-denied">Denied speed bump</span>'
+      : '<span class="outcome-badge outcome-approved">Approved speed bump</span>';
+    var extras = '';
+    if (r.denial) extras += statRow('Denial reason', r.denial);
+    if (r.installDt) extras += statRow('Installed', r.installDt);
+    if (r.dir) extras += statRow('Traffic', r.dir);
+    return {
+      id: 'srts:' + r.code, lat: r.lat, lon: r.lon, title: r.on, ref: r.code + ' · ' + r.from + ' to ' + r.to,
+      summary: (r.outcome === 'denied' ? 'Denied' : 'Approved') + ' speed bump, ' + r.cr + ' crashes within 150m',
+      html: badge +
+        '<h3 class="ea-subhead">Request details</h3>' +
+        statRow('Requested', r.reqDt) + statRow('Decision date', r.closedDt) + statRow('Project status', r.projStatus) + extras +
+        '<h3 class="ea-subhead">Crashes within 150 meters</h3>' +
+        statRow('Total crashes', r.cr) + statRow('Total injuries', r.inj) +
+        statRow('Pedestrian injuries', r.pinj) + statRow('Fatalities', r.fat) +
+        '<p class="ea-method-note">Note: "Speed &lt; 30 mph" reflects DOT measured 85th-percentile radar travel speed, not the 25 mph posted speed limit.</p>',
+    };
+  }
+
+  function buildCrashInspect(r) {
+    var loc = (r.on && r.off) ? (r.on + ' & ' + r.off) : (r.on || r.off || 'Intersection record (street omitted by NYPD)');
+    var sev = r.k > 0 ? 'Fatal crash' : (r.inj > 0 ? r.inj + ' injured' : 'Crash');
+    return {
+      id: 'cr:' + r.cid, lat: r.lat, lon: r.lon, title: loc, ref: 'Collision ID ' + r.cid + ' · ' + r.dt + ' at ' + r.tm,
+      summary: sev,
+      html: '<span class="outcome-badge ' + (r.k > 0 ? 'outcome-denied' : 'outcome-crash') + '">' + escHtml(sev) + '</span>' +
+        '<h3 class="ea-subhead">Casualties</h3>' +
+        statRow('Pedestrians', r.pinj + ' injured, ' + r.pk + ' killed') +
+        statRow('Cyclists', r.cinj + ' injured, ' + r.ck + ' killed') +
+        statRow('Motorists', r.minj + ' injured, ' + r.mk + ' killed') +
+        '<h3 class="ea-subhead">NYPD report</h3>' +
+        statRow('Contributing factor', r.fac || 'Unspecified') +
+        statRow('Vehicle type', r.veh || 'Unspecified'),
+    };
+  }
+
+  function buildApsInspect(r) {
+    return {
+      id: 'aps:' + r.loc + r.dt, lat: r.lat, lon: r.lon, title: r.loc, ref: 'Installed ' + r.dt,
+      summary: 'APS installed in ' + r.nta,
+      html: '<span class="outcome-badge outcome-aps">APS installed</span>' +
+        statRow('Installation date', r.dt) + statRow('Neighborhood', r.nta) +
+        '<p class="ea-method-note">Installed APS inventory. Excluded from discretionary signal denial-rate calculations.</p>',
+    };
+  }
+
+  function buildEffInspect(ba) {
+    var label = ba.chg < 0 ? (Math.abs(Math.round(ba.pct)) + '% fewer crashes') : (ba.chg === 0 ? 'No change' : (Math.round(ba.pct) + '% more crashes'));
+    var injChg = ba.ai - ba.bi;
+    var injPct = ba.bi > 0 ? Math.round(injChg / ba.bi * 100) : 0;
+    var injLabel = injChg < 0 ? (Math.abs(injPct) + '% fewer') : (injChg > 0 ? (injPct + '% more') : 'No change');
+    return {
+      id: 'eff:' + ba.ref, lat: ba.lat, lon: ba.lon, title: ba.main + ' & ' + ba.cross, ref: ba.ref + ' · ' + ba.type,
+      summary: label,
+      html: '<span class="outcome-badge ' + (ba.chg < 0 ? 'outcome-approved' : 'outcome-denied') + '">' + escHtml(label) + '</span>' +
+        statRow('Installed', ba.installDt) + statRow('Comparison window', ba.wm + ' months before & after (150m)') +
+        statRow('Crashes', ba.bc + ' → ' + ba.ac) + statRow('Injuries', ba.bi + ' → ' + ba.ai + ' (' + injLabel + ')'),
+    };
+  }
+
+  function haversineDist(lat1, lon1, lat2, lon2) {
+    var R = 6371000, dLat = (lat2 - lat1) * Math.PI / 180, dLon = (lon2 - lon1) * Math.PI / 180;
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function getRecordsInRange(key) {
+    var out = [], idx = dataByYear[key] || {};
+    for (var y = yearStart; y <= yearEnd; y++) {
+      if (idx[y]) out = out.concat(idx[y]);
+    }
+    return out;
+  }
+
+  function drawBoundary() {
+    if (boundaryLayer) map.removeLayer(boundaryLayer);
+    if (!DATA || !DATA.boundary || !DATA.boundary.features) return;
+    var c = themeColors();
+    boundaryLayer = L.geoJSON(DATA.boundary, {
+      interactive: false,
+      style: { color: c.gold, weight: 2.2, opacity: 0.9, fillColor: c.primary, fillOpacity: 0.04, dashArray: '5 4' },
+      onEachFeature: function (_, l) { l.on('add', function () { stripFocus(l); }); },
+    }).addTo(map);
+    cb5Bounds = boundaryLayer.getBounds();
+  }
+
+  function buildAllLayers() {
+    var c = themeColors();
+    var hoverPill = document.getElementById('hover-pill');
+
+    // 1. Crash dots (Canvas renderer for fast rendering & zero SVG Tab-bomb)
+    var dotsFg = L.featureGroup();
+    crashRecs.forEach(function (r) {
+      var isFatal = r.k > 0;
+      var loc = (r.on && r.off) ? (r.on + ' & ' + r.off) : (r.on || r.off || 'Crash record');
+      var m = isFatal
+        ? L.marker([r.jlat, r.jlon], { icon: makeFatalIcon(c), keyboard: false })
+        : L.circleMarker([r.jlat, r.jlon], {
+            renderer: canvasRenderer, radius: r.inj > 0 ? 3.5 : 2,
+            color: c.halo, weight: 0.8, fillColor: c.crashInj, fillOpacity: r.inj > 0 ? 0.78 : 0.45,
+          });
+      m.on('add', function () { stripFocus(m); });
+      m.on('click', function () { pinInspect(buildCrashInspect(r), { zoom: false }); });
+      m.on('mouseover', function () {
+        hoverPill.innerHTML = escHtml(loc) + '<span>' + (isFatal ? 'Fatal' : r.inj + ' inj.') + ' · ' + escHtml(r.dt) + '</span>';
+        hoverPill.hidden = false;
+      });
+      m.on('mouseout', function () { hoverPill.hidden = true; });
+      m.addTo(dotsFg);
+    });
+    layerGroups.crashDots = dotsFg;
+
+    // 2. Clustered crashes (DEFAULT ON — neutral slate bubbles, zero keyboard Tab-bomb)
+    var cluster = L.markerClusterGroup({
+      maxClusterRadius: 54,
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      iconCreateFunction: function (cl) {
+        var n = cl.getChildCount();
+        var sz = n < 10 ? 28 : n < 50 ? 34 : 40;
+        return L.divIcon({
+          html: '<div class="ea-cluster" aria-hidden="true" style="width:' + sz + 'px;height:' + sz + 'px;line-height:' + (sz - 4) + 'px;">' + n + '</div>',
+          className: 'ea-marker-icon', iconSize: L.point(sz, sz),
+        });
+      },
+    });
+    cluster.on('clusteradd layeradd', function (ev) { stripFocus(ev.layer); });
+    crashRecs.forEach(function (r) {
+      var isFatal = r.k > 0;
+      var loc = (r.on && r.off) ? (r.on + ' & ' + r.off) : (r.on || r.off || 'Crash record');
+      var icon = isFatal
+        ? makeFatalIcon(c)
+        : L.divIcon({
+            className: 'ea-marker-icon',
+            html: '<div style="width:8px;height:8px;border-radius:50%;background:' + c.crashInj + ';border:1.5px solid ' + c.halo + ';"></div>',
+            iconSize: [8, 8], iconAnchor: [4, 4],
+          });
+      var m = L.marker([r.lat, r.lon], { icon: icon, keyboard: false });
+      m.on('add', function () { stripFocus(m); });
+      m.on('click', function () { pinInspect(buildCrashInspect(r), { zoom: false }); });
+      m.on('mouseover', function () {
+        hoverPill.innerHTML = escHtml(loc) + '<span>' + (isFatal ? 'Fatal' : r.inj + ' inj.') + '</span>';
+        hoverPill.hidden = false;
+      });
+      m.on('mouseout', function () { hoverPill.hidden = true; });
+      m.addTo(cluster);
+    });
+    layerGroups.crashClustered = cluster;
+
+    // 3. Signal studies (CIRCLES — Vermilion Denied / Teal Approved)
+    function buildSigFg(recs, outcome) {
+      var fg = L.featureGroup();
+      var fill = outcome === 'denied' ? c.denied : c.approved;
+      recs.forEach(function (r) {
+        var loc = r.main + ' & ' + r.cross;
+        var m = L.circleMarker([r.lat, r.lon], {
+          radius: 6, color: c.halo, weight: 1.8, fillColor: fill, fillOpacity: 0.94,
+        });
+        m.on('add', function () { stripFocus(m); });
+        m.on('click', function () { pinInspect(buildSignalInspect(r), { zoom: false }); });
+        m.on('mouseover', function () {
+          hoverPill.innerHTML = escHtml(loc) + '<span>Signal · ' + (outcome === 'denied' ? 'Denied' : 'Approved') + '</span>';
+          hoverPill.hidden = false;
+        });
+        m.on('mouseout', function () { hoverPill.hidden = true; });
+        m.addTo(fg);
+      });
+      return fg;
+    }
+    layerGroups.deniedSignals = buildSigFg(denSigRecs, 'denied');
+    layerGroups.approvedSignals = buildSigFg(appSigRecs, 'approved');
+
+    // 4. Speed bumps / SRTS (DIAMONDS — Vermilion Denied / Teal Approved)
+    function buildSrtsFg(recs, outcome) {
+      var fg = L.featureGroup();
+      var fill = outcome === 'denied' ? c.denied : c.approved;
+      var icon = makeDiamondIcon(fill, c.halo);
+      recs.forEach(function (r) {
+        var m = L.marker([r.lat, r.lon], { icon: icon, keyboard: false });
+        m.on('add', function () { stripFocus(m); });
+        m.on('click', function () { pinInspect(buildSrtsInspect(r), { zoom: false }); });
+        m.on('mouseover', function () {
+          hoverPill.innerHTML = escHtml(r.on) + '<span>Speed bump · ' + (outcome === 'denied' ? 'Denied' : 'Approved') + '</span>';
+          hoverPill.hidden = false;
+        });
+        m.on('mouseout', function () { hoverPill.hidden = true; });
+        m.addTo(fg);
+      });
+      return fg;
+    }
+    layerGroups.deniedSrts = buildSrtsFg(denSrtsRecs, 'denied');
+    layerGroups.approvedSrts = buildSrtsFg(appSrtsRecs, 'approved');
+
+    // 5. APS Installed (SQUARES — Indigo/Violet)
+    var apsFg = L.featureGroup();
+    var apsIcon = makeSquareIcon(c.aps, c.halo);
+    apsRecs.forEach(function (r) {
+      var m = L.marker([r.lat, r.lon], { icon: apsIcon, keyboard: false });
+      m.on('add', function () { stripFocus(m); });
+      m.on('click', function () { pinInspect(buildApsInspect(r), { zoom: false }); });
+      m.on('mouseover', function () { hoverPill.innerHTML = escHtml(r.loc) + '<span>APS · ' + escHtml(r.dt) + '</span>'; hoverPill.hidden = false; });
+      m.on('mouseout', function () { hoverPill.hidden = true; });
+      m.addTo(apsFg);
+    });
+    layerGroups.aps = apsFg;
+
+    // 6. DOT Before-After Effectiveness
+    var effFg = L.featureGroup();
+    (DATA.effectiveness || []).forEach(function (ba) {
+      var instYear = ba.installDt ? parseInt(ba.installDt.split(', ').pop(), 10) : 0;
+      if (instYear < yearStart || instYear > yearEnd) return;
+      var fill = ba.chg < 0 ? c.approved : (ba.chg === 0 ? c.neutral : c.worsened);
+      var ring = L.circle([ba.lat, ba.lon], { radius: 150, color: fill, fillColor: fill, fillOpacity: 0.08, weight: 1.5, dashArray: '4 4', interactive: false });
+      ring.on('add', function () { stripFocus(ring); });
+      ring.addTo(effFg);
+      var m = L.circleMarker([ba.lat, ba.lon], { radius: Math.max(7, Math.min(13, 5 + ba.bc)), color: c.halo, fillColor: fill, fillOpacity: 0.94, weight: 2 });
+      m.on('add', function () { stripFocus(m); });
+      m.on('click', function () { pinInspect(buildEffInspect(ba), { zoom: false }); });
+      m.on('mouseover', function () { hoverPill.innerHTML = escHtml(ba.main + ' & ' + ba.cross) + '<span>' + ba.bc + ' → ' + ba.ac + '</span>'; hoverPill.hidden = false; });
+      m.on('mouseout', function () { hoverPill.hidden = true; });
+      m.addTo(effFg);
+    });
+    layerGroups.effectiveness = effFg;
+
+    // 7. Top 15 Denied Spotlight
+    var locs = [];
+    denSigRecs.forEach(function (d) { if (d.lat && d.lon) locs.push({ lat: d.lat, lon: d.lon, name: d.main + ' & ' + d.cross, dataset: 'Signal Study', type: d.type, ref: d.ref, rec: d, kind: 'sig' }); });
+    denSrtsRecs.forEach(function (d) { if (d.lat && d.lon) locs.push({ lat: d.lat, lon: d.lon, name: d.on + ' (' + d.from + ' to ' + d.to + ')', dataset: 'Speed Bump', type: 'Speed Reducer', ref: d.code, rec: d, kind: 'srts' }); });
+    var dLat = 0.00135, dLon = 0.0018;
+    locs.forEach(function (loc) {
+      var cr = 0, inj = 0, pinj = 0, fat = 0;
+      crashRecs.forEach(function (k) {
+        if (Math.abs(k.lat - loc.lat) > dLat || Math.abs(k.lon - loc.lon) > dLon) return;
+        if (haversineDist(loc.lat, loc.lon, k.lat, k.lon) <= 150) { cr++; inj += k.inj; pinj += k.pinj; fat += k.k; }
+      });
+      loc.cr = cr; loc.inj = inj; loc.pinj = pinj; loc.fat = fat;
+    });
+    locs.sort(function (a, b) { return b.cr - a.cr; });
+    top15List = [];
+    locs.forEach(function (loc) {
+      if (top15List.length >= 15) return;
+      var close = top15List.some(function (s) { return haversineDist(loc.lat, loc.lon, s.lat, s.lon) < 150; });
+      if (!close) top15List.push(loc);
+    });
+    var top15Fg = L.featureGroup();
+    top15List.forEach(function (r, idx) {
+      var rank = idx + 1;
+      var circ = L.circle([r.lat, r.lon], { radius: 150, color: c.denied, fillColor: c.denied, fillOpacity: 0.07, weight: 1.5, dashArray: '4 4', interactive: false });
+      circ.on('add', function () { stripFocus(circ); });
+      circ.addTo(top15Fg);
+      var m = L.circleMarker([r.lat, r.lon], { radius: 9, color: c.halo, fillColor: c.denied, fillOpacity: 0.94, weight: 2 });
+      m.on('add', function () { stripFocus(m); });
+      m.on('click', function () { pinInspect(r.kind === 'sig' ? buildSignalInspect(r.rec) : buildSrtsInspect(r.rec), { zoom: false }); });
+      m.addTo(top15Fg);
+      var lbl = L.marker([r.lat, r.lon], { icon: L.divIcon({ html: '<div class="spot-rank">' + rank + '</div>', className: 'ea-marker-icon', iconSize: [18, 18], iconAnchor: [9, 9] }), interactive: false, keyboard: false });
+      lbl.addTo(top15Fg);
+    });
+    layerGroups.top15 = top15Fg;
+
+    // 8. Top 10 Crash Intersections
+    var byInt = {};
+    crashRecs.forEach(function (k) {
+      if (!k.on || !k.off) return;
+      var parts = [k.on, k.off].sort();
+      var key = parts[0] + ' & ' + parts[1];
+      if (!byInt[key]) byInt[key] = { name: key, lat: k.lat, lon: k.lon, cr: 0, inj: 0, pinj: 0, cinj: 0, fat: 0 };
+      byInt[key].cr++; byInt[key].inj += k.inj; byInt[key].pinj += k.pinj; byInt[key].cinj += (k.cinj || 0); byInt[key].fat += k.k;
+    });
+    top10CrashList = Object.keys(byInt).map(function (k) { return byInt[k]; }).sort(function (a, b) { return b.cr - a.cr; }).slice(0, 10);
+    var top10Fg = L.featureGroup();
+    top10CrashList.forEach(function (cr, idx) {
+      var rank = idx + 1;
+      var circ = L.circle([cr.lat, cr.lon], { radius: 150, color: c.primary, fillColor: c.primary, fillOpacity: 0.07, weight: 1.5, dashArray: '4 4', interactive: false });
+      circ.on('add', function () { stripFocus(circ); });
+      circ.addTo(top10Fg);
+      var m = L.circleMarker([cr.lat, cr.lon], { radius: 9, color: c.halo, fillColor: c.primary, fillOpacity: 0.94, weight: 2 });
+      m.on('add', function () { stripFocus(m); });
+      m.on('click', function () {
+        pinInspect({
+          id: 'topcr:' + cr.name, lat: cr.lat, lon: cr.lon, title: '#' + rank + ': ' + cr.name, ref: yearStart + '–' + yearEnd + ' crash hotspot',
+          summary: cr.cr + ' crashes, ' + cr.inj + ' injuries',
+          html: '<span class="outcome-badge outcome-crash">Top 10 crash intersection</span>' +
+            statRow('Total crashes', cr.cr) + statRow('Total injuries', cr.inj) +
+            statRow('Pedestrian injuries', cr.pinj) + statRow('Cyclist injuries', cr.cinj) + statRow('Fatalities', cr.fat),
+        }, { zoom: false });
+      });
+      m.addTo(top10Fg);
+      var lbl = L.marker([cr.lat, cr.lon], { icon: L.divIcon({ html: '<div class="spot-rank">' + rank + '</div>', className: 'ea-marker-icon', iconSize: [18, 18], iconAnchor: [9, 9] }), interactive: false, keyboard: false });
+      lbl.addTo(top10Fg);
+    });
+    layerGroups.top10crashes = top10Fg;
+  }
+
+  function buildSearchIndex() {
+    searchEntries = [];
+    denSigRecs.concat(appSigRecs).forEach(function (r) {
+      searchEntries.push({
+        label: r.main + ' & ' + r.cross,
+        ref: r.ref,
+        sub: 'Signal · ' + (r.outcome === 'denied' ? 'Denied' : 'Approved'),
+        hay: (r.main + ' ' + r.cross + ' ' + r.ref + ' ' + r.type + ' ' + (r.school || '')).toLowerCase(),
+        make: function () { return buildSignalInspect(r); },
+      });
+    });
+    denSrtsRecs.concat(appSrtsRecs).forEach(function (r) {
+      searchEntries.push({
+        label: r.on + ' (' + r.from + ' to ' + r.to + ')',
+        ref: r.code,
+        sub: 'Speed bump · ' + (r.outcome === 'denied' ? 'Denied' : 'Approved'),
+        hay: (r.on + ' ' + r.from + ' ' + r.to + ' ' + r.code + ' ' + (r.denial || '')).toLowerCase(),
+        make: function () { return buildSrtsInspect(r); },
+      });
+    });
+    apsRecs.forEach(function (r) {
+      searchEntries.push({
+        label: r.loc,
+        ref: r.nta,
+        sub: 'APS installed',
+        hay: (r.loc + ' ' + r.nta + ' aps').toLowerCase(),
+        make: function () { return buildApsInspect(r); },
+      });
+    });
+    top10CrashList.forEach(function (cr, idx) {
+      searchEntries.push({
+        label: cr.name,
+        ref: cr.cr + ' crashes',
+        sub: 'Top #' + (idx + 1) + ' crash site',
+        hay: (cr.name + ' crash hotspot').toLowerCase(),
+        make: function () {
+          return {
+            id: 'topcr:' + cr.name, lat: cr.lat, lon: cr.lon, title: '#' + (idx + 1) + ': ' + cr.name,
+            ref: yearStart + '–' + yearEnd + ' crash hotspot', summary: cr.cr + ' crashes, ' + cr.inj + ' injuries',
+            html: '<span class="outcome-badge outcome-crash">Top 10 crash intersection</span>' +
+              statRow('Total crashes', cr.cr) + statRow('Total injuries', cr.inj) +
+              statRow('Pedestrian injuries', cr.pinj) + statRow('Cyclist injuries', cr.cinj) + statRow('Fatalities', cr.fat),
+          };
+        },
+      });
+    });
+  }
+
+  function syncLegendVisibility() {
+    document.getElementById('leg-inj').hidden = !map.hasLayer(layerGroups.crashDots);
+    document.getElementById('leg-aps').hidden = !map.hasLayer(layerGroups.aps);
+    document.getElementById('leg-eff').hidden = !map.hasLayer(layerGroups.effectiveness);
+  }
+
+  function updateCounts() {
+    var effCount = 0;
+    (DATA.effectiveness || []).forEach(function (ba) {
+      var y = ba.installDt ? parseInt(ba.installDt.split(', ').pop(), 10) : 0;
+      if (y >= yearStart && y <= yearEnd) effCount++;
+    });
+    var counts = {
+      crashDots: crashRecs.length, crashClustered: crashRecs.length,
+      deniedSignals: denSigRecs.length, approvedSignals: appSigRecs.length,
+      deniedSrts: denSrtsRecs.length, approvedSrts: appSrtsRecs.length,
+      aps: apsRecs.length, effectiveness: effCount,
+    };
+    Object.keys(counts).forEach(function (k) {
+      var el = document.getElementById('count-' + k);
+      if (el) el.textContent = '(' + counts[k].toLocaleString() + ')';
+    });
+    var totalReq = denSigRecs.length + appSigRecs.length + denSrtsRecs.length + appSrtsRecs.length;
+    document.getElementById('list-count').textContent = String(totalReq);
+  }
+
+  function rebuildLayers(keepState) {
+    var checked = {};
+    document.querySelectorAll('input[data-layer]').forEach(function (cb) {
+      checked[cb.getAttribute('data-layer')] = cb.checked;
+    });
+    Object.keys(layerGroups).forEach(function (k) {
+      if (layerGroups[k] && map.hasLayer(layerGroups[k])) map.removeLayer(layerGroups[k]);
+    });
+    crashRecs = getRecordsInRange('crashes');
+    denSigRecs = getRecordsInRange('deniedSignals');
+    appSigRecs = getRecordsInRange('approvedSignals');
+    denSrtsRecs = getRecordsInRange('deniedSrts');
+    appSrtsRecs = getRecordsInRange('approvedSrts');
+    apsRecs = getRecordsInRange('aps');
+
+    buildAllLayers();
+    buildSearchIndex();
+
+    Object.keys(checked).forEach(function (k) {
+      if (checked[k] && layerGroups[k]) layerGroups[k].addTo(map);
+    });
+    updateCounts();
+    syncLegendVisibility();
+    renderList();
+    if (keepState !== false) {
+      announce('Showing ' + yearStart + ' to ' + yearEnd + ': ' + crashRecs.length.toLocaleString() + ' crashes, ' + denSigRecs.length + ' denied signals, ' + denSrtsRecs.length + ' denied speed bumps.');
+    }
+    if (window.parent && window.parent !== window) {
+      try { window.parent.postMessage({ type: 'mapYearChanged', start: yearStart, end: yearEnd }, window.location.origin); } catch (_) {}
+    }
+  }
+
+  window.__eaOnThemeChange = function (scheme) {
+    var next = tileLayers[scheme === 'dark' ? 'dark' : 'light'];
+    if (activeBaseLayer !== next) {
+      map.removeLayer(activeBaseLayer);
+      activeBaseLayer = next.addTo(map);
+    }
+    if (DATA) {
+      drawBoundary();
+      rebuildLayers(false);
+    }
+  };
+
+  // Rail & Mobile Sheet controls
+  function setActiveTab(name, opts) {
+    var o = opts || {};
+    document.querySelectorAll('.ea-rail-tab').forEach(function (btn) {
+      var active = btn.dataset.tab === name;
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      btn.tabIndex = active ? 0 : -1;
+    });
+    document.querySelectorAll('.ea-tabpanel').forEach(function (p) { p.hidden = p.id !== ('rpanel-' + name); });
+    var st = document.getElementById('sheet-title');
+    if (st) st.textContent = name === 'inspect' ? 'Location details' : name === 'list' ? 'Requests & hotspots' : 'Filters & layers';
+    if (o.openPanel) {
+      if (isMobile()) openMobileSheet(name);
+      else setDesktopRailOpen(true);
+    }
+    syncMobileBar(name);
+  }
+  function syncMobileBar(activeTab) {
+    var open = document.body.classList.contains('sheet-open');
+    document.querySelectorAll('.ea-mob-btn').forEach(function (btn) {
+      btn.setAttribute('aria-expanded', (open && btn.dataset.mobTab === activeTab) ? 'true' : 'false');
+    });
+  }
+  function openMobileSheet(tabName, trigger) {
+    if (trigger) lastTriggerEl = trigger;
+    document.body.classList.add('sheet-open');
+    document.getElementById('sheet-backdrop').hidden = false;
+    setActiveTab(tabName);
+    syncMobileBar(tabName);
+  }
+  function closeMobileSheet() {
+    if (!document.body.classList.contains('sheet-open')) return;
+    document.body.classList.remove('sheet-open');
+    document.getElementById('sheet-backdrop').hidden = true;
+    syncMobileBar('');
+    if (lastTriggerEl && typeof lastTriggerEl.focus === 'function') lastTriggerEl.focus();
+  }
+  function setDesktopRailOpen(open) {
+    document.body.classList.toggle('rail-collapsed', !open);
+    var btn = document.getElementById('rail-open-btn');
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    window.setTimeout(function () { map.invalidateSize({ animate: false }); }, 60);
+  }
+
+  var railTabEls = Array.from(document.querySelectorAll('.ea-rail-tab'));
+  railTabEls.forEach(function (btn, idx) {
+    btn.addEventListener('click', function () { setActiveTab(btn.dataset.tab); });
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var next = railTabEls[(idx + (e.key === 'ArrowRight' ? 1 : -1) + railTabEls.length) % railTabEls.length];
+        setActiveTab(next.dataset.tab);
+        next.focus();
+      }
+    });
+  });
+  document.getElementById('panel-close').addEventListener('click', function () { isMobile() ? closeMobileSheet() : setDesktopRailOpen(false); });
+  document.getElementById('rail-open-btn').addEventListener('click', function () { setDesktopRailOpen(true); });
+  document.getElementById('sheet-backdrop').addEventListener('click', closeMobileSheet);
+  document.querySelectorAll('.ea-mob-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tab = btn.dataset.mobTab;
+      if (document.body.classList.contains('sheet-open') && btn.getAttribute('aria-expanded') === 'true') closeMobileSheet();
+      else openMobileSheet(tab, btn);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var list = document.getElementById('ref-search-list');
+      if (list && !list.hidden) { closeCombo(); return; }
+      if (isMobile() && document.body.classList.contains('sheet-open')) closeMobileSheet();
+      else if (selectedItemId) clearSelection();
+    }
+  });
+
+  document.getElementById('btn-zoom-in').addEventListener('click', function () { map.zoomIn(); });
+  document.getElementById('btn-zoom-out').addEventListener('click', function () { map.zoomOut(); });
+  document.getElementById('btn-reset-view').addEventListener('click', function () {
+    if (cb5Bounds && cb5Bounds.isValid()) {
+      map.fitBounds(cb5Bounds, { padding: [20, 20], animate: !reducedMotion() });
+      announce('Map view reset to Queens Community Board 5.');
+    }
+  });
+  document.getElementById('btn-fullscreen').addEventListener('click', function () {
+    if (isEmbedded) window.open(window.location.pathname, '_blank', 'noopener');
+    else if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {});
+    else if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
+  });
+
+  var legendToggle = document.getElementById('legend-toggle');
+  var legendPill = document.getElementById('map-legend');
+  function setLegendCollapsed(c) {
+    legendPill.classList.toggle('is-collapsed', c);
+    legendToggle.setAttribute('aria-expanded', c ? 'false' : 'true');
+    legendToggle.textContent = c ? 'Show' : 'Hide';
+  }
+  legendToggle.addEventListener('click', function () { setLegendCollapsed(!legendPill.classList.contains('is-collapsed')); });
+  if (isMobile()) setLegendCollapsed(true);
+
+  // WAI-ARIA Search Combobox (streets, intersections, neighborhoods, AND DOT ref codes!)
+  var searchInput = document.getElementById('ref-search');
+  var searchList = document.getElementById('ref-search-list');
+  var searchClear = document.getElementById('ref-search-clear');
+  var comboMatches = [];
+  var comboIdx = -1;
+
+  function closeCombo() {
+    searchList.hidden = true;
+    searchInput.setAttribute('aria-expanded', 'false');
+    searchInput.setAttribute('aria-activedescendant', '');
+    comboIdx = -1;
+  }
+  function renderCombo(qRaw) {
+    var q = (qRaw || '').trim().toLowerCase();
+    var qNorm = q.replace(/[-\s]/g, '');
+    searchClear.hidden = !q;
+    if (!q) { closeCombo(); return; }
+    comboMatches = searchEntries.filter(function (e) {
+      return e.hay.indexOf(q) >= 0 || (qNorm.length >= 2 && e.ref.replace(/[-\s]/g, '').toLowerCase().indexOf(qNorm) >= 0);
+    }).slice(0, 12);
+    if (!comboMatches.length) {
+      searchList.innerHTML = '<li class="ea-combo-opt" role="option" aria-disabled="true">No matching streets or references</li>';
+      searchList.hidden = false;
+      searchInput.setAttribute('aria-expanded', 'true');
+      comboIdx = -1;
+      return;
+    }
+    comboIdx = 0;
+    searchList.innerHTML = comboMatches.map(function (m, i) {
+      return '<li id="dot-opt-' + i + '" class="ea-combo-opt" role="option" aria-selected="' + (i === 0 ? 'true' : 'false') + '" data-idx="' + i + '">' +
+        '<span>' + escHtml(m.label) + '</span>' +
+        '<span class="ea-combo-sub">' + escHtml(m.sub) + '</span>' +
+      '</li>';
+    }).join('');
+    searchList.hidden = false;
+    searchInput.setAttribute('aria-expanded', 'true');
+    searchInput.setAttribute('aria-activedescendant', 'dot-opt-0');
+  }
+  function moveCombo(delta) {
+    if (searchList.hidden || !comboMatches.length) return;
+    comboIdx = (comboIdx + delta + comboMatches.length) % comboMatches.length;
+    Array.from(searchList.children).forEach(function (li, i) { li.setAttribute('aria-selected', i === comboIdx ? 'true' : 'false'); });
+    var active = document.getElementById('dot-opt-' + comboIdx);
+    searchInput.setAttribute('aria-activedescendant', active ? active.id : '');
+    if (active) active.scrollIntoView({ block: 'nearest' });
+  }
+  searchInput.addEventListener('input', function () { renderCombo(searchInput.value); });
+  searchInput.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); moveCombo(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); moveCombo(-1); }
+    else if (e.key === 'Enter' && comboIdx >= 0 && comboMatches[comboIdx]) {
+      e.preventDefault();
+      var chosen = comboMatches[comboIdx];
+      searchInput.value = chosen.label;
+      closeCombo();
+      pinInspect(chosen.make());
+    } else if (e.key === 'Escape') closeCombo();
+  });
+  searchList.addEventListener('click', function (e) {
+    var li = e.target.closest('li[data-idx]');
+    if (!li) return;
+    var chosen = comboMatches[parseInt(li.dataset.idx, 10)];
+    if (!chosen) return;
+    searchInput.value = chosen.label;
+    closeCombo();
+    pinInspect(chosen.make());
+  });
+  searchClear.addEventListener('click', function () { searchInput.value = ''; closeCombo(); searchInput.focus(); });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.ea-combo')) closeCombo(); });
+
+  // List tab (synchronized with active year range)
+  var listCat = document.getElementById('list-category');
+  var listFilter = document.getElementById('list-filter');
+  var currentListItems = [];
+
+  function renderList() {
+    if (!DATA) return;
+    var cat = listCat.value;
+    var q = (listFilter.value || '').trim().toLowerCase();
+    var items = [];
+    if (cat === 'topDenied') {
+      items = top15List.map(function (r, i) {
+        return { id: r.kind + ':' + r.ref, title: '#' + (i + 1) + ' ' + r.name, meta: r.dataset + ' · ' + r.ref, val: r.cr + ' cr', make: function () { return r.kind === 'sig' ? buildSignalInspect(r.rec) : buildSrtsInspect(r.rec); } };
+      });
+    } else if (cat === 'topCrashes') {
+      items = top10CrashList.map(function (cr, i) {
+        return {
+          id: 'topcr:' + cr.name, title: '#' + (i + 1) + ' ' + cr.name, meta: cr.inj + ' injuries · ' + cr.pinj + ' ped.', val: cr.cr + ' cr',
+          make: function () {
+            return {
+              id: 'topcr:' + cr.name, lat: cr.lat, lon: cr.lon, title: '#' + (i + 1) + ': ' + cr.name, ref: yearStart + '–' + yearEnd + ' crash hotspot',
+              summary: cr.cr + ' crashes', html: '<span class="outcome-badge outcome-crash">Top 10 crash intersection</span>' +
+                statRow('Total crashes', cr.cr) + statRow('Total injuries', cr.inj) +
+                statRow('Pedestrian injuries', cr.pinj) + statRow('Cyclist injuries', cr.cinj) + statRow('Fatalities', cr.fat),
+            };
+          },
+        };
+      });
+    } else if (cat === 'deniedSignals' || cat === 'approvedSignals') {
+      var arr = (cat === 'deniedSignals' ? denSigRecs : appSigRecs).slice().sort(function (a, b) { return b.cr - a.cr; });
+      items = arr.map(function (r) {
+        return { id: 'sig:' + r.ref, title: r.main + ' & ' + r.cross, meta: r.type + ' · ' + r.ref, val: r.cr + ' cr', make: function () { return buildSignalInspect(r); } };
+      });
+    } else if (cat === 'deniedSrts' || cat === 'approvedSrts') {
+      var arr2 = (cat === 'deniedSrts' ? denSrtsRecs : appSrtsRecs).slice().sort(function (a, b) { return b.cr - a.cr; });
+      items = arr2.map(function (r) {
+        return { id: 'srts:' + r.code, title: r.on, meta: r.from + ' to ' + r.to + ' · ' + r.code, val: r.cr + ' cr', make: function () { return buildSrtsInspect(r); } };
+      });
+    } else if (cat === 'effectiveness') {
+      (DATA.effectiveness || []).forEach(function (ba) {
+        var y = ba.installDt ? parseInt(ba.installDt.split(', ').pop(), 10) : 0;
+        if (y < yearStart || y > yearEnd) return;
+        items.push({ id: 'eff:' + ba.ref, title: ba.main + ' & ' + ba.cross, meta: ba.type + ' · ' + ba.installDt, val: ba.bc + '→' + ba.ac, make: function () { return buildEffInspect(ba); } });
+      });
+    }
+
+    if (q) {
+      items = items.filter(function (it) { return (it.title + ' ' + it.meta).toLowerCase().indexOf(q) >= 0; });
+    }
+    currentListItems = items.slice(0, 120);
+    var ul = document.getElementById('safety-list-rows');
+    ul.innerHTML = currentListItems.map(function (it, idx) {
+      var sel = selectedItemId === it.id ? ' is-selected' : '';
+      return '<li><button type="button" class="ea-list-btn' + sel + '" data-lidx="' + idx + '">' +
+        '<span><span class="ea-list-name">' + escHtml(it.title) + '</span><span class="ea-list-meta">' + escHtml(it.meta) + '</span></span>' +
+        '<span class="ea-list-val">' + escHtml(it.val) + '</span>' +
+      '</button></li>';
+    }).join('') || '<li class="ea-empty-state">No locations match this filter.</li>';
+  }
+  listCat.addEventListener('change', renderList);
+  listFilter.addEventListener('input', renderList);
+  document.getElementById('safety-list-rows').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-lidx]');
+    if (!btn) return;
+    var it = currentListItems[parseInt(btn.dataset.lidx, 10)];
+    if (it) pinInspect(it.make());
+  });
+
+  function initMap(loaded) {
+    DATA = loaded;
+    var loadEl = document.getElementById('map-loading');
+    if (loadEl) loadEl.classList.remove('is-loading');
+
+    function indexByYear(key, arr) {
+      dataByYear[key] = {};
+      (arr || []).forEach(function (r) {
+        var y = r.y || 0;
+        if (!dataByYear[key][y]) dataByYear[key][y] = [];
+        dataByYear[key][y].push(r);
+      });
+    }
+    indexByYear('crashes', DATA.crashes);
+    indexByYear('deniedSignals', DATA.deniedSignals);
+    indexByYear('approvedSignals', DATA.approvedSignals);
+    indexByYear('deniedSrts', DATA.deniedSrts);
+    indexByYear('approvedSrts', DATA.approvedSrts);
+    indexByYear('aps', DATA.aps);
+
+    drawBoundary();
+    if (cb5Bounds && cb5Bounds.isValid()) {
+      map.fitBounds(cb5Bounds, { padding: [20, 20], animate: false });
+    } else {
+      map.setView([40.714, -73.889], 13.5);
+    }
+
+    var selStart = document.getElementById('year-start');
+    var selEnd = document.getElementById('year-end');
+    function enforceYearRange() {
+      if (parseInt(selStart.value, 10) > parseInt(selEnd.value, 10)) selEnd.value = selStart.value;
+    }
+    selStart.addEventListener('change', enforceYearRange);
+    selEnd.addEventListener('change', enforceYearRange);
+    document.getElementById('year-apply').addEventListener('click', function () {
+      enforceYearRange();
+      yearStart = parseInt(selStart.value, 10);
+      yearEnd = parseInt(selEnd.value, 10);
+      rebuildLayers(true);
+    });
+    document.getElementById('year-reset').addEventListener('click', function () {
+      selStart.value = '__STUDY_START_YEAR__';
+      selEnd.value = '__LAST_COMPLETE_YEAR__';
+      yearStart = __STUDY_START_YEAR__;
+      yearEnd = __LAST_COMPLETE_YEAR__;
+      rebuildLayers(true);
+    });
+
+    document.querySelectorAll('input[data-layer]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var k = this.getAttribute('data-layer');
+        if (!layerGroups[k]) return;
+        if (this.checked) layerGroups[k].addTo(map);
+        else map.removeLayer(layerGroups[k]);
+        syncLegendVisibility();
+        announce((this.parentElement ? this.parentElement.textContent.trim() : k) + (this.checked ? ' shown.' : ' hidden.'));
+      });
+    });
+
+    window.setYearRange = function (s, e) {
+      if (isNaN(s) || isNaN(e) || s < __STUDY_START_YEAR__ || e > __LAST_COMPLETE_YEAR__ || s > e) return;
+      selStart.value = String(s);
+      selEnd.value = String(e);
+      yearStart = s;
+      yearEnd = e;
+      rebuildLayers(true);
+    };
+
+    if (pendingYearRange) {
+      window.setYearRange(pendingYearRange[0], pendingYearRange[1]);
+      pendingYearRange = null;
+    } else {
+      rebuildLayers(false);
+    }
+
+    document.body.classList.add('map-ready');
+    window.setTimeout(function () { map.invalidateSize({ animate: false }); }, 150);
+  }
+
+  window.addEventListener('message', function (ev) {
+    if (window.parent === window || ev.source !== window.parent) return;
+    if (ev.origin !== window.location.origin && ev.origin !== 'https://electoralanalytics.net') return;
+    if (!ev.data) return;
+    if (ev.data.type === 'ea:color-scheme' && (ev.data.value === 'light' || ev.data.value === 'dark')) {
+      if (window.eaColorScheme) window.eaColorScheme.set(ev.data.value);
+      return;
+    }
+    if (ev.data.type === 'setYearRange') {
+      var s = parseInt(ev.data.start, 10), e = parseInt(ev.data.end, 10);
+      if (isNaN(s) || isNaN(e) || s < __STUDY_START_YEAR__ || e > __LAST_COMPLETE_YEAR__ || s > e) return;
+      if (typeof window.setYearRange === 'function') window.setYearRange(s, e);
+      else pendingYearRange = [s, e];
+    }
+  });
+
+  var resizeRaf = 0;
+  function scheduleResize() {
+    if (resizeRaf) return;
+    resizeRaf = requestAnimationFrame(function () { resizeRaf = 0; map.invalidateSize({ animate: false }); });
+  }
+  window.addEventListener('resize', scheduleResize);
+  if (window.ResizeObserver) new ResizeObserver(scheduleResize).observe(document.body);
+  window.invalidateSize = function () { map.invalidateSize({ animate: false }); };
+
+  fetch(cacheBust('map_data.json'))
+    .then(function (r) { if (!r.ok) throw new Error('map_data.json ' + r.status); return r.json(); })
+    .then(initMap)
+    .catch(function (err) {
+      var el = document.getElementById('map-loading');
+      if (el) {
+        el.classList.remove('is-loading');
+        el.classList.add('is-error');
+        el.textContent = 'Map data failed to load.';
+      }
+      console.error(err);
+    });
+})();
+</script>
+</body>
+</html>

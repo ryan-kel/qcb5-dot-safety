@@ -117,9 +117,9 @@ class DocumentationAlignmentTest(unittest.TestCase):
 
     def test_boundary_docs_use_current_srts_polygon_counts(self):
         text = self.read('REFERENCE_cb5_boundaries.md')
-        self.assertIn('| 1 | Resolved raw records (`cb=405`) | 2,015 |', text)
-        self.assertIn('| 2 | After polygon boundary filter | 1,988 |', text)
-        self.assertIn('| — | Excluded by polygon filter | 27 |', text)
+        self.assertIn('| 1 | Resolved raw records (`cb=405`) | 2,170 |', text)
+        self.assertIn('| 2 | After polygon boundary filter | 2,142 |', text)
+        self.assertIn('| — | Excluded by polygon filter | 28 |', text)
         self.assertIn('| Feature id | `405` |', text)
         self.assertIn('| Coordinate points | `51` |', text)
         self.assertIn('| Bounds | lon -73.924519 to -73.855294; lat 40.682342 to 40.735120 |', text)
@@ -127,8 +127,8 @@ class DocumentationAlignmentTest(unittest.TestCase):
 
     def test_methodology_uses_exact_srts_boundary_counts_and_existing_references(self):
         text = self.read('output/METHODOLOGY.md')
-        self.assertIn('27 resolved records excluded', text)
-        self.assertIn('2,015 resolved `cb=405` SRTS records -> 1,988 retained', text)
+        self.assertIn('28 resolved records excluded', text)
+        self.assertIn('2,170 resolved `cb=405` SRTS records -> 2,142 retained', text)
         self.assertNotIn('~26', text)
         self.assertNotIn('decisions.md', text)
 
@@ -178,19 +178,22 @@ class DocumentationAlignmentTest(unittest.TestCase):
         text = self.read('output/METHODOLOGY.md')
         self.assertIn('Publication readiness note', text)
         self.assertIn('duplicate `CQ21-0749` rows', text)
-        self.assertIn('11 unmatched signal-study geocodes', text)
+        self.assertIn('10 unmatched signal-study geocodes', text)
         self.assertNotIn('partially corrected after audit', text)
         self.assertNotIn('full regeneration pass before publication', text)
-        self.assertIn('| Signal Studies | `[w76s-c5u4]` | `data_raw/signal_studies_citywide.csv` | 75,339 |', text)
+        self.assertIn('| Signal Studies | `[w76s-c5u4]` | `data_raw/signal_studies_citywide.csv` | 76,748 |', text)
         self.assertIn('| CB5 Signal Studies | Derived | `output/data_cb5_signal_studies.csv` | 499 |', text)
         self.assertIn('pre-filtered curated file (`output/data_cb5_signal_studies.csv`)', text)
-        self.assertIn('97% geocoded (421/432 current resolved non-APS rows)', text)
+        self.assertIn('98% geocoded (422/432 current resolved non-APS rows)', text)
         self.assertIn('data_unmatched_signal_geocodes.csv', text)
         self.assertIn('495 rows match once', text)
         self.assertIn('1 curated row (`CQ25-0457B`) is not present', text)
         self.assertIn('does not by itself validate CB5 inclusion', text)
         self.assertIn('do not appear in the signal-study map layers or proximity statistics', text)
         self.assertIn('injury or fatal crashes', text)
+        self.assertIn('measured 85th-percentile radar travel speed below 30 mph', text)
+        self.assertNotIn('Batting Average Analysis', text)
+        self.assertNotIn('The infrastructure works', text)
         self.assertNotIn('Data fetched: 2026-02-11', text)
         self.assertNotIn('hard-capped at 2025', text)
         self.assertNotIn('contains only injury crashes', text)
@@ -282,7 +285,7 @@ class DocumentationAlignmentTest(unittest.TestCase):
             str(SHARED_DATAVIZ_GUIDE),
             'generate_charts.py',
             'generate_maps.py',
-            'output/map_01_crash_denial_overlay.html',
+            'templates/map_02_template.html',
             'output/map_02_interactive_explorer.html',
         ]
         unsupported_phrases = [
@@ -311,7 +314,8 @@ class DocumentationAlignmentTest(unittest.TestCase):
 
         methodology = self.read('output/METHODOLOGY.md')
         self.assertIn('This is an analytic classification, not a direct DOT status label.', methodology)
-        self.assertIn('Installed APS inventory.', self.read('generate_maps.py'))
+        self.assertIn('Installed APS inventory.', self.read('templates/map_02_template.html'))
+        self.assertIn('Installed APS inventory.', self.read('output/map_02_interactive_explorer.html'))
         self.assertIn('APS inventory (excl. from denial rates)', self.read('generate_charts.py'))
 
     def test_methodology_headline_counts_match_current_tables(self):
@@ -389,6 +393,44 @@ class DocumentationAlignmentTest(unittest.TestCase):
         self.assertNotIn('5crt-au7u', text)
         self.assertNotIn('311-Service-Requests-from-2010-to-Present', text)
         self.assertIn('311-Service-Requests-from-2020-to-Present', text)
+
+    def test_interactive_explorer_security_theme_and_external_data(self):
+        import json as _json
+        self.assertFalse(Path('output/map_01_crash_denial_overlay.html').exists())
+        map_path = Path('output/map_02_interactive_explorer.html')
+        self.assertTrue(map_path.exists())
+        self.assertLess(map_path.stat().st_size, 100_000)
+        html = map_path.read_text(encoding='utf-8')
+        self.assertIn("fetch(cacheBust('map_data.json'))", html)
+        self.assertNotIn('var DATA = {', html)
+        self.assertIn('var yearStart = 2020, yearEnd = 2025;', html)
+        self.assertNotIn('body.embedded #year-filter-section', html)
+        self.assertNotIn("'*'", html)
+        self.assertIn("ev.origin !== window.location.origin", html)
+        self.assertIn("sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H", html)
+        self.assertIn("sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH", html)
+        self.assertIn("sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV", html)
+        self.assertIn("sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+", html)
+        self.assertIn("sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr", html)
+        self.assertIn("ea-color-scheme", html)
+        self.assertIn("ea-standalone-bar", html)
+        self.assertIn("IBM+Plex+Sans", html)
+        self.assertIn("dark_all", html)
+        self.assertIn("key=cb1_2949_1_9bd5bcde55f90cb1ce920410", html)
+        self.assertIn('role="combobox"', html)
+        self.assertIn("zoomSnap: 0.25", html)
+        self.assertIn("scrollWheelZoom: !isEmbedded", html)
+        self.assertIn("prefers-reduced-motion: reduce", html)
+        self.assertIn("#7C5B12", html)
+        self.assertIn("#C43E2F", html)
+        self.assertIn("#1D6F8A", html)
+        self.assertIn("makeDiamondIcon", html)
+        self.assertNotIn("outline: none", html)
+        self.assertLess(html.index('id="panel"'), html.index('id="map"'))
+        curated = _json.loads(Path('output/curated_charts.json').read_text(encoding='utf-8'))
+        self.assertEqual(6, len(curated['summary_charts']))
+        for item in curated['summary_charts']:
+            self.assertTrue((Path('output') / item['file']).exists(), item['file'])
 
 
 if __name__ == '__main__':

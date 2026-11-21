@@ -1,0 +1,31 @@
+{
+  "snapshot_window": "2020-2025",
+  "canonical_map": "map_02_interactive_explorer.html",
+  "map_data": "map_data.json",
+  "summary_charts": [
+    {
+      "file": "chart_01d_denied_vs_approved.png",
+      "title": "QCB5 Signal Study Outcomes: Denied and Approved"
+    },
+    {
+      "file": "chart_03b_signal_denial_rates.png",
+      "title": "QCB5 and Citywide Signal Study Denial Rates by Year"
+    },
+    {
+      "file": "chart_03d_srts_denial_rates.png",
+      "title": "QCB5 and Citywide Speed Bump Denial Rates by Year"
+    },
+    {
+      "file": "chart_05b_denial_reasons.png",
+      "title": "QCB5 Speed Bump Denial Reasons"
+    },
+    {
+      "file": "chart_09_crash_proximity_analysis.png",
+      "title": "Crash Proximity: Denied and Approved Signal Study Locations"
+    },
+    {
+      "file": "chart_15_srts_funnel.png",
+      "title": "QCB5 DOT-Approved Speed Bumps: Post-Approval Outcomes"
+    }
+  ]
+}
