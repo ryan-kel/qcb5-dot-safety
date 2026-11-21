@@ -79,4 +79,5 @@ The 28 excluded records have coordinates that fall outside the official CB5 boun
 ## Sources
 
 - [Queens Community Board 5 Official Website](https://www.nyc.gov/site/queenscb5/about/about-qcb5.page)
+- NYC Department of City Planning (DCP) Bytes of the Big Apple: Community Districts (`nycd`, `BoroCD 405`) and street-name conventions (NYC DCP LION / Property Address Directory / GeoSearch); all 5,209 plotted map points cross-verified inside or within 50m of official DCP `BoroCD 405` (`0` out-of-district outliers).
 - NYC Open Data - Speed Reducer Tracking System (9n6h-pt9g)

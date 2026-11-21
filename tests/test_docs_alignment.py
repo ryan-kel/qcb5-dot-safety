@@ -432,6 +432,56 @@ class DocumentationAlignmentTest(unittest.TestCase):
         for item in curated['summary_charts']:
             self.assertTrue((Path('output') / item['file']).exists(), item['file'])
 
+    def test_map_data_street_normalization_and_spatial_veracity(self):
+        import json as _json
+        import math as _math
+        from shapely.geometry import Point, shape
+        from shapely.ops import transform
+
+        data = _json.loads(Path('output/map_data.json').read_text(encoding='utf-8'))
+        boundary_gj = _json.loads(Path('data_raw/cb5_boundary.geojson').read_text(encoding='utf-8'))
+        cb5_geom = shape(boundary_gj['features'][0]['geometry'])
+        cos_lat = _math.cos(_math.radians(40.71))
+        cb5_m = transform(lambda x, y, z=None: (x * 111320 * cos_lat, y * 111320), cb5_geom)
+
+        def is_all_caps(val):
+            letters = [c for c in val if c.isalpha()]
+            return len(letters) >= 4 and all(c.isupper() for c in letters)
+
+        # 1. Zero ALL-CAPS or redundant whitespace in displayed street/label fields
+        for key in (
+            'crashes', 'deniedSignals', 'approvedSignals',
+            'deniedSrts', 'approvedSrts', 'aps', 'effectiveness', 'top15', 'top10crashes',
+        ):
+            for rec in data[key]:
+                lat, lon = rec.get('lat'), rec.get('lon')
+                self.assertIsNotNone(lat, f'{key} missing lat')
+                self.assertIsNotNone(lon, f'{key} missing lon')
+                self.assertTrue(40.65 <= lat <= 40.76 and -73.95 <= lon <= -73.84, (key, lat, lon))
+                pt_m = Point(lon * 111320 * cos_lat, lat * 111320)
+                dist_m = 0.0 if cb5_m.contains(pt_m) else cb5_m.distance(pt_m)
+                self.assertLessEqual(dist_m, 150.0, f'{key} point >150m outside CB5: {rec}')
+                for fld in ('on', 'off', 'main', 'cross', 'from', 'to', 'loc', 'name', 'school', 'status'):
+                    val = rec.get(fld)
+                    if isinstance(val, str) and val:
+                        self.assertFalse(is_all_caps(val), f'ALL-CAPS in {key}.{fld}: {val!r}')
+                        self.assertEqual(val, val.strip(), f'Edge whitespace in {key}.{fld}: {val!r}')
+                        self.assertNotIn('  ', val, f'Double space in {key}.{fld}: {val!r}')
+
+        for ref, entry in data['searchIndex'].items():
+            lbl = entry.get('label', '')
+            self.assertFalse(is_all_caps(lbl), f'ALL-CAPS searchIndex[{ref}]: {lbl!r}')
+            self.assertEqual(lbl, lbl.strip())
+            self.assertNotIn('  ', lbl)
+
+        # 2. Canonical intersection deduplication (no spelling/order splits)
+        top10 = {r['name']: r['cr'] for r in data['top10crashes']}
+        self.assertGreaterEqual(top10.get('Borden Ave & Maurice Ave', 0), 58)
+        self.assertGreaterEqual(top10.get('Cypress Ave & Vermont Pl', 0), 48)
+        t06 = {r['Intersection']: int(r['Denials']) for r in self.csv_rows('output/table_06_most_denied_intersections.csv')}
+        self.assertGreaterEqual(t06.get('Forest Ave & Metropolitan Ave', 0), 6)
+        self.assertGreaterEqual(t06.get('Cooper Ave & Cypress Ave', 0), 5)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,16 +1,16 @@
 referencenumber,requesttype,mainstreet,crossstreet1,daterequested,install_date,window_months,before_crashes,after_crashes,crash_change,pct_change,before_injuries,after_injuries,latitude,longitude,Source File
-CQ24-1479,All-Way Stop,62 STREET,68 AVENUE,2024-04-24T00:00:00.000,2024-07-15,17.5,7,7,0,0.0,7,7,40.705513,-73.89538,data_cb5_signal_studies.csv
-CQ24-0955,All-Way Stop,BLEECKER STREET,WOODWARD AVENUE,2024-03-18T00:00:00.000,2024-05-13,19.6,8,1,-7,-87.5,8,1,40.70703,-73.909325,data_cb5_signal_studies.csv
-CQ24-0418,All-Way Stop,78 AVENUE,87 STREET,2024-02-07T00:00:00.000,2024-05-02,20.0,1,1,0,0.0,1,1,40.705832,-73.862265,data_cb5_signal_studies.csv
-CQ24-0220,All-Way Stop,LINDEN STREET,ONDERDONK AVENUE,2024-01-23T00:00:00.000,2024-04-08,20.8,10,5,-5,-50.0,17,6,40.704594,-73.90826,data_cb5_signal_studies.csv
-CQ22-1028,Traffic Signal,FLUSHING AVENUE,60 LANE,2022-03-31T00:00:00.000,2024-11-13,13.6,8,9,1,12.5,8,9,40.720604,-73.9047875,data_cb5_signal_studies.csv
-CQ21-2683,Traffic Signal,SENECA AVENUE,WEIRFIELD STREET,2021-10-26T00:00:00.000,2024-01-11,23.7,22,16,-6,-27.3,28,18,40.700005,-73.90296,data_cb5_signal_studies.csv
-CQ21-1868,All-Way Stop,69 STREET,52 AVENUE,2021-08-27T00:00:00.000,2024-03-25,21.2,0,0,0,0.0,0,0,40.733605,-73.897893,data_cb5_signal_studies.csv
-CQ21-1545,All-Way Stop,FAIRVIEW AVENUE,PALMETTO STREET,2021-07-23T00:00:00.000,2022-05-19,24.0,4,3,-1,-25.0,4,3,40.70592,-73.90452,data_cb5_signal_studies.csv
-CQ21-1538,All-Way Stop,84 STREET,78 AVENUE,2021-07-22T00:00:00.000,2022-05-02,24.0,0,0,0,0.0,0,0,40.70667,-73.865206,data_cb5_signal_studies.csv
-CQ21-1143,Traffic Signal,COOPER AVENUE,60 LANE,2021-06-04T00:00:00.000,2022-05-23,24.0,4,3,-1,-25.0,4,4,40.6965692144966,-73.8945563503407,data_cb5_signal_studies.csv
-CQ21-0749,Traffic Signal,69 LANE,LONG ISLAND EXPRESSWAY,2021-04-20T00:00:00.000,2023-06-01,24.0,0,1,1,100.0,0,1,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
-CQ21-0194,All-Way Stop,PALMETTO STREET,60 PLACE,2021-01-29T00:00:00.000,2021-09-02,20.0,4,4,0,0.0,4,4,40.70767,-73.901054,data_cb5_signal_studies.csv
-CQ20-2303,Traffic Signal,65 DRIVE,70 STREET,2020-11-09T00:00:00.000,2022-02-10,24.0,1,4,3,300.0,2,5,40.715369,-73.88653999999998,data_cb5_signal_studies.csv
-CQ20-1328,All-Way Stop,GATES AVENUE,GRANDVIEW AVENUE,2020-07-13T00:00:00.000,2020-10-08,9.2,0,2,2,100.0,0,2,40.70755,-73.90404,data_cb5_signal_studies.csv
-CQ20-0745,All-Way Stop,CATALPA AVENUE,62 STREET,2020-02-24T00:00:00.000,2022-03-02,24.0,11,8,-3,-27.3,16,8,40.704178,-73.89481,data_cb5_signal_studies.csv
+CQ24-1479,All-Way Stop,62 St,68 Ave,2024-04-24T00:00:00.000,2024-07-15,17.5,7,7,0,0.0,7,7,40.705513,-73.89538,data_cb5_signal_studies.csv
+CQ24-0955,All-Way Stop,Bleecker St,Woodward Ave,2024-03-18T00:00:00.000,2024-05-13,19.6,8,1,-7,-87.5,8,1,40.70703,-73.909325,data_cb5_signal_studies.csv
+CQ24-0418,All-Way Stop,78 Ave,87 St,2024-02-07T00:00:00.000,2024-05-02,20.0,1,1,0,0.0,1,1,40.705832,-73.862265,data_cb5_signal_studies.csv
+CQ24-0220,All-Way Stop,Linden St,Onderdonk Ave,2024-01-23T00:00:00.000,2024-04-08,20.8,10,5,-5,-50.0,17,6,40.704594,-73.90826,data_cb5_signal_studies.csv
+CQ22-1028,Traffic Signal,Flushing Ave,60 Ln,2022-03-31T00:00:00.000,2024-11-13,13.6,8,9,1,12.5,8,9,40.720604,-73.9047875,data_cb5_signal_studies.csv
+CQ21-2683,Traffic Signal,Seneca Ave,Weirfield St,2021-10-26T00:00:00.000,2024-01-11,23.7,22,16,-6,-27.3,28,18,40.700005,-73.90296,data_cb5_signal_studies.csv
+CQ21-1868,All-Way Stop,69 St,52 Ave,2021-08-27T00:00:00.000,2024-03-25,21.2,0,0,0,0.0,0,0,40.733605,-73.897893,data_cb5_signal_studies.csv
+CQ21-1545,All-Way Stop,Fairview Ave,Palmetto St,2021-07-23T00:00:00.000,2022-05-19,24.0,4,3,-1,-25.0,4,3,40.70592,-73.90452,data_cb5_signal_studies.csv
+CQ21-1538,All-Way Stop,84 St,78 Ave,2021-07-22T00:00:00.000,2022-05-02,24.0,0,0,0,0.0,0,0,40.70667,-73.865206,data_cb5_signal_studies.csv
+CQ21-1143,Traffic Signal,Cooper Ave,60 Ln,2021-06-04T00:00:00.000,2022-05-23,24.0,4,3,-1,-25.0,4,4,40.6965692144966,-73.8945563503407,data_cb5_signal_studies.csv
+CQ21-0749,Traffic Signal,69 Ln,Long Island Expy,2021-04-20T00:00:00.000,2023-06-01,24.0,0,1,1,100.0,0,1,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
+CQ21-0194,All-Way Stop,Palmetto St,60 Pl,2021-01-29T00:00:00.000,2021-09-02,20.0,4,4,0,0.0,4,4,40.70767,-73.901054,data_cb5_signal_studies.csv
+CQ20-2303,Traffic Signal,65 Dr,70 St,2020-11-09T00:00:00.000,2022-02-10,24.0,1,4,3,300.0,2,5,40.715369,-73.88653999999998,data_cb5_signal_studies.csv
+CQ20-1328,All-Way Stop,Gates Ave,Grandview Ave,2020-07-13T00:00:00.000,2020-10-08,9.2,0,2,2,100.0,0,2,40.70755,-73.90404,data_cb5_signal_studies.csv
+CQ20-0745,All-Way Stop,Catalpa Ave,62 St,2020-02-24T00:00:00.000,2022-03-02,24.0,11,8,-3,-27.3,16,8,40.704178,-73.89481,data_cb5_signal_studies.csv

@@ -17,6 +17,7 @@ import json
 import warnings
 import os
 import datetime
+from street_norm import format_nyc_intersection, format_nyc_street
 
 warnings.filterwarnings('ignore')
 
@@ -1505,8 +1506,10 @@ def chart_06_most_denied_intersections(data):
 
     cb5_denied = _dedup_signal_studies(cb5_denied)
 
-    cb5_denied['location'] = cb5_denied['mainstreet'].fillna('') + ' & ' + cb5_denied['crossstreet1'].fillna('')
-    cb5_denied['location'] = cb5_denied['location'].str.title()
+    cb5_denied['location'] = cb5_denied.apply(
+        lambda r: format_nyc_intersection(r['mainstreet'], r['crossstreet1'], sort_pair=True),
+        axis=1,
+    )
 
     location_counts = cb5_denied['location'].value_counts().head(10)
 
@@ -1553,7 +1556,7 @@ def chart_07_most_denied_streets_speed_bumps(data):
     cb5_srts_denied = cb5_srts_recent[cb5_srts_recent['segmentstatusdescription'] == 'Not Feasible'].copy()
     n_denied = len(cb5_srts_denied)
 
-    cb5_srts_denied['street_clean'] = cb5_srts_denied['onstreet'].str.title()
+    cb5_srts_denied['street_clean'] = cb5_srts_denied['onstreet'].apply(format_nyc_street)
     street_counts = cb5_srts_denied['street_clean'].value_counts().head(10)
 
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -1592,21 +1595,8 @@ def chart_07_most_denied_streets_speed_bumps(data):
 # ============================================================
 
 def _normalize_street_name(name):
-    """Normalize street names: strip whitespace, expand abbreviations, title case."""
-    if pd.isna(name) or str(name).strip() == '':
-        return ''
-    s = str(name).strip().upper()
-    s = ' '.join(s.split())
-    abbrevs = {
-        ' AVE': ' AVENUE', ' BLVD': ' BOULEVARD', ' RD': ' ROAD',
-        ' ST': ' STREET', ' PL': ' PLACE', ' DR': ' DRIVE',
-        ' LN': ' LANE', ' CT': ' COURT', ' PKWY': ' PARKWAY',
-        ' TPKE': ' TURNPIKE', ' EXPWY': ' EXPRESSWAY',
-    }
-    for abbr, full in abbrevs.items():
-        if s.endswith(abbr):
-            s = s[:-len(abbr)] + full
-    return s.title()
+    """Normalize street names using canonical NYC DCP LION-aligned Title Case."""
+    return format_nyc_street(name)
 
 
 # ============================================================

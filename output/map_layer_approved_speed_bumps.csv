@@ -1,7 +1,7 @@
 projectcode,onstreet,fromstreet,tostreet,outcome,requestdate,closeddate,projectstatus,denialreason,installationdate,trafficdirectiondesc,crashes_150m,injuries_150m,ped_injuries_150m,fatalities_150m,latitude,longitude,Source File
-SR-20210119-24318,MYRTLE AVENUE,83 STREET,84 STREET,approved,2020-07-27,2022-06-27T11:17:00.000,"Study Completed, Closed",,2022-06-13T00:00:00.000,Two-way,8,10,2,0.0,40.703182,-73.865639,srts_citywide.csv
-SR-20240502-31623,74 STREET,PLEASANTVIEW STREET,PENELOPE AVENUE,approved,2024-05-01,,BC prioritized installation queue,,,One-way,2,2,2,0.0,40.717917,-73.882355,srts_citywide.csv
-SR-20251203-39806,WOODWARD AVENUE,68 ROAD,CATALPA AVENUE,approved,2025-12-03,2026-02-19T13:14:00.000,"Reject planning proposal of Feasible, Closed",,,One-way,25,30,5,0.0,40.702664,-73.901897,srts_citywide.csv
-SR-20230918-30597,74 STREET,JUNIPER VALLEY ROAD,66 DRIVE,approved,2023-09-17,,BC prioritized installation queue,,,One-way,7,8,4,0.0,40.715245,-73.880206,srts_citywide.csv
-SR-20221006-28863,CYPRESS HILLS STREET,80 AVENUE,CYPRESS AVENUE,approved,2022-10-05,,MOSAICS closed,,2025-07-18T00:00:00.000,Two-way,8,11,0,0.0,40.696669,-73.88681,srts_citywide.csv
-SR-20221006-28863,CYPRESS HILLS STREET,78 AVENUE,80 AVENUE,approved,2022-10-05,,MOSAICS closed,,2025-07-18T00:00:00.000,Two-way,14,20,1,0.0,40.698015,-73.887882,srts_citywide.csv
+SR-20210119-24318,Myrtle Ave,83 St,84 St,approved,2020-07-27,2022-06-27T11:17:00.000,"Study Completed, Closed",,2022-06-13T00:00:00.000,Two-way,8,10,2,0.0,40.703182,-73.865639,srts_citywide.csv
+SR-20240502-31623,74 St,Pleasantview St,Penelope Ave,approved,2024-05-01,,BC prioritized installation queue,,,One-way,2,2,2,0.0,40.717917,-73.882355,srts_citywide.csv
+SR-20251203-39806,Woodward Ave,68 Rd,Catalpa Ave,approved,2025-12-03,2026-02-19T13:14:00.000,"Reject planning proposal of Feasible, Closed",,,One-way,25,30,5,0.0,40.702664,-73.901897,srts_citywide.csv
+SR-20230918-30597,74 St,Juniper Valley Rd,66 Dr,approved,2023-09-17,,BC prioritized installation queue,,,One-way,7,8,4,0.0,40.715245,-73.880206,srts_citywide.csv
+SR-20221006-28863,Cypress Hills St,80 Ave,Cypress Ave,approved,2022-10-05,,MOSAICS closed,,2025-07-18T00:00:00.000,Two-way,8,11,0,0.0,40.696669,-73.88681,srts_citywide.csv
+SR-20221006-28863,Cypress Hills St,78 Ave,80 Ave,approved,2022-10-05,,MOSAICS closed,,2025-07-18T00:00:00.000,Two-way,14,20,1,0.0,40.698015,-73.887882,srts_citywide.csv

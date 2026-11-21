@@ -1,16 +1,16 @@
 location_name,dataset,request_info,latitude,longitude,crashes_150m,injuries_150m,ped_injuries_150m,fatalities_150m,Source File
-Borden Avenue & Maurice Avenue,Signal Study,Left Turn Arrow/Signal,40.727733,-73.906731,120,188,4,4.0,data_cb5_signal_studies.csv
-69 Place & Grand Avenue,Signal Study,Traffic Signal,40.72648,-73.89442,91,127,18,1.0,data_cb5_signal_studies.csv
-Borden Avenue & Grand Avenue,Signal Study,Left Turn Arrow/Signal,40.725635,-73.895856,88,133,16,1.0,data_cb5_signal_studies.csv
-Aubrey Avenue & Metropolitan Avenue,Signal Study,Traffic Signal,40.711994,-73.86073,70,105,5,0.0,data_cb5_signal_studies.csv
-Bleecker Street & Fresh Pond Road,Signal Study,Left Turn Arrow/Signal,40.711903,-73.90019,69,79,18,1.0,data_cb5_signal_studies.csv
-61 Street & Metropolitan Avenue,Signal Study,Left Turn Arrow/Signal,40.712757,-73.90225,65,76,20,0.0,data_cb5_signal_studies.csv
-Hamilton Place & Perry Avenue,Signal Study,All-Way Stop,40.724888,-73.89899,65,95,5,0.0,data_cb5_signal_studies.csv
-60 Street & Metropolitan Avenue,Signal Study,Traffic Signal,40.7129023175027,-73.906077007385,64,75,19,0.0,data_cb5_signal_studies.csv
-Cooper Avenue & Cypress Avenue,Signal Study,Leading Pedestrian Interval,40.694107,-73.89737,61,76,12,0.0,data_cb5_signal_studies.csv
-69 Avenue & Onderdonk Avenue,Signal Study,All-Way Stop,40.70123,-73.902565,60,69,15,1.0,data_cb5_signal_studies.csv
-Cypress Avenue & Vermont Place,Signal Study,Traffic Signal,40.691433,-73.89063,59,85,2,0.0,data_cb5_signal_studies.csv
-81 Road & Myrtle Avenue,Signal Study,Traffic Signal,40.70337374346303,-73.85939346916709,54,79,4,0.0,data_cb5_signal_studies.csv
-Cypress Avenue & Putnam Avenue,Signal Study,All-Way Stop,40.700367,-73.906624,52,56,13,0.0,data_cb5_signal_studies.csv
-81 Road & Woodhaven Boulevard,Signal Study,Left Turn Arrow/Signal,40.70456,-73.856735,50,78,0,0.0,data_cb5_signal_studies.csv
-80 Street & Cooper Avenue,Signal Study,Traffic Signal,40.709415,-73.87022,48,55,9,0.0,data_cb5_signal_studies.csv
+Borden Ave & Maurice Ave,Signal Study,Left Turn Arrow/Signal,40.727733,-73.906731,120,188,4,4.0,data_cb5_signal_studies.csv
+69 Pl & Grand Ave,Signal Study,Traffic Signal,40.72648,-73.89442,91,127,18,1.0,data_cb5_signal_studies.csv
+Borden Ave & Grand Ave,Signal Study,Left Turn Arrow/Signal,40.725635,-73.895856,88,133,16,1.0,data_cb5_signal_studies.csv
+Aubrey Ave & Metropolitan Ave,Signal Study,Traffic Signal,40.711994,-73.86073,70,105,5,0.0,data_cb5_signal_studies.csv
+Bleecker St & Fresh Pond Rd,Signal Study,Left Turn Arrow/Signal,40.711903,-73.90019,69,79,18,1.0,data_cb5_signal_studies.csv
+61 St & Metropolitan Ave,Signal Study,Left Turn Arrow/Signal,40.712757,-73.90225,65,76,20,0.0,data_cb5_signal_studies.csv
+Hamilton Pl & Perry Ave,Signal Study,All-Way Stop,40.724888,-73.89899,65,95,5,0.0,data_cb5_signal_studies.csv
+60 St & Metropolitan Ave,Signal Study,Traffic Signal,40.7129023175027,-73.906077007385,64,75,19,0.0,data_cb5_signal_studies.csv
+Cooper Ave & Cypress Ave,Signal Study,Leading Pedestrian Interval,40.694107,-73.89737,61,76,12,0.0,data_cb5_signal_studies.csv
+69 Ave & Onderdonk Ave,Signal Study,All-Way Stop,40.70123,-73.902565,60,69,15,1.0,data_cb5_signal_studies.csv
+Cypress Ave & Vermont Pl,Signal Study,Traffic Signal,40.691433,-73.89063,59,85,2,0.0,data_cb5_signal_studies.csv
+81 Rd & Myrtle Ave,Signal Study,Traffic Signal,40.70337374346303,-73.85939346916709,54,79,4,0.0,data_cb5_signal_studies.csv
+Cypress Ave & Putnam Ave,Signal Study,All-Way Stop,40.700367,-73.906624,52,56,13,0.0,data_cb5_signal_studies.csv
+81 Rd & Woodhaven Blvd,Signal Study,Left Turn Arrow/Signal,40.70456,-73.856735,50,78,0,0.0,data_cb5_signal_studies.csv
+80 St & Cooper Ave,Signal Study,Traffic Signal,40.709415,-73.87022,48,55,9,0.0,data_cb5_signal_studies.csv

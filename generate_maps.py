@@ -22,6 +22,13 @@ import os
 import math
 import datetime
 import shutil
+from street_norm import (
+    clean_whitespace,
+    format_aps_location,
+    format_nyc_intersection,
+    format_nyc_street,
+    format_school_name,
+)
 
 warnings.filterwarnings('ignore')
 
@@ -1342,8 +1349,8 @@ def _compute_before_after(data):
         results.append({
             'referencenumber': row['referencenumber'],
             'requesttype': row['requesttype'],
-            'mainstreet': row['mainstreet'],
-            'crossstreet1': row['crossstreet1'],
+            'mainstreet': format_nyc_street(row['mainstreet']),
+            'crossstreet1': format_nyc_street(row['crossstreet1']),
             'daterequested': row.get('daterequested', None),
             'install_date': install_dt,
             'window_months': round(window_months, 1),
@@ -1395,10 +1402,10 @@ def _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
         cyc_k = int(r.get('number_of_cyclist_killed', 0))
         mot_inj = int(r.get('number_of_motorist_injured', 0))
         mot_k = int(r.get('number_of_motorist_killed', 0))
-        _on = '' if pd.isna(r.get('on_street_name')) else str(r['on_street_name']).strip()
-        _off = '' if pd.isna(r.get('off_street_name')) else str(r['off_street_name']).strip()
-        _factor = str(r.get('contributing_factor_vehicle_1', '') or '').strip()
-        _veh = str(r.get('vehicle_type_code1', '') or '').strip()
+        _on = format_nyc_street(r.get('on_street_name'))
+        _off = format_nyc_street(r.get('off_street_name'))
+        _factor = clean_whitespace(r.get('contributing_factor_vehicle_1'))
+        _veh = clean_whitespace(r.get('vehicle_type_code1'))
         _date = ''
         try:
             _date = pd.to_datetime(r.get('crash_date')).strftime('%b %d, %Y')
@@ -1426,12 +1433,12 @@ def _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
     # --- Signal studies ---
     def _signal_rec(row):
         ref = str(row.get('referencenumber', ''))
-        main_st = str(row.get('mainstreet', '') or '')
-        cross_st = str(row.get('crossstreet1', '') or '')
-        req_type = str(row.get('requesttype', '') or '')
-        status = str(row.get('statusdescription', '') or '').strip()
-        findings = str(row.get('findings', '') or '').strip()
-        school = str(row.get('schoolname', '') or '').strip()
+        main_st = format_nyc_street(row.get('mainstreet'))
+        cross_st = format_nyc_street(row.get('crossstreet1'))
+        req_type = clean_whitespace(row.get('requesttype'))
+        status = clean_whitespace(row.get('statusdescription'))
+        findings = clean_whitespace(row.get('findings'))
+        school = format_school_name(row.get('schoolname'))
         vz = 1 if row.get('visionzero') == 'Yes' else 0
         req_date = ''
         try:
@@ -1464,13 +1471,13 @@ def _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
 
     # --- SRTS ---
     def _srts_rec(row):
-        on_st = str(row.get('onstreet', '') or '')
-        from_st = str(row.get('fromstreet', '') or '')
-        to_st = str(row.get('tostreet', '') or '')
-        proj_code = str(row.get('projectcode', '') or '')
-        proj_status = str(row.get('projectstatus', '') or '').strip()
-        denial = str(row.get('denialreason', '') or '').strip()
-        direction = str(row.get('trafficdirectiondesc', '') or '').strip()
+        on_st = format_nyc_street(row.get('onstreet'))
+        from_st = format_nyc_street(row.get('fromstreet'))
+        to_st = format_nyc_street(row.get('tostreet'))
+        proj_code = clean_whitespace(row.get('projectcode'))
+        proj_status = clean_whitespace(row.get('projectstatus'))
+        denial = clean_whitespace(row.get('denialreason'))
+        direction = clean_whitespace(row.get('trafficdirectiondesc'))
         req_date = ''
         try:
             req_date = pd.to_datetime(row.get('requestdate')).strftime('%b %d, %Y')
@@ -1519,8 +1526,8 @@ def _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
                 'lat': round(r['point_y'], 6),
                 'lon': round(r['point_x'], 6),
                 'y': int(r.get('year', 0)),
-                'loc': str(r.get('location', '') or '').strip(),
-                'nta': str(r.get('ntaname', '') or '').strip(),
+                'loc': format_aps_location(r.get('location')),
+                'nta': clean_whitespace(r.get('ntaname')),
                 'dt': inst_date,
             })
 
@@ -1542,9 +1549,9 @@ def _export_map_json(signal_prox, srts_prox, cb5_crashes, data, before_after_df,
                 'lat': round(ba['latitude'], 6),
                 'lon': round(ba['longitude'], 6),
                 'ref': str(ba.get('referencenumber', '')),
-                'main': str(ba.get('mainstreet', '')),
-                'cross': str(ba.get('crossstreet1', '')),
-                'type': str(ba.get('requesttype', '')),
+                'main': format_nyc_street(ba.get('mainstreet')),
+                'cross': format_nyc_street(ba.get('crossstreet1')),
+                'type': clean_whitespace(ba.get('requesttype')),
                 'reqDt': req_date,
                 'installDt': install_str,
                 'wm': round(ba['window_months'], 1),
@@ -1711,8 +1718,8 @@ def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
                 'ref': row.get('referencenumber', ''),
                 'lat': row['latitude'],
                 'lon': row['longitude'],
-                'label': f"{row.get('mainstreet', '')} & {row.get('crossstreet1', '')}",
-                'type': row.get('requesttype', ''),
+                'label': format_nyc_intersection(row.get('mainstreet'), row.get('crossstreet1'), sort_pair=False),
+                'type': clean_whitespace(row.get('requesttype')),
                 'outcome': outcome_label,
             })
 
@@ -1721,10 +1728,10 @@ def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
             if pd.isna(row['latitude']):
                 continue
             search_entries.append({
-                'ref': str(row.get('projectcode', '')),
+                'ref': clean_whitespace(row.get('projectcode')),
                 'lat': row['latitude'],
                 'lon': row['longitude'],
-                'label': f"{row.get('onstreet', '')} ({row.get('fromstreet', '')} to {row.get('tostreet', '')})",
+                'label': f"{format_nyc_street(row.get('onstreet'))} ({format_nyc_street(row.get('fromstreet'))} to {format_nyc_street(row.get('tostreet'))})",
                 'type': 'Speed Bump',
                 'outcome': outcome_label,
             })
@@ -1747,7 +1754,7 @@ def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
         cb5_aps = cb5_aps[inside]
         n_aps = len(cb5_aps)
         for _, row in cb5_aps.iterrows():
-            location = str(row.get('location', '') or '').strip()
+            location = format_aps_location(row.get('location'))
             search_entries.append({
                 'ref': '',
                 'lat': row['point_y'],
@@ -1800,6 +1807,10 @@ def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
                   'contributing_factor_vehicle_1', 'vehicle_type_code1',
                   'collision_id', 'latitude', 'longitude']
     _crash_export = crash_with_coords[[c for c in crash_cols if c in crash_with_coords.columns]].copy()
+    if 'on_street_name' in _crash_export.columns:
+        _crash_export['on_street_name'] = _crash_export['on_street_name'].apply(format_nyc_street)
+    if 'off_street_name' in _crash_export.columns:
+        _crash_export['off_street_name'] = _crash_export['off_street_name'].apply(format_nyc_street)
     _crash_export['Source Dataset'] = 'Motor Vehicle Collisions [h9gi-nx95]'
     _crash_export.to_csv(f'{OUTPUT_DIR}/map_layer_crashes.csv', index=False)
 
@@ -1816,7 +1827,15 @@ def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
         _exp = subset[subset['latitude'].notna()].copy()
         if len(_sig_enrich) > 0:
             _exp = _exp.merge(_sig_enrich, on='referencenumber', how='left', suffixes=('', '_orig'))
-        _exp = _exp[[c for c in sig_cols if c in _exp.columns]]
+        _exp = _exp[[c for c in sig_cols if c in _exp.columns]].copy()
+        if 'mainstreet' in _exp.columns:
+            _exp['mainstreet'] = _exp['mainstreet'].apply(format_nyc_street)
+        if 'crossstreet1' in _exp.columns:
+            _exp['crossstreet1'] = _exp['crossstreet1'].apply(format_nyc_street)
+        if 'schoolname' in _exp.columns:
+            _exp['schoolname'] = _exp['schoolname'].apply(format_school_name)
+        if 'statusdescription' in _exp.columns:
+            _exp['statusdescription'] = _exp['statusdescription'].apply(clean_whitespace)
         _exp['Source File'] = 'data_cb5_signal_studies.csv'
         _exp.to_csv(f'{OUTPUT_DIR}/map_layer_{outcome_label}_signals.csv', index=False)
 
@@ -1827,13 +1846,18 @@ def prepare_map_layers(signal_prox, srts_prox, cb5_crashes, data=None):
                  'latitude', 'longitude']
     for outcome_label, subset in [('denied', _srts_denied), ('approved', _srts_approved)]:
         _exp = subset[[c for c in srts_cols if c in subset.columns]].copy()
-        _exp = _exp[_exp['latitude'].notna()]
+        _exp = _exp[_exp['latitude'].notna()].copy()
+        for _sc in ('onstreet', 'fromstreet', 'tostreet'):
+            if _sc in _exp.columns:
+                _exp[_sc] = _exp[_sc].apply(format_nyc_street)
         _exp['Source File'] = 'srts_citywide.csv'
         _exp.to_csv(f'{OUTPUT_DIR}/map_layer_{outcome_label}_speed_bumps.csv', index=False)
 
     if n_aps > 0:
         aps_cols = ['location', 'date_insta', 'ntaname', 'point_x', 'point_y']
         _aps_export = cb5_aps[[c for c in aps_cols if c in cb5_aps.columns]].copy()
+        if 'location' in _aps_export.columns:
+            _aps_export['location'] = _aps_export['location'].apply(format_aps_location)
         _aps_export = _aps_export.rename(columns={'point_y': 'latitude', 'point_x': 'longitude'})
         _aps_export['Source Dataset'] = 'APS Installed Locations [de3m-c5p4]'
         _aps_export.to_csv(f'{OUTPUT_DIR}/map_layer_aps_installed.csv', index=False)
@@ -1939,14 +1963,11 @@ def chart_09_crash_proximity(signal_prox, srts_prox):
 
 
 def _normalize_intersection(street_a, street_b):
-    """Normalize intersection name by sorting streets alphabetically.
+    """Normalize intersection name via canonical NYC DCP LION-aligned formatting and sorting.
 
-    Ensures 'Cooper Ave & Cypress Ave' == 'Cypress Ave & Cooper Ave'.
+    Ensures 'METROPOLITAN AVENUE & COOPER AVENUE' == 'Cooper Ave & Metropolitan Ave'.
     """
-    a = str(street_a).strip().title() if pd.notna(street_a) else ''
-    b = str(street_b).strip().title() if pd.notna(street_b) else ''
-    parts = sorted([a, b])
-    return f'{parts[0]} & {parts[1]}'
+    return format_nyc_intersection(street_a, street_b, sort_pair=True)
 
 
 def _spatial_dedup(df, radius_m=100):

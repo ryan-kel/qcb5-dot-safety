@@ -1,11 +1,11 @@
 Intersection,Denials,Source File
-Woodhaven Boulevard & Eliot Avenue,5,data_cb5_signal_studies.csv
-Metropolitan Avenue & Forest Avenue,5,data_cb5_signal_studies.csv
-Fresh Pond Road & 60 Road,3,data_cb5_signal_studies.csv
-Metropolitan Avenue & Flushing Avenue,3,data_cb5_signal_studies.csv
-Fresh Pond Road & Metropolitan Avenue,3,data_cb5_signal_studies.csv
-Myrtle Avenue & St Nicholas Avenue,3,data_cb5_signal_studies.csv
-Metropolitan Avenue & Aubrey Avenue,3,data_cb5_signal_studies.csv
-Grand Avenue & Borden Avenue,3,data_cb5_signal_studies.csv
-Grand Avenue & 74 Street,3,data_cb5_signal_studies.csv
-Cypress Avenue & Cooper Avenue,3,data_cb5_signal_studies.csv
+Forest Ave & Metropolitan Ave,6,data_cb5_signal_studies.csv
+Eliot Ave & Woodhaven Blvd,5,data_cb5_signal_studies.csv
+Cooper Ave & Cypress Ave,5,data_cb5_signal_studies.csv
+Aubrey Ave & Metropolitan Ave,4,data_cb5_signal_studies.csv
+Borden Ave & Maurice Ave,3,data_cb5_signal_studies.csv
+60 Rd & Fresh Pond Rd,3,data_cb5_signal_studies.csv
+Flushing Ave & Metropolitan Ave,3,data_cb5_signal_studies.csv
+Fresh Pond Rd & Metropolitan Ave,3,data_cb5_signal_studies.csv
+Myrtle Ave & St Nicholas Ave,3,data_cb5_signal_studies.csv
+Bleecker St & Fresh Pond Rd,3,data_cb5_signal_studies.csv

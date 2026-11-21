@@ -1,43 +1,43 @@
 referencenumber,mainstreet,crossstreet1,requesttype,outcome,daterequested,statusdate,statusdescription,findings,schoolname,visionzero,crashes_150m,injuries_150m,ped_injuries_150m,fatalities_150m,latitude,longitude,Source File
-CQ24-3662,60 ROAD,60 STREET,All-Way Stop,approved,2024-11-14,2025-04-21T00:00:00.000,A/W Approval,,P.S. 153 MASPEHT ELEM,No,10,11,5,0.0,40.71574,-73.90603,data_cb5_signal_studies.csv
-CQ24-3033,PENELOPE AVENUE,79 STREET,Traffic Signal,approved,2024-09-24,2024-10-21T00:00:00.000,Signal Approval,,P.S. 049 DOROTHY BONAWIT KOLE,No,2,2,1,0.0,40.716185,-73.88164,data_cb5_signal_studies.csv
-CQ24-2118,METROPOLITAN AVENUE,65 LANE,Traffic Signal,approved,2024-07-02,2024-07-24T00:00:00.000,Signal Approval,,MIDDLE VILLAGE PREPARATORY CHARTER SCHOOL,No,17,19,2,0.0,40.71244,-73.894025,data_cb5_signal_studies.csv
-CQ24-1479,62 STREET,68 AVENUE,All-Way Stop,approved,2024-04-24,2024-05-23T00:00:00.000,A/W Approval,,PS 088,No,25,27,13,0.0,40.705513,-73.89538,data_cb5_signal_studies.csv
-CQ24-0955,BLEECKER STREET,WOODWARD AVENUE,All-Way Stop,approved,2024-03-18,2024-04-08T00:00:00.000,A/W Approval,,,No,19,20,4,0.0,40.70703,-73.909325,data_cb5_signal_studies.csv
-CQ24-0418,78 AVENUE,87 STREET,All-Way Stop,approved,2024-02-07,2024-04-01T00:00:00.000,A/W Approval,,ANTHONY J. PRANZO,No,4,4,0,0.0,40.705832,-73.862265,data_cb5_signal_studies.csv
-CQ24-0220,LINDEN STREET,ONDERDONK AVENUE,All-Way Stop,approved,2024-01-23,2024-03-11T00:00:00.000,A/W Approval,,HAPPY BEARS GROUP FAMILY DAYCARE.,No,29,42,7,0.0,40.704594,-73.90826,data_cb5_signal_studies.csv
-CQ23-3242,SENECA AVENUE,STOCKHOLM STREET,All-Way Stop,approved,2023-11-16,2023-12-11T00:00:00.000,A/W Approval,,P.S. 305,No,16,27,5,0.0,40.70719,-73.91511,data_cb5_signal_studies.csv
-CQ23-1985,FAIRVIEW AVENUE,MENAHAN STREET,All-Way Stop,approved,2023-07-20,2023-12-18T00:00:00.000,A/W Approval,,,No,11,11,3,1.0,40.707676,-73.907486,data_cb5_signal_studies.csv
-CQ23-1831,FURMANVILLE AVENUE,79 STREET,All-Way Stop,approved,2023-07-10,2023-12-04T00:00:00.000,A/W Approval,,PS 049 (DOROTHY BONAWIT KOLE),No,5,5,0,0.0,40.7175725,-73.8744025,data_cb5_signal_studies.csv
-CQ23-0526,WOODWARD AVENUE,PALMETTO STREET,All-Way Stop,approved,2023-02-24,2023-05-30T00:00:00.000,A/W Approval,,I.S.093 RIDGEWOOD,No,21,23,9,0.0,40.70485,-73.90562,data_cb5_signal_studies.csv
-CQ23-0441,75 STREET,78 AVENUE,All-Way Stop,approved,2023-02-10,2023-04-11T00:00:00.000,A/W Approval,,P.S. / I.S. 119Q,No,4,6,1,0.0,40.704473,-73.874307,data_cb5_signal_studies.csv
-CQ23-0344,WOODWARD AVENUE,GATES AVENUE,Traffic Signal,approved,2023-01-31,2025-07-21T00:00:00.000,Signal Approval,,IS 093 RIDGEWOOD / SUCCESS ACADEMY CHARTER SCHOOL SOUTH JAMAICA,No,21,23,8,0.0,40.705284,-73.90636,data_cb5_signal_studies.csv
-CQ22-3653,84 STREET,DRY HARBOR ROAD,Traffic Signal,approved,2022-12-21,2023-02-22T00:00:00.000,A/W Approval,,,No,11,20,2,0.0,40.72191393073102,-73.87281837440547,data_cb5_signal_studies.csv
-CQ22-3347,65 STREET,SHALER AVENUE,All-Way Stop,approved,2022-11-16,2023-03-06T00:00:00.000,A/W Approval,,ONCE UPON A TIME DAYCARE AND PRESCHOOL,No,10,10,4,0.0,40.704846,-73.89212999999998,data_cb5_signal_studies.csv
-CQ22-3242,56 ROAD,60 STREET,Traffic Signal,approved,2022-11-03,2023-02-27T00:00:00.000,A/W Approval,,MOSAIC PRE-K CENTER,No,8,10,2,0.0,40.72452,-73.90626,data_cb5_signal_studies.csv
-CQ22-2741,60 STREET,60 AVENUE,All-Way Stop,approved,2022-09-14,2023-01-17T00:00:00.000,A/W Approval,,MASPETH ELEMENTARY SCHOOL,No,12,13,5,0.0,40.71642,-73.90618,data_cb5_signal_studies.csv
-CQ22-1950,HIMROD STREET,FAIRVIEW AVENUE,All-Way Stop,approved,2022-07-05,2022-10-31T00:00:00.000,A/W Approval,,,No,12,12,3,0.0,40.708345,-73.91154799999998,data_cb5_signal_studies.csv
-CQ22-1923,70 STREET,52 AVENUE,All-Way Stop,approved,2022-06-30,2023-01-17T00:00:00.000,A/W Approval,,,No,3,5,2,0.0,40.7335956143277,-73.8940647658594,data_cb5_signal_studies.csv
-CQ22-1455,STANHOPE STREET,FAIRVIEW AVENUE,Traffic Signal,approved,2022-05-16,2022-07-25T00:00:00.000,A/W Approval,,GROVER CLEVELAND HS,No,6,8,2,0.0,40.709868,-73.911185,data_cb5_signal_studies.csv
-CQ22-1028,FLUSHING AVENUE,60 LANE,Traffic Signal,approved,2022-03-31,2023-08-15T00:00:00.000,Signal Approval,,,No,36,40,10,0.0,40.720604,-73.9047875,data_cb5_signal_studies.csv
-CQ22-0974,61 STREET,ST FELIX AVENUE,Traffic Signal,approved,2022-03-31,2022-12-19T00:00:00.000,A/W Approval,,,No,10,11,2,0.0,40.697061,-73.894631,data_cb5_signal_studies.csv
-CQ22-0901,78 AVENUE,74 STREET,All-Way Stop,approved,2022-03-18,2023-01-09T00:00:00.000,A/W Approval,,PS 119,No,1,1,1,0.0,40.704215,-73.876161,data_cb5_signal_studies.csv
-CQ22-0674,ONDERDONK AVENUE,STARR STREET,All-Way Stop,approved,2022-03-07,2022-05-17T00:00:00.000,A/W Approval,,,No,11,17,4,0.0,40.71029,-73.91789,data_cb5_signal_studies.csv
-CQ22-0194,COOPER AVENUE,61 STREET,Traffic Signal,approved,2022-01-26,2022-03-28T00:00:00.000,A/W Approval,,,No,12,14,2,0.0,40.696912,-73.893564,data_cb5_signal_studies.csv
-CQ21-2876,RUST STREET,MASPETH AVENUE,Traffic Signal,approved,2021-11-15,2022-06-21T00:00:00.000,Signal Approval,,,No,14,16,1,0.0,40.72205984333144,-73.91329813158207,data_cb5_signal_studies.csv
-CQ21-2826,60 LANE,ST FELIX AVENUE,Traffic Signal,approved,2021-11-09,2022-03-28T00:00:00.000,A/W Approval,,PS 068,No,10,11,2,0.0,40.697061,-73.894631,data_cb5_signal_studies.csv
-CQ21-2816,60 AVENUE,69 LANE,Traffic Signal,approved,2021-11-03,2022-09-26T00:00:00.000,A/W Approval,,,No,8,10,3,0.0,40.722507,-73.89043,data_cb5_signal_studies.csv
-CQ21-2708,60 PLACE,MADISON STREET,All-Way Stop,approved,2021-10-26,2022-06-21T00:00:00.000,A/W Approval,,IS 93,No,7,8,3,0.0,40.706356,-73.900276,data_cb5_signal_studies.csv
-CQ21-2683,SENECA AVENUE,WEIRFIELD STREET,Traffic Signal,approved,2021-10-26,2023-02-28T00:00:00.000,Signal Approval,,IS 77,No,58,75,13,1.0,40.700005,-73.90296,data_cb5_signal_studies.csv
-CQ21-2383,57 ROAD,59 STREET,Traffic Signal,approved,2021-10-12,2021-11-08T00:00:00.000,A/W Approval,,PS 72,No,4,4,1,0.0,40.722373,-73.910645,data_cb5_signal_studies.csv
-CQ21-1868,69 STREET,52 AVENUE,All-Way Stop,approved,2021-08-27,2023-08-15T00:00:00.000,Signal Approval,,PS 229,No,1,1,0,0.0,40.733605,-73.897893,data_cb5_signal_studies.csv
-CQ21-1545,FAIRVIEW AVENUE,PALMETTO STREET,All-Way Stop,approved,2021-07-23,2022-05-02T00:00:00.000,A/W Approval,,,No,9,9,2,0.0,40.70592,-73.90452,data_cb5_signal_studies.csv
-CQ21-1538,84 STREET,78 AVENUE,All-Way Stop,approved,2021-07-22,2022-04-18T00:00:00.000,A/W Approval,,SACRED HEART SCHOOL,No,0,0,0,0.0,40.70667,-73.865206,data_cb5_signal_studies.csv
-CQ21-1143,COOPER AVENUE,60 LANE,Traffic Signal,approved,2021-06-04,2022-03-28T00:00:00.000,A/W Approval,,,No,10,11,2,0.0,40.6965692144966,-73.8945563503407,data_cb5_signal_studies.csv
-CQ21-0749,69 LANE,LONG ISLAND EXPRESSWAY,Traffic Signal,approved,2021-04-20,2022-07-12T00:00:00.000,Signal Approval,,,No,3,3,0,0.0,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
-CQ21-0749,69 LANE,LONG ISLAND EXPRESSWAY,Traffic Signal,approved,2021-04-20,2022-07-12T00:00:00.000,Signal Approval,,,No,3,3,0,0.0,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
-CQ21-0749,69 LANE,LONG ISLAND EXPRESSWAY,Traffic Signal,approved,2021-04-20,2022-07-12T00:00:00.000,Signal Approval,,,No,3,3,0,0.0,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
-CQ21-0194,PALMETTO STREET,60 PLACE,All-Way Stop,approved,2021-01-29,2021-08-23T00:00:00.000,A/W Approval,,,No,9,9,2,0.0,40.70767,-73.901054,data_cb5_signal_studies.csv
-CQ20-2303,65 DRIVE,70 STREET,Traffic Signal,approved,2020-11-09,2022-01-18T00:00:00.000,A/W Approval,,PS 128,No,7,9,1,0.0,40.715369,-73.88653999999998,data_cb5_signal_studies.csv
-CQ20-1328,GATES AVENUE,GRANDVIEW AVENUE,All-Way Stop,approved,2020-07-13,2020-09-22T00:00:00.000,A/W Approval,ALL/WAY APPROVAL BASED ON ENGINEERING JUDGMENT.,,No,12,12,5,0.0,40.70755,-73.90404,data_cb5_signal_studies.csv
-CQ20-0745,CATALPA AVENUE,62 STREET,All-Way Stop,approved,2020-02-24,2022-01-31T00:00:00.000,A/W Approval,,PS 88,No,25,30,9,0.0,40.704178,-73.89481,data_cb5_signal_studies.csv
+CQ24-3662,60 Rd,60 St,All-Way Stop,approved,2024-11-14,2025-04-21T00:00:00.000,A/W Approval,,P.S. 153 Maspeht Elem,No,10,11,5,0.0,40.71574,-73.90603,data_cb5_signal_studies.csv
+CQ24-3033,Penelope Ave,79 St,Traffic Signal,approved,2024-09-24,2024-10-21T00:00:00.000,Signal Approval,,P.S. 049 Dorothy Bonawit Kole,No,2,2,1,0.0,40.716185,-73.88164,data_cb5_signal_studies.csv
+CQ24-2118,Metropolitan Ave,65 Ln,Traffic Signal,approved,2024-07-02,2024-07-24T00:00:00.000,Signal Approval,,Middle Village Preparatory Charter School,No,17,19,2,0.0,40.71244,-73.894025,data_cb5_signal_studies.csv
+CQ24-1479,62 St,68 Ave,All-Way Stop,approved,2024-04-24,2024-05-23T00:00:00.000,A/W Approval,,Ps 088,No,25,27,13,0.0,40.705513,-73.89538,data_cb5_signal_studies.csv
+CQ24-0955,Bleecker St,Woodward Ave,All-Way Stop,approved,2024-03-18,2024-04-08T00:00:00.000,A/W Approval,,,No,19,20,4,0.0,40.70703,-73.909325,data_cb5_signal_studies.csv
+CQ24-0418,78 Ave,87 St,All-Way Stop,approved,2024-02-07,2024-04-01T00:00:00.000,A/W Approval,,Anthony J. Pranzo,No,4,4,0,0.0,40.705832,-73.862265,data_cb5_signal_studies.csv
+CQ24-0220,Linden St,Onderdonk Ave,All-Way Stop,approved,2024-01-23,2024-03-11T00:00:00.000,A/W Approval,,Happy Bears Group Family Daycare.,No,29,42,7,0.0,40.704594,-73.90826,data_cb5_signal_studies.csv
+CQ23-3242,Seneca Ave,Stockholm St,All-Way Stop,approved,2023-11-16,2023-12-11T00:00:00.000,A/W Approval,,P.S. 305,No,16,27,5,0.0,40.70719,-73.91511,data_cb5_signal_studies.csv
+CQ23-1985,Fairview Ave,Menahan St,All-Way Stop,approved,2023-07-20,2023-12-18T00:00:00.000,A/W Approval,,,No,11,11,3,1.0,40.707676,-73.907486,data_cb5_signal_studies.csv
+CQ23-1831,Furmanville Ave,79 St,All-Way Stop,approved,2023-07-10,2023-12-04T00:00:00.000,A/W Approval,,Ps 049 (dorothy Bonawit Kole),No,5,5,0,0.0,40.7175725,-73.8744025,data_cb5_signal_studies.csv
+CQ23-0526,Woodward Ave,Palmetto St,All-Way Stop,approved,2023-02-24,2023-05-30T00:00:00.000,A/W Approval,,I.s.093 Ridgewood,No,21,23,9,0.0,40.70485,-73.90562,data_cb5_signal_studies.csv
+CQ23-0441,75 St,78 Ave,All-Way Stop,approved,2023-02-10,2023-04-11T00:00:00.000,A/W Approval,,P.S. / I.S. 119q,No,4,6,1,0.0,40.704473,-73.874307,data_cb5_signal_studies.csv
+CQ23-0344,Woodward Ave,Gates Ave,Traffic Signal,approved,2023-01-31,2025-07-21T00:00:00.000,Signal Approval,,Is 093 Ridgewood / Success Academy Charter School South Jamaica,No,21,23,8,0.0,40.705284,-73.90636,data_cb5_signal_studies.csv
+CQ22-3653,84 St,Dry Harbor Rd,Traffic Signal,approved,2022-12-21,2023-02-22T00:00:00.000,A/W Approval,,,No,11,20,2,0.0,40.72191393073102,-73.87281837440547,data_cb5_signal_studies.csv
+CQ22-3347,65 St,Shaler Ave,All-Way Stop,approved,2022-11-16,2023-03-06T00:00:00.000,A/W Approval,,Once Upon A Time Daycare and Preschool,No,10,10,4,0.0,40.704846,-73.89212999999998,data_cb5_signal_studies.csv
+CQ22-3242,56 Rd,60 St,Traffic Signal,approved,2022-11-03,2023-02-27T00:00:00.000,A/W Approval,,Mosaic Pre-k Center,No,8,10,2,0.0,40.72452,-73.90626,data_cb5_signal_studies.csv
+CQ22-2741,60 St,60 Ave,All-Way Stop,approved,2022-09-14,2023-01-17T00:00:00.000,A/W Approval,,Maspeth Elementary School,No,12,13,5,0.0,40.71642,-73.90618,data_cb5_signal_studies.csv
+CQ22-1950,Himrod St,Fairview Ave,All-Way Stop,approved,2022-07-05,2022-10-31T00:00:00.000,A/W Approval,,,No,12,12,3,0.0,40.708345,-73.91154799999998,data_cb5_signal_studies.csv
+CQ22-1923,70 St,52 Ave,All-Way Stop,approved,2022-06-30,2023-01-17T00:00:00.000,A/W Approval,,,No,3,5,2,0.0,40.7335956143277,-73.8940647658594,data_cb5_signal_studies.csv
+CQ22-1455,Stanhope St,Fairview Ave,Traffic Signal,approved,2022-05-16,2022-07-25T00:00:00.000,A/W Approval,,Grover Cleveland Hs,No,6,8,2,0.0,40.709868,-73.911185,data_cb5_signal_studies.csv
+CQ22-1028,Flushing Ave,60 Ln,Traffic Signal,approved,2022-03-31,2023-08-15T00:00:00.000,Signal Approval,,,No,36,40,10,0.0,40.720604,-73.9047875,data_cb5_signal_studies.csv
+CQ22-0974,61 St,St Felix Ave,Traffic Signal,approved,2022-03-31,2022-12-19T00:00:00.000,A/W Approval,,,No,10,11,2,0.0,40.697061,-73.894631,data_cb5_signal_studies.csv
+CQ22-0901,78 Ave,74 St,All-Way Stop,approved,2022-03-18,2023-01-09T00:00:00.000,A/W Approval,,Ps 119,No,1,1,1,0.0,40.704215,-73.876161,data_cb5_signal_studies.csv
+CQ22-0674,Onderdonk Ave,Starr St,All-Way Stop,approved,2022-03-07,2022-05-17T00:00:00.000,A/W Approval,,,No,11,17,4,0.0,40.71029,-73.91789,data_cb5_signal_studies.csv
+CQ22-0194,Cooper Ave,61 St,Traffic Signal,approved,2022-01-26,2022-03-28T00:00:00.000,A/W Approval,,,No,12,14,2,0.0,40.696912,-73.893564,data_cb5_signal_studies.csv
+CQ21-2876,Rust St,Maspeth Ave,Traffic Signal,approved,2021-11-15,2022-06-21T00:00:00.000,Signal Approval,,,No,14,16,1,0.0,40.72205984333144,-73.91329813158207,data_cb5_signal_studies.csv
+CQ21-2826,60 Ln,St Felix Ave,Traffic Signal,approved,2021-11-09,2022-03-28T00:00:00.000,A/W Approval,,Ps 068,No,10,11,2,0.0,40.697061,-73.894631,data_cb5_signal_studies.csv
+CQ21-2816,60 Ave,69 Ln,Traffic Signal,approved,2021-11-03,2022-09-26T00:00:00.000,A/W Approval,,,No,8,10,3,0.0,40.722507,-73.89043,data_cb5_signal_studies.csv
+CQ21-2708,60 Pl,Madison St,All-Way Stop,approved,2021-10-26,2022-06-21T00:00:00.000,A/W Approval,,Is 93,No,7,8,3,0.0,40.706356,-73.900276,data_cb5_signal_studies.csv
+CQ21-2683,Seneca Ave,Weirfield St,Traffic Signal,approved,2021-10-26,2023-02-28T00:00:00.000,Signal Approval,,Is 77,No,58,75,13,1.0,40.700005,-73.90296,data_cb5_signal_studies.csv
+CQ21-2383,57 Rd,59 St,Traffic Signal,approved,2021-10-12,2021-11-08T00:00:00.000,A/W Approval,,Ps 72,No,4,4,1,0.0,40.722373,-73.910645,data_cb5_signal_studies.csv
+CQ21-1868,69 St,52 Ave,All-Way Stop,approved,2021-08-27,2023-08-15T00:00:00.000,Signal Approval,,Ps 229,No,1,1,0,0.0,40.733605,-73.897893,data_cb5_signal_studies.csv
+CQ21-1545,Fairview Ave,Palmetto St,All-Way Stop,approved,2021-07-23,2022-05-02T00:00:00.000,A/W Approval,,,No,9,9,2,0.0,40.70592,-73.90452,data_cb5_signal_studies.csv
+CQ21-1538,84 St,78 Ave,All-Way Stop,approved,2021-07-22,2022-04-18T00:00:00.000,A/W Approval,,Sacred Heart School,No,0,0,0,0.0,40.70667,-73.865206,data_cb5_signal_studies.csv
+CQ21-1143,Cooper Ave,60 Ln,Traffic Signal,approved,2021-06-04,2022-03-28T00:00:00.000,A/W Approval,,,No,10,11,2,0.0,40.6965692144966,-73.8945563503407,data_cb5_signal_studies.csv
+CQ21-0749,69 Ln,Long Island Expy,Traffic Signal,approved,2021-04-20,2022-07-12T00:00:00.000,Signal Approval,,,No,3,3,0,0.0,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
+CQ21-0749,69 Ln,Long Island Expy,Traffic Signal,approved,2021-04-20,2022-07-12T00:00:00.000,Signal Approval,,,No,3,3,0,0.0,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
+CQ21-0749,69 Ln,Long Island Expy,Traffic Signal,approved,2021-04-20,2022-07-12T00:00:00.000,Signal Approval,,,No,3,3,0,0.0,40.73248713329137,-73.89772588651475,data_cb5_signal_studies.csv
+CQ21-0194,Palmetto St,60 Pl,All-Way Stop,approved,2021-01-29,2021-08-23T00:00:00.000,A/W Approval,,,No,9,9,2,0.0,40.70767,-73.901054,data_cb5_signal_studies.csv
+CQ20-2303,65 Dr,70 St,Traffic Signal,approved,2020-11-09,2022-01-18T00:00:00.000,A/W Approval,,Ps 128,No,7,9,1,0.0,40.715369,-73.88653999999998,data_cb5_signal_studies.csv
+CQ20-1328,Gates Ave,Grandview Ave,All-Way Stop,approved,2020-07-13,2020-09-22T00:00:00.000,A/W Approval,ALL/WAY APPROVAL BASED ON ENGINEERING JUDGMENT.,,No,12,12,5,0.0,40.70755,-73.90404,data_cb5_signal_studies.csv
+CQ20-0745,Catalpa Ave,62 St,All-Way Stop,approved,2020-02-24,2022-01-31T00:00:00.000,A/W Approval,,Ps 88,No,25,30,9,0.0,40.704178,-73.89481,data_cb5_signal_studies.csv
