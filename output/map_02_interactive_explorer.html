@@ -1488,12 +1488,12 @@ html[data-color-scheme="dark"] .sym-cluster { background: #46617A; }
         };
       });
     } else if (cat === 'deniedSignals' || cat === 'approvedSignals') {
-      var arr = (cat === 'deniedSignals' ? denSigRecs : appSigRecs).slice().sort(function (a, b) { return b.cr - a.cr; });
+      var arr = (cat === 'deniedSignals' ? denSigRecs : appSigRecs).toSorted(function (a, b) { return b.cr - a.cr; });
       items = arr.map(function (r) {
         return { id: 'sig:' + r.ref, title: r.main + ' & ' + r.cross, meta: r.type + ' · ' + r.ref, val: r.cr + ' cr', make: function () { return buildSignalInspect(r); } };
       });
     } else if (cat === 'deniedSrts' || cat === 'approvedSrts') {
-      var arr2 = (cat === 'deniedSrts' ? denSrtsRecs : appSrtsRecs).slice().sort(function (a, b) { return b.cr - a.cr; });
+      var arr2 = (cat === 'deniedSrts' ? denSrtsRecs : appSrtsRecs).toSorted(function (a, b) { return b.cr - a.cr; });
       items = arr2.map(function (r) {
         return { id: 'srts:' + r.code, title: r.on, meta: r.from + ' to ' + r.to + ' · ' + r.code, val: r.cr + ' cr', make: function () { return buildSrtsInspect(r); } };
       });
